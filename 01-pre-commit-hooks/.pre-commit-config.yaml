@@ -1,0 +1,271 @@
+# Pre-Commit Configuration: Production-Ready Security Hooks
+#
+# Installation:
+#   1. pip install pre-commit
+#   2. pre-commit install
+#   3. pre-commit run --all-files (to check existing code)
+#
+# Then hooks run automatically on every `git commit`
+#
+# To bypass (NOT RECOMMENDED): git commit --no-verify
+# To run manually: pre-commit run --all-files
+
+# Global settings
+default_stages: [commit]
+fail_fast: false  # Run all hooks even if one fails (see failures together)
+
+repos:
+  # ============================================================================
+  # GITLEAKS: Pattern-based secret detection (FAST, RECOMMENDED)
+  # ============================================================================
+  # What: Scans for hardcoded API keys, passwords, tokens using known patterns
+  # Why: Catches 99% of common secrets with <1% false positives
+  # Speed: ~50ms
+  # False positives: <1% (highly accurate patterns)
+  #
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.4
+    hooks:
+      - id: gitleaks
+        name: Detect secrets with Gitleaks
+        description: Scans commits for hardcoded secrets and credentials
+        entry: gitleaks protect --verbose --log-level debug
+        language: golang
+        stages: [commit]
+        pass_filenames: false  # Gitleaks scans staged content, not filenames
+        always_run: true       # Even if no files match patterns
+
+
+  # ============================================================================
+  # DETECT-SECRETS: Regex + entropy baseline (LIGHTWEIGHT)
+  # ============================================================================
+  # What: Detects hardcoded secrets using regex and heuristics
+  # Why: Lightweight alternative; includes baseline for allowlisting false positives
+  # Speed: ~100ms
+  # False positives: ~5% (higher than gitleaks, but manageable)
+  #
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.4.0
+    hooks:
+      - id: detect-secrets
+        name: Detect secrets (baseline)
+        description: Catches hardcoded passwords, API keys, tokens
+        args: ['--baseline', '.secrets.baseline']
+        exclude: package.lock.json
+
+
+  # ============================================================================
+  # TRUFFLEHOG: Entropy-based deep scanning (THOROUGH)
+  # ============================================================================
+  # What: Entropy analysis to find novel secrets (what attackers use to scan)
+  # Why: Catches secrets that don't match known patterns
+  # Speed: ~500ms (slower, but thorough)
+  # False positives: ~2% (entropy can flag random-looking strings)
+  #
+  # NOTE: Trufflehog is slower; consider running in CI only (not pre-commit)
+  # Uncomment to enable:
+  #
+  # - repo: https://github.com/trufflesecurity/trufflehog
+  #   rev: v3.63.0
+  #   hooks:
+  #     - id: trufflehog
+  #       name: Trufflehog (entropy scanning)
+  #       description: Deep entropy analysis to find novel secrets
+  #       entry: trufflehog filesystem .
+  #       language: python
+  #       stages: [commit]
+  #       pass_filenames: false
+
+
+  # ============================================================================
+  # SEMGREP: Static analysis for code vulnerabilities (COMPREHENSIVE)
+  # ============================================================================
+  # What: SAST tool for SQL injection, hardcoded secrets, auth bypass, etc.
+  # Why: Finds code-level vulnerabilities, not just secrets
+  # Speed: ~2-5s (slowest hook, consider CI-only)
+  # False positives: <1% (high-quality rules)
+  #
+  # WARNING: Slow. Use in pre-commit only if needed; better in CI.
+  # Uncomment to enable:
+  #
+  # - repo: https://github.com/returntocorp/semgrep
+  #   rev: v1.45.0
+  #   hooks:
+  #     - id: semgrep
+  #       name: Semgrep (static analysis)
+  #       description: SAST scanning for vulnerabilities
+  #       entry: semgrep --config=p/owasp-top-ten --config=p/security-audit
+  #       language: python
+  #       types: [python, javascript, typescript]
+  #       pass_filenames: false
+
+
+  # ============================================================================
+  # NPM AUDIT: Dependency vulnerability scanning
+  # ============================================================================
+  # What: Scans npm/yarn/pnpm dependencies for known CVEs
+  # Why: Prevents vulnerable packages from being committed
+  # Speed: ~1-3s (depends on package.json size)
+  # False positives: Medium (flags dev dependencies as audit-only)
+  #
+  - repo: https://github.com/pre-commit/mirrors-npm
+    rev: v10.2.4
+    hooks:
+      - id: npm-audit
+        name: NPM audit (dependency scanning)
+        description: Scans node dependencies for known vulnerabilities
+        files: ^package\.json$
+        entry: bash -c 'npm audit --audit-level=moderate'
+        language: node
+        stages: [commit]
+        pass_filenames: false
+
+
+  # ============================================================================
+  # GIT-LFS: Large file detection (PREVENTS ACCIDENTAL COMMITS)
+  # ============================================================================
+  # What: Prevents large/binary files from being committed to git
+  # Why: Keeps repo lean; large files should use git-lfs or cloud storage
+  # Speed: Instant
+  # False positives: None
+  #
+  # NOTE: Requires: brew install git-lfs && git lfs install
+  #
+  - repo: https://github.com/pre-commit/mirrors-git-lfs
+    rev: v3.5.0
+    hooks:
+      - id: git-lfs
+        name: Git LFS tracking
+        description: Ensures large files use git-lfs, not git
+        entry: git-lfs
+        language: system
+        stages: [commit]
+        pass_filenames: false
+        additional_dependencies: ['git-lfs']
+
+
+  # ============================================================================
+  # OPTIONAL: PRETTIER (CODE FORMATTING)
+  # ============================================================================
+  # What: Auto-formats JavaScript, TypeScript, YAML, Markdown
+  # Why: Ensures consistent code style
+  # Speed: ~200ms
+  # Uncomment if needed:
+  #
+  # - repo: https://github.com/pre-commit/mirrors-prettier
+  #   rev: v3.1.0
+  #   hooks:
+  #     - id: prettier
+  #       types_or: [javascript, typescript, json, yaml, markdown]
+
+
+  # ============================================================================
+  # OPTIONAL: ESLINT (JAVASCRIPT LINTING)
+  # ============================================================================
+  # What: Lints JavaScript/TypeScript for code quality issues
+  # Why: Catches common bugs and style issues
+  # Speed: ~500ms
+  # Uncomment if needed:
+  #
+  # - repo: https://github.com/pre-commit/mirrors-eslint
+  #   rev: v8.54.0
+  #   hooks:
+  #     - id: eslint
+  #       types: [javascript, typescript]
+  #       additional_dependencies:
+  #         - eslint
+  #         - eslint-config-prettier
+
+
+  # ============================================================================
+  # OPTIONAL: PYLINT (PYTHON LINTING)
+  # ============================================================================
+  # What: Lints Python code for quality and security issues
+  # Why: Catches common Python bugs
+  # Speed: ~1s
+  # Uncomment if needed:
+  #
+  # - repo: https://github.com/pycqa/pylint
+  #   rev: pylint-3.0.3
+  #   hooks:
+  #     - id: pylint
+  #       types: [python]
+
+
+  # ============================================================================
+  # BUILT-IN: YAML VALIDATION
+  # ============================================================================
+  # What: Validates YAML syntax (configs, docker-compose, etc.)
+  # Why: Catches typos in configuration files
+  # Speed: ~10ms
+  #
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: check-yaml
+        name: Validate YAML
+        description: Checks YAML files for syntax errors
+        args: ['--unsafe']
+
+      - id: check-json
+        name: Validate JSON
+        description: Checks JSON files for syntax errors
+
+      - id: check-toml
+        name: Validate TOML
+        description: Checks TOML files for syntax errors
+
+      - id: trailing-whitespace
+        name: Remove trailing whitespace
+        description: Removes trailing whitespace from all files
+
+      - id: end-of-file-fixer
+        name: Fix end-of-file-fixer
+        description: Ensures files end with a newline
+
+      - id: check-added-large-files
+        name: Detect large files
+        description: Prevents commits of large files (>5MB)
+        args: ['--maxkb=5000']
+
+      - id: check-merge-conflict
+        name: Detect merge conflicts
+        description: Checks for files that would conflict in a merge
+
+
+# ============================================================================
+# CI-SPECIFIC CONFIGURATION
+# ============================================================================
+#
+# In CI (GitHub Actions, GitLab CI), you may want to:
+#
+# 1. Run slower hooks (semgrep, trufflehog) that are disabled locally
+# 2. Be stricter (fail on warnings, not just errors)
+# 3. Generate reports (sarif, json) for dashboards
+#
+# To override for CI, create .pre-commit-config-ci.yaml with additional repos
+# Then in CI:
+#   pre-commit run --config .pre-commit-config-ci.yaml --all-files
+#
+# See ci-integration.md for GitHub Actions example.
+
+# ============================================================================
+# TROUBLESHOOTING
+# ============================================================================
+#
+# Hook fails intermittently?
+#   → Check if external tool is installed: gitleaks --version, npm --version
+#   → Try: pre-commit clean && pre-commit install --install-hooks
+#
+# False positives consuming workflow?
+#   → For detect-secrets: add to .secrets.baseline
+#   → For semgrep: add --exclude pattern to entry
+#   → For npm-audit: use npm audit --omit=dev if dev deps are noisy
+#
+# Hooks running too slow?
+#   → Move semgrep and trufflehog to CI (comment out here)
+#   → Use --exclude-types to skip large directories
+#
+# Need to bypass hooks?
+#   → AVOID in production. If necessary: git commit --no-verify
+#   → Better: fix the issue and re-commit normally

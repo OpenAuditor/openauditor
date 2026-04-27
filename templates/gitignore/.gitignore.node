@@ -1,0 +1,225 @@
+# NODE.JS GITIGNORE TEMPLATE
+# For Node.js, npm, yarn, pnpm projects
+# Start with this + .gitignore.universal
+
+# ==============================================================================
+# DEPENDENCIES
+# ==============================================================================
+
+# npm
+node_modules/
+package-lock.json
+npm-debug.log*
+npm-error.log*
+.npm
+
+# yarn
+yarn.lock
+yarn-error.log*
+.yarn/cache/
+.yarn/unplugged/
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# pnpm
+pnpm-lock.yaml
+pnpm-workspace.yaml
+.pnpm-store/
+
+# npm lock file (optional - usually want to track, so comment out if you do)
+# package-lock.json
+
+# ==============================================================================
+# BUILD & COMPILATION
+# ==============================================================================
+
+# Build output
+dist/
+build/
+lib/
+out/
+.next/
+.nuxt/
+.cache/
+.parcel-cache/
+.vuepress/dist/
+
+# Compiled files
+*.js (if TypeScript - see .gitignore.nextjs)
+*.js.map
+*.d.ts.map
+
+# tsbuildinfo
+*.tsbuildinfo
+
+# ==============================================================================
+# TESTING & COVERAGE
+# ==============================================================================
+
+# Test coverage
+coverage/
+.nyc_output/
+.coverage
+.coverage.*
+*.lcov
+test-results/
+
+# Jest cache
+.jest-cache/
+jest.json
+
+# Mocha
+.mocha-cache/
+
+# ==============================================================================
+# ENVIRONMENT VARIABLES (CRITICAL)
+# ==============================================================================
+
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.staging.local
+.env.production.local
+
+# ==============================================================================
+# IDE & EDITOR
+# ==============================================================================
+
+.vscode/
+.vscode-server/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.vim/
+
+# Vim
+*.swp
+*.swo
+*~
+.netrwhist
+
+# ==============================================================================
+# OS FILES
+# ==============================================================================
+
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ==============================================================================
+# LOGGING
+# ==============================================================================
+
+*.log
+logs/
+lerna-debug.log*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ==============================================================================
+# CREDENTIALS & SECRETS (CRITICAL)
+# ==============================================================================
+
+.env
+.env.local
+.env.*.local
+
+.secrets/
+secrets/
+
+*.key
+*.pem
+*.p12
+*.pfx
+
+# API keys
+.apikeys
+.env.keys
+
+# ==============================================================================
+# TEMPORARY & BACKUP
+# ==============================================================================
+
+tmp/
+temp/
+.tmp/
+*.bak
+*.backup
+*.old
+
+# ==============================================================================
+# OPTIONAL: MONOREPO (LERNA/YARN WORKSPACES)
+# ==============================================================================
+
+lerna-debug.log*
+dist/
+
+# ==============================================================================
+# OPTIONAL: WEBPACK
+# ==============================================================================
+
+dist/
+.webpack/
+webpack-stats.json
+
+# ==============================================================================
+# OPTIONAL: GULP
+# ==============================================================================
+
+.gulp-temp/
+
+# ==============================================================================
+# OPTIONAL: BOWER
+# ==============================================================================
+
+bower_components/
+
+# ==============================================================================
+# OPTIONAL: NODE MODULES (AGGRESSIVE)
+# ==============================================================================
+
+# If you want to ignore node_modules entirely (note: this can break things)
+# node_modules/
+# Uncomment above only if you have a reliable way to restore them
+
+# ==============================================================================
+# OPTIONAL: PM2
+# ==============================================================================
+
+.pm2/
+ecosystem.config.local.js
+
+# ==============================================================================
+# OPTIONAL: DOCKER
+# ==============================================================================
+
+# Docker volumes (if local)
+volumes/
+data/
+
+# ==============================================================================
+# MISC
+# ==============================================================================
+
+.DS_Store
+Thumbs.db
+.env
+node_modules/
+dist/
+coverage/
+
+# ==============================================================================
+# GIT HOOKS
+# ==============================================================================
+
+.husky/
+.husky/.
+pre-commit.sample
+commit-msg.sample

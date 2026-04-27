@@ -1,0 +1,181 @@
+# .github/workflows/security-scan.yml
+# Comprehensive security scanning for every PR and push to main
+# Covers: SAST (Semgrep), dependency audit, secret scanning
+#
+# Setup:
+# 1. Copy this file to .github/workflows/security-scan.yml
+# 2. Set SNYK_TOKEN secret (optional but recommended): Settings → Secrets → SNYK_TOKEN
+# 3. For Semgrep Pro: set SEMGREP_APP_TOKEN secret
+
+name: Security Scan
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+# Least-privilege permissions
+permissions:
+  contents: read
+  security-events: write  # Required to upload SARIF results to GitHub
+  actions: read
+
+jobs:
+  # ============================================================
+  # 1. Dependency Vulnerability Scanning
+  # ============================================================
+  dependency-audit:
+    name: Dependency Audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+
+      - name: Setup Node.js
+        if: hashFiles('package.json') != ''
+        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies (npm)
+        if: hashFiles('package.json') != ''
+        run: npm ci --ignore-scripts
+
+      - name: npm audit
+        if: hashFiles('package.json') != ''
+        run: npm audit --audit-level=high
+        # Fails the build if High or Critical vulnerabilities are found
+
+      - name: Setup Python
+        if: hashFiles('requirements.txt') != ''
+        uses: actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c # v5.0.0
+        with:
+          python-version: '3.12'
+
+      - name: pip-audit
+        if: hashFiles('requirements.txt') != ''
+        run: |
+          pip install pip-audit
+          pip-audit -r requirements.txt --severity HIGH
+        # Fails if High or Critical Python package vulnerabilities found
+
+  # ============================================================
+  # 2. SAST — Static Application Security Testing
+  # ============================================================
+  semgrep:
+    name: Semgrep SAST
+    runs-on: ubuntu-latest
+    container:
+      image: returntocorp/semgrep
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+
+      - name: Run Semgrep
+        env:
+          SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
+        run: |
+          semgrep \
+            --config=p/security-audit \
+            --config=p/owasp-top-ten \
+            --config=p/javascript \
+            --config=p/typescript \
+            --config=p/python \
+            --sarif \
+            --output=semgrep.sarif \
+            --error \
+            .
+        # --error: exit code 1 if findings with severity ERROR
+
+      - name: Upload Semgrep results to GitHub
+        if: always()  # Upload even if scan finds issues
+        uses: github/codeql-action/upload-sarif@c7f9125735019aa87cfc361530512d50ea439c71 # v3
+        with:
+          sarif_file: semgrep.sarif
+          category: semgrep
+
+  # ============================================================
+  # 3. Secret Scanning (catches secrets that slipped past git hooks)
+  # ============================================================
+  secret-scan:
+    name: Secret Scanning
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        with:
+          fetch-depth: 0  # Full history for secret scanning
+
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@cb7149a9b57195b609c63e8518d2c6ef8e492c33 # v2.3.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # ============================================================
+  # 4. CodeQL (GitHub's own SAST — free for public repos)
+  # ============================================================
+  codeql:
+    name: CodeQL Analysis
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [javascript-typescript]
+        # Add 'python' if applicable
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+
+      - name: Initialise CodeQL
+        uses: github/codeql-action/init@c7f9125735019aa87cfc361530512d50ea439c71 # v3
+        with:
+          languages: ${{ matrix.language }}
+          queries: security-extended
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@c7f9125735019aa87cfc361530512d50ea439c71 # v3
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@c7f9125735019aa87cfc361530512d50ea439c71 # v3
+        with:
+          category: codeql-${{ matrix.language }}
+
+  # ============================================================
+  # 5. Snyk (optional — uncomment if SNYK_TOKEN is configured)
+  # ============================================================
+  # snyk:
+  #   name: Snyk Security
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+  #
+  #     - name: Run Snyk
+  #       uses: snyk/actions/node@b98d498629f1c5e001b02839e95fe3a63eba4c42
+  #       env:
+  #         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+  #       with:
+  #         args: --severity-threshold=high
+
+  # ============================================================
+  # 6. GitHub Actions version pinning check
+  # ============================================================
+  check-action-pins:
+    name: Check Action Pins
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+
+      - name: Check for unpinned actions
+        run: |
+          # Find any 'uses:' lines that don't use a full SHA (40 hex chars)
+          UNPINNED=$(grep -rn "uses:" .github/workflows/ | \
+            grep -v "@[a-f0-9]\{40\}" | \
+            grep -v "^#")
+
+          if [ -n "$UNPINNED" ]; then
+            echo "⚠️ Found unpinned GitHub Actions (should use commit SHA):"
+            echo "$UNPINNED"
+            echo ""
+            echo "Use: https://github.com/mheap/pin-github-action to pin actions"
+            exit 1
+          fi
+
+          echo "✓ All actions are pinned to commit SHAs"

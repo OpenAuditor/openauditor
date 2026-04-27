@@ -1,0 +1,367 @@
+# UNIVERSAL GITIGNORE TEMPLATE
+# Use this as a baseline for all projects
+# Then add language/framework-specific sections from other templates
+
+# ==============================================================================
+# CREDENTIALS & SECRETS (CRITICAL - NEVER COMMIT THESE)
+# ==============================================================================
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+.env.production.local
+.env.development.local
+.env.staging.local
+
+# API Keys, tokens, credentials
+*.key
+*.pem
+*.p12
+*.pfx
+*.jks
+.secrets
+secrets/
+credentials/
+private_keys/
+*.ppk
+
+# SSH keys
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+known_hosts
+
+# OAuth tokens and secrets
+oauth_token.txt
+access_token.txt
+refresh_token.txt
+
+# Database credentials
+database.yml
+database.local.yml
+
+# AWS credentials
+.aws/credentials
+.aws/config.local
+
+# Google Cloud
+google-cloud-key.json
+google-cloud-key-*.json
+
+# Azure credentials
+azure-credentials.json
+
+# Third-party API keys
+openai_key.txt
+anthropic_api_key.txt
+huggingface_token.txt
+
+# ==============================================================================
+# OPERATING SYSTEM FILES
+# ==============================================================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Linux
+.directory
+.Trash-*
+*~
+
+# ==============================================================================
+# EDITOR & IDE FILES
+# ==============================================================================
+
+# VS Code
+.vscode/
+.vscode-server/
+*.code-workspace
+
+# JetBrains
+.idea/
+.idea_modules/
+*.iml
+*.iws
+*.ipr
+out/
+.gradle
+.gradle/
+*.jks
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+sftp-config.json
+
+# Vim
+*.swp
+*.swo
+*.swn
+.vim/
+.vimrc.local
+*~
+.netrwhist
+
+# Emacs
+*~
+\#*\#
+.\#*
+auto-save-list/
+
+# NeoVim
+.nvimrc.local
+
+# Eclipse
+.classpath
+.project
+.settings/
+.metadata/
+bin/
+
+# Xcode
+*.xcodeproj/
+*.xcworkspace/
+xcuserdata/
+*.pbxuser
+
+# ==============================================================================
+# BUILD & OUTPUT DIRECTORIES
+# ==============================================================================
+
+build/
+dist/
+output/
+out/
+target/
+.cache/
+tmp/
+temp/
+.gradle/
+.pytest_cache/
+.tox/
+.coverage
+htmlcov/
+
+# ==============================================================================
+# LOG FILES
+# ==============================================================================
+
+*.log
+*.log.*
+logs/
+*.out
+*.err
+
+npm-debug.log*
+npm-error.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+pnpm-error.log*
+
+# ==============================================================================
+# PACKAGE MANAGER ARTIFACTS
+# ==============================================================================
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# dotenv environment variables file(s)
+# Note: .env is above in SECRETS section
+
+# ==============================================================================
+# DATABASE
+# ==============================================================================
+
+*.db
+*.sqlite
+*.sqlite3
+*.dumped
+*.sql
+
+data/
+database/
+postgres-data/
+mysql-data/
+mongo-data/
+
+# ==============================================================================
+# BACKUP & TEMPORARY
+# ==============================================================================
+
+*.backup
+*.tmp
+*.temp
+*.bak
+*.old
+*.swp
+*.swo
+*~
+.#*
+
+# ==============================================================================
+# OS JUNK FILES
+# ==============================================================================
+
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# ==============================================================================
+# COMMON PROJECT ARTIFACTS
+# ==============================================================================
+
+# Node.js (see .gitignore.node for complete list)
+node_modules/
+package-lock.json
+
+# Python (see .gitignore.python for complete list)
+__pycache__/
+*.pyc
+*.pyo
+venv/
+env/
+
+# Java
+*.class
+*.jar
+*.war
+
+# Compiled files
+*.o
+*.obj
+*.exe
+*.so
+*.dll
+*.dylib
+
+# ==============================================================================
+# IDE CACHE & METADATA
+# ==============================================================================
+
+# IntelliJ IDEA
+*.iml
+*.iws
+*.ipr
+.idea/
+out/
+
+# Xcode
+*.xcodeproj/
+*.playground
+
+# CocoaPods
+Pods/
+Podfile.lock
+
+# ==============================================================================
+# TESTING & COVERAGE
+# ==============================================================================
+
+coverage/
+.nyc_output/
+.coverage
+htmlcov/
+nosetests.xml
+clover.xml
+junit.xml
+test-results/
+*.cover
+
+# ==============================================================================
+# SYSTEM & TEMPORARY
+# ==============================================================================
+
+# Temporary files
+.tmp/
+.temp/
+tmp/
+
+# Backup
+*.backup
+*.bak
+*.swp
+*.swo
+*~
+
+# ==============================================================================
+# PLATFORM-SPECIFIC
+# ==============================================================================
+
+# macOS extended attributes
+._*
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ==============================================================================
+# SECURITY - NEVER COMMIT
+# ==============================================================================
+
+# Private keys
+*.key
+*.pem
+*.p12
+
+# Passwords
+passwords.txt
+secrets.txt
+
+# Configuration with secrets
+config.local.*
+local.settings.json
+
+# ==============================================================================
+# DOCUMENTATION BUILDS (optional - uncomment if needed)
+# ==============================================================================
+
+# site/  # Generated documentation
+# docs/_build/
+# docs/.build/
+
+# ==============================================================================
+# OTHER
+# ==============================================================================
+
+# Misc
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# NOTES: Update this file as you add new patterns
+# Keep credentials at the top for visibility
+# Document why patterns are needed with comments

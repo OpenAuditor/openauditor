@@ -1,0 +1,36 @@
+# security.txt — place this at https://yourapp.com/.well-known/security.txt
+# Generated following RFC 9116: https://securitytxt.org/
+
+# Replace all PLACEHOLDER values before publishing
+
+Contact: mailto:security@YOURDOMAIN.COM
+Contact: https://YOURDOMAIN.COM/security
+
+# When this file expires — update and rotate annually
+Expires: 2027-04-30T23:59:00.000Z
+
+# Encryption — add your PGP key for encrypted vulnerability reports (optional but recommended)
+# Encryption: https://YOURDOMAIN.COM/pgp-key.asc
+
+# Preferred languages for vulnerability reports
+Preferred-Languages: en
+
+# Policy page explaining scope, rewards, and safe harbour
+Policy: https://YOURDOMAIN.COM/security
+
+# Which systems are in scope — be specific
+# Canonical: https://YOURDOMAIN.COM
+# Canonical: https://api.YOURDOMAIN.COM
+
+# Acknowledgements page (optional — recognises researchers who report responsibly)
+Acknowledgments: https://YOURDOMAIN.COM/security/hall-of-fame
+
+# Out of scope (comment — not part of RFC but helpful for researchers)
+# Out of scope:
+# - Denial of service attacks
+# - Social engineering
+# - Physical security
+# - Third-party services we don't control
+
+# Safe harbour — researchers won't be prosecuted for good-faith testing
+# (You should have this on your policy page; this file references it)

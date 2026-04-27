@@ -1,0 +1,391 @@
+# AI/ML APPLICATIONS GITIGNORE TEMPLATE
+# For projects using LLM APIs, ML models, training data
+# Start with this + .gitignore.universal
+
+# ==============================================================================
+# API KEYS & CREDENTIALS (CRITICAL - NEVER COMMIT)
+# ==============================================================================
+
+# LLM API Keys
+.env
+.env.local
+.env.*.local
+.env.production.local
+
+# OpenAI
+openai_api_key.txt
+OPENAI_API_KEY
+sk_*
+
+# Anthropic Claude
+anthropic_api_key.txt
+ANTHROPIC_API_KEY
+
+# Google
+google_api_key.txt
+GOOGLE_API_KEY
+google-cloud-key.json
+google-cloud-key-*.json
+
+# Hugging Face
+huggingface_token.txt
+HF_TOKEN
+huggingface_cache/
+
+# Azure
+azure_api_key.txt
+AZURE_API_KEY
+azure-credentials.json
+
+# Cohere
+cohere_api_key.txt
+COHERE_API_KEY
+
+# AWS
+.aws/credentials
+.aws/config.local
+AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY
+
+# Generic secrets
+*.key
+*.pem
+*.p12
+*.pfx
+.secrets/
+secrets/
+private_keys/
+
+# ==============================================================================
+# MODEL FILES & WEIGHTS (Large binary files - usually not tracked)
+# ==============================================================================
+
+# Model weights and checkpoints
+*.bin
+*.pt
+*.pth
+*.safetensors
+*.h5
+*.model
+*.ckpt
+*.checkpoint
+
+# Model directories
+models/
+checkpoints/
+weights/
+pretrained_models/
+fine_tuned_models/
+saved_models/
+
+# ONNX models
+*.onnx
+
+# TensorFlow SavedModel
+saved_model/
+export_model/
+
+# Hugging Face model cache
+.cache/huggingface/
+huggingface_models/
+
+# LLaMA models
+llama_models/
+llm_models/
+
+# Local model storage (if using local versions)
+local_models/
+
+# ==============================================================================
+# TRAINING DATA & DATASETS (Often sensitive or very large)
+# ==============================================================================
+
+data/
+datasets/
+training_data/
+val_data/
+test_data/
+raw_data/
+
+# Common data formats
+*.csv
+*.tsv
+*.jsonl
+*.parquet
+*.arrow
+
+# Large data files
+*.tar.gz
+*.zip
+*.7z
+
+# Database files that might contain training data
+*.db
+*.sqlite
+*.sqlite3
+
+# ==============================================================================
+# PYTHON SPECIFIC (For ML projects using Python)
+# ==============================================================================
+
+# Byte-compiled
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+.venv
+ENV/
+
+# Poetry
+poetry.lock
+
+# Pipenv
+Pipfile.lock
+
+# Distribution
+build/
+dist/
+*.egg-info/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ==============================================================================
+# JUPYTER NOTEBOOKS (Development artifacts)
+# ==============================================================================
+
+# Jupyter cache
+.ipynb_checkpoints/
+*.ipynb_checkpoints/
+
+# Optional: Ignore notebook checkpoints
+*/.ipynb_checkpoints/*
+
+# Optional: Ignore notebook output (large) - UNCOMMENT if notebooks generate huge outputs
+# *.ipynb_checkpoints/
+# .ipynb_checkpoints/
+
+# Jupyter kernel dead letter
+.dead.kernels
+
+# ==============================================================================
+# EXPERIMENT RESULTS & LOGS
+# ==============================================================================
+
+# MLflow artifacts
+mlruns/
+mlruns.db
+
+# Weights & Biases
+wandb/
+
+# TensorBoard logs
+runs/
+logs/
+tensorboard_logs/
+
+# Experiment outputs
+experiments/
+results/
+outputs/
+evaluations/
+
+# Training logs
+*.log
+logs/
+training_logs/
+validation_logs/
+
+# ==============================================================================
+# CACHE FILES
+# ==============================================================================
+
+# General cache
+.cache/
+__pycache__/
+*.pyc
+
+# Transformers library cache
+.cache/
+.huggingface/
+huggingface_cache/
+
+# Pip cache
+.pip-cache/
+
+# Node/npm cache
+node_modules/
+npm-cache/
+
+# ==============================================================================
+# ENVIRONMENT VARIABLES
+# ==============================================================================
+
+.env
+.env.local
+.env.*.local
+.env.development
+.env.staging
+.env.production
+
+# ==============================================================================
+# IDE & EDITOR
+# ==============================================================================
+
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# PyCharm
+.idea/
+*.iml
+
+# ==============================================================================
+# OS FILES
+# ==============================================================================
+
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ==============================================================================
+# TEMPORARY & BACKUP
+# ==============================================================================
+
+*.bak
+*.backup
+*.tmp
+*.temp
+.tmp/
+tmp/
+
+# ==============================================================================
+# NODE.JS (If using Node.js for inference/API)
+# ==============================================================================
+
+node_modules/
+npm-debug.log*
+yarn-error.log*
+package-lock.json
+
+# ==============================================================================
+# DOCKER (If using Docker for ML)
+# ==============================================================================
+
+# Docker build outputs
+.docker/
+
+# Docker volumes
+volumes/
+data/
+
+# ==============================================================================
+# OPTIONAL: LANGCHAIN/LLAMAINDEX CACHES
+# ==============================================================================
+
+# LangChain cache
+.langchain/
+.langchain_cache/
+
+# LlamaIndex cache
+.llamaindex_cache/
+index_cache/
+chroma_data/
+
+# ==============================================================================
+# OPTIONAL: VECTOR DATABASE
+# ==============================================================================
+
+# Chroma
+chroma_data/
+chroma/
+
+# Pinecone (usually cloud-based, but local cache)
+.pinecone/
+
+# Weaviate
+weaviate_data/
+
+# Milvus
+milvus/
+
+# Qdrant
+qdrant_data/
+
+# ==============================================================================
+# OPTIONAL: FINE-TUNING
+# ==============================================================================
+
+# LoRA adapters (can be large)
+lora_adapters/
+lora_models/
+
+# Fine-tuned models
+fine_tuned/
+finetuned_models/
+
+# Adapter weights
+adapter_weights/
+
+# ==============================================================================
+# OPTIONAL: PROMPT ENGINEERING
+# ==============================================================================
+
+# Prompt templates (usually OK to commit, but if contains secrets...)
+prompts/secrets_prompts.txt
+
+# ==============================================================================
+# OPTIONAL: EVALUATION RESULTS
+# ==============================================================================
+
+eval_results/
+evaluation_outputs/
+benchmark_results/
+metrics.json
+results.json
+
+# ==============================================================================
+# GIT ATTRIBUTES (For handling large files)
+# ==============================================================================
+
+# Note: Consider using Git LFS for large files
+# Install: git lfs install
+# Track: git lfs track "*.bin" "*.pt" "*.pth"
+
+# ==============================================================================
+# CRITICAL REMINDERS
+# ==============================================================================
+
+# NEVER COMMIT:
+# - API Keys (OpenAI, Anthropic, Google, etc.)
+# - AWS credentials
+# - Database passwords
+# - OAuth tokens
+# - Hugging Face tokens
+# - Model weights (if proprietary)
+# - Training data (if sensitive)
+# - Configuration with secrets
+
+# USE SECRET MANAGEMENT:
+# - AWS Secrets Manager
+# - Google Secret Manager
+# - Azure Key Vault
+# - HashiCorp Vault
+# - Environment variables in CI/CD
