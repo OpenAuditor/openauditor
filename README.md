@@ -55,23 +55,36 @@ Browse [PROMPTS.md](./PROMPTS.md) for the full prompt index.
 
 ---
 
-## Who Built This
+## Created By
 
-OpenAuditor is maintained by [Baulin Technologies](https://baulin.tech) and the open source community.
+**[Baffour D. Ampaw](https://baulin.tech)** · Founder, [Baulin Technologies](https://baulin.tech)
+
+Maintained by Baffour and the open source community.
 
 ---
 
-## License
-
-MIT License. See [LICENSE](./LICENSE) for details.
-
 ## Contributing
 
-We welcome contributions. See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
+Contributions are welcome — new prompts, vulnerability guides, code fixes, and translations.
+
+- **Found a bug or outdated guidance?** [Open an issue](https://github.com/OpenAuditor/openauditor/issues)
+- **Want to add a section or prompt?** Read [CONTRIBUTING.md](./CONTRIBUTING.md) first
+- **Security vulnerability in the toolkit?** See [SECURITY.md](./SECURITY.md)
+- **General discussion?** Use [GitHub Discussions](https://github.com/OpenAuditor/openauditor/discussions)
+
+## Versioning
+
+This project follows [Semantic Versioning](https://semver.org). Current version: **v1.0.0**
+
+See [CHANGELOG.md](./CHANGELOG.md) for the full release history.
+
+## License
+
+MIT — free to use, modify, and distribute. See [LICENSE](./LICENSE) for details.
 
 ## Status
 
-Last updated: 2026-04-25. See [STATUS.md](./STATUS.md) for completeness and maintenance status.
+241 files · 18 sections · 60+ prompts. See [STATUS.md](./STATUS.md) for full details.
 
 ---
 

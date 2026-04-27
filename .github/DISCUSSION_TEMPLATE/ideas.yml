@@ -1,0 +1,48 @@
+title: "[Recommendation] "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template to recommend a new section, prompt, tool, or technique.
+        Maintainers review all ideas within 7 days.
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What are you recommending?
+      description: Describe the content, tool, or technique clearly.
+    validations:
+      required: true
+
+  - type: textarea
+    id: why
+    attributes:
+      label: Why does it belong in OpenAuditor?
+      description: What security risk does it address? Has it caused real-world incidents?
+    validations:
+      required: true
+
+  - type: input
+    id: section
+    attributes:
+      label: Which section does it belong in?
+      placeholder: e.g. 06-secure-coding, 02-owasp, new section
+    validations:
+      required: false
+
+  - type: textarea
+    id: references
+    attributes:
+      label: References
+      description: Links to official docs, CVEs, breach reports, or related tools.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: contribute
+    attributes:
+      label: Would you like to contribute this yourself?
+      options:
+        - label: Yes, I'd like to write a draft PR
+        - label: No, I'm suggesting it for the maintainers

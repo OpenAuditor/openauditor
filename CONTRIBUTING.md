@@ -1,87 +1,132 @@
 # Contributing to OpenAuditor
 
-OpenAuditor is built by the community. Your contributions make this toolkit better for everyone shipping code.
+OpenAuditor is built by the community. Your contributions make this toolkit better for every developer shipping code.
 
-## What We Accept
+---
 
-- **New security guidance** — A vulnerability or pattern you've seen in the wild
-- **Code examples** — Working, tested fixes for OWASP, MITRE, or CVE topics
-- **Tool recommendations** — A SAST, DAST, or monitoring tool worth documenting
-- **Real-world breach stories** — With permission, case studies that teach
-- **Prompts** — Agent prompts that help developers implement security faster
-- **Fixes to existing docs** — Typos, clarity, outdated recommendations
-- **Translations** — Additional languages beyond English
+## Ways to Contribute
 
-## What We Don't Accept
+| Type | How |
+|------|-----|
+| 🐛 Found outdated or incorrect guidance | [Open an issue](https://github.com/OpenAuditor/openauditor/issues/new?template=bug_report.md) |
+| 💡 Suggest a new section or prompt | [Start a discussion](https://github.com/OpenAuditor/openauditor/discussions/new?category=ideas) |
+| 📝 Fix a typo or broken link | Open a pull request directly |
+| 🔐 Responsible disclosure (security issue in our guidance) | Email security@baulin.tech |
+| 🌍 Translate content | [Open an issue](https://github.com/OpenAuditor/openauditor/issues/new) and tag it `translation` |
+| ⭐ Show support | Star the repo on GitHub |
 
-- Marketing language or sales pitches
-- Unsubstantiated claims about tools or techniques
-- Content that requires proprietary access or special licenses
-- SEO padding or duplicate content from other sources
-- Anything that undermines the toolkit's integrity
+---
 
-## Before You Submit
+## Making a Recommendation
 
-1. **Read the relevant section** — Understand the style and depth we use
-2. **Check the build prompt** — Is your contribution aligned with the toolkit's scope?
-3. **Follow the format** — Use the templates for prompts and checklist items
-4. **Test your code examples** — They must work. Tested on at least one stack.
-5. **Cite sources** — If you reference a breach, paper, or tool, link it
+Have a security tool, technique, or pattern you think belongs here?
 
-## How to Contribute
+1. **Go to [GitHub Discussions → Ideas](https://github.com/OpenAuditor/openauditor/discussions/new?category=ideas)**
+2. Title it: `[Recommendation] Your idea here`
+3. Describe:
+   - What it covers and why it matters
+   - Which section it belongs in
+   - Any real-world examples or breaches that motivate it
+   - Links to existing documentation or tools
 
-### Small fix (typo, clarity, links)
-Open a pull request directly with the change.
+Maintainers review all ideas within 7 days. Accepted recommendations are added to the roadmap and credited to you in the CHANGELOG.
 
-### New section or major update
-1. Open an issue describing what you want to add
-2. Wait for feedback from maintainers
-3. Submit a PR once approved
-4. Link your PR to the issue
+---
+
+## Submitting a Pull Request
+
+### Small fix (typo, broken link, outdated code)
+Open a PR directly — no issue needed.
+
+### New content (section, prompt, guide)
+1. [Open an issue](https://github.com/OpenAuditor/openauditor/issues/new?template=feature_request.md) describing the addition
+2. Wait for a maintainer to confirm it fits the scope
+3. Fork the repo, make your changes, submit a PR
+4. Link your PR to the issue with `Closes #123`
 
 ### New prompt
-1. Follow the [prompt template](./templates/negative-prompts.md)
-2. Test it in Claude, Cursor, or Copilot
-3. Include what you expect the agent to output
-4. Place it in the relevant `prompts/` folder
+1. Copy the structure from any existing prompt in a `prompts/` folder
+2. Include: **When to use this**, **Works with**, the full agent prompt
+3. Test it in at least one AI tool (Claude, Cursor, Copilot, etc.)
+4. Place it in the relevant section's `prompts/` folder
+5. Add it to [PROMPTS.md](./PROMPTS.md) under the correct category
 
-### New vulnerability or pattern
-1. Describe the risk clearly in 2–3 sentences
-2. Explain the real-world impact (has this cost companies money?)
-3. Provide at least one code example showing the risk
-4. Provide at least one fix with code
-5. Link to related OWASP, MITRE, or CVE material
+---
+
+## Content Standards
+
+**We accept:**
+- New security guidance grounded in real vulnerabilities or breaches
+- Working, tested code examples
+- Agent prompts that have been tested in at least one AI tool
+- Tool recommendations with honest pros/cons (no marketing)
+- Corrections to outdated or incorrect guidance
+
+**We do not accept:**
+- Marketing content or sponsored placements
+- Unverified claims about tools or techniques
+- Content requiring proprietary access or special licences
+- Duplicate content from other sources without meaningful additions
+
+---
 
 ## Style Guide
 
-- **UK English spelling** — colour, organisation, behaviour
-- **Plain English** — Write for a developer, not a security researcher
-- **Be direct** — No padding, no marketing, no hedging
-- **Explain the why** — Why does this matter? What breaks if you ignore it?
-- **Real examples** — Actual breaches, real CVEs, production incidents
-- **One-sentence summary first** — Every section opens with a 30-second explanation
-- **Code examples must run** — No pseudocode, no "in theory" examples
+- **UK English** — colour, organisation, behaviour, licence
+- **Plain English** — write for a developer, not a security researcher
+- **30-second summary first** — every file opens with a `> **30-second summary:**` blockquote
+- **Be direct** — if something is dangerous, say so plainly
+- **Explain the why** — what breaks if this is ignored?
+- **Real examples** — actual breaches, real CVEs, production incidents
+- **Code must run** — no pseudocode, no "in theory" examples
+- **No AI-generated filler** — every sentence must earn its place
 
-## Tone
-
-- Not condescending. You're writing for smart developers.
-- Not alarmist. Facts and context, not fear.
-- Direct. If it's dangerous, say so plainly.
-- Practical. Every recommendation must have a code path.
+---
 
 ## Review Process
 
-1. Maintainers will review your PR within 7 days
-2. We may ask for changes, citations, or testing
-3. Once approved, we'll merge and credit you
-4. Your contribution will be in the next release
+1. A maintainer will review your PR within **7 days**
+2. We may request changes, citations, or test evidence
+3. Once approved, we merge and credit you in the CHANGELOG
+4. Your GitHub username will appear under `Contributors` in the release notes
 
-## Questions?
+---
 
-Open an issue. We're here to help.
+## Commit Message Format
+
+```
+type: short description (under 72 chars)
+
+Optional longer explanation.
+Fixes #123
+```
+
+Types: `fix`, `add`, `update`, `remove`, `docs`, `refactor`
+
+Examples:
+```
+add: Kubernetes pod security standards guide
+fix: outdated bcrypt cost factor recommendation in A07
+update: Supabase auth patterns to use @supabase/ssr
+```
 
 ---
 
 ## Maintainers
 
-OpenAuditor is maintained by [Baulin Technologies](https://baulin.tech) and contributors like you.
+**Creator:** [Baffour D. Ampaw](https://baulin.tech) · Baulin Technologies  
+**Maintainer:** [@baulintech](https://github.com/baulintech)
+
+---
+
+## Code of Conduct
+
+Be respectful, be helpful, be direct. We're here to ship secure software — not to argue.
+
+Harassment of any kind will result in an immediate ban. No exceptions.
+
+---
+
+## Questions?
+
+Open a [GitHub Discussion](https://github.com/OpenAuditor/openauditor/discussions) — we're here to help.
