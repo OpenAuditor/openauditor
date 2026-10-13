@@ -1,4 +1,4 @@
-# API3 — Broken Object Property Level Authorisation
+# API3: Broken Object Property Level Authorisation
 
 ## 30-second summary
 
@@ -11,7 +11,7 @@ Even when a user is authorised to access an object, they may not be authorised t
 ## Vulnerable code example
 
 ```typescript
-// Express.js — VULNERABLE: both over-exposure and mass assignment
+// Express.js: VULNERABLE: both over-exposure and mass assignment
 
 // Over-exposure: returns all user fields including sensitive ones
 app.get('/api/users/:id', authenticate, async (req, res) => {
@@ -20,7 +20,7 @@ app.get('/api/users/:id', authenticate, async (req, res) => {
     [req.params.id]
   );
   // Returns: id, email, name, passwordHash, isAdmin, stripeCustomerId,
-  //          internalCreditBalance, suspensionReason — all exposed
+  //          internalCreditBalance, suspensionReason: all exposed
   return res.json(user);
 });
 
@@ -43,7 +43,7 @@ app.patch('/api/users/:id', authenticate, async (req, res) => {
 ## Fixed code example
 
 ```typescript
-// Express.js — FIXED
+// Express.js: FIXED
 
 // Explicit field allowlist for reads
 const PUBLIC_USER_FIELDS = ['id', 'email', 'displayName', 'avatarUrl', 'createdAt'];
@@ -65,7 +65,7 @@ app.get('/api/users/:id', authenticate, async (req, res) => {
   return res.json(filtered);
 });
 
-// Explicit allowlist for writes — role-aware
+// Explicit allowlist for writes: role-aware
 const USER_WRITABLE_FIELDS = ['displayName', 'avatarUrl', 'bio'];
 const ADMIN_WRITABLE_FIELDS = [...USER_WRITABLE_FIELDS, 'isAdmin', 'suspensionReason'];
 
@@ -98,15 +98,15 @@ app.patch('/api/users/:id', authenticate, async (req, res) => {
 
 ## Real-world breach scenario
 
-**GitHub (2012) — Mass Assignment:** A researcher exploited a mass assignment vulnerability in GitHub's API to add his own SSH public key to the Ruby on Rails organisation's repository. He sent a PATCH request with an additional field that mapped to an internal attribute controlling repository access. He gained write access to any public repository. GitHub patched the issue within hours.
+**GitHub (2012): Mass Assignment:** A researcher exploited a mass assignment vulnerability in GitHub's API to add his own SSH public key to the Ruby on Rails organisation's repository. He sent a PATCH request with an additional field that mapped to an internal attribute controlling repository access. He gained write access to any public repository. GitHub patched the issue within hours.
 
-**Over-exposure pattern:** Multiple healthcare SaaS providers have been found to return full patient records — including diagnosis codes, medication histories, and internal provider notes — because their API returned `SELECT *` results. The portal only *displayed* certain fields, but the JSON response contained everything.
+**Over-exposure pattern:** Multiple healthcare SaaS providers have been found to return full patient records, including diagnosis codes, medication histories, and internal provider notes, because their API returned `SELECT *` results. The portal only *displayed* certain fields, but the JSON response contained everything.
 
 ---
 
 ## Detection checklist
 
-- [ ] API responses use field-level projection — only the minimum necessary fields are returned.
+- [ ] API responses use field-level projection: only the minimum necessary fields are returned.
 - [ ] No endpoint uses `SELECT *` where results are sent directly to the client.
 - [ ] Update/create endpoints maintain an explicit allowlist of writable fields per role.
 - [ ] `req.body` or request payloads are never spread directly into ORM `update()` calls.
@@ -121,7 +121,7 @@ app.patch('/api/users/:id', authenticate, async (req, res) => {
 **Over-exposure test:**
 1. Authenticate as a regular user.
 2. Call endpoints that return user or entity objects.
-3. Inspect the full JSON response — not the rendered UI — for sensitive fields.
+3. Inspect the full JSON response, not the rendered UI, for sensitive fields.
 4. Flag: `passwordHash`, `internalNotes`, `isAdmin`, `stripeCustomerId`, `ssn`, any `*secret*` or `*token*` fields.
 
 **Mass assignment test:**
@@ -138,9 +138,9 @@ curl -s https://api.example.com/api/users/42 \
 ```
 
 **Tools:**
-- Burp Suite — intercept responses and inspect full JSON, not just the rendered page.
-- Postman — send PATCH/PUT requests with unexpected fields.
-- `openapi-diff` — compare actual API response shapes against declared schemas.
+- Burp Suite: intercept responses and inspect full JSON, not just the rendered page.
+- Postman: send PATCH/PUT requests with unexpected fields.
+- `openapi-diff`: compare actual API response shapes against declared schemas.
 
 ---
 

@@ -2,7 +2,7 @@
 
 ## When to use this
 
-Use this when setting up a new Vercel project or before launching. Vercel's defaults are optimised for ease of use, not security — this prompt gets you to a hardened configuration.
+Use this when setting up a new Vercel project or before launching. Vercel's defaults are optimised for ease of use, not security: this prompt gets you to a hardened configuration.
 
 ## Works with
 
@@ -127,7 +127,7 @@ For each finding:
 - **Risk:** What could an attacker do?
 - **Fix:** Exact configuration change
 
-Then implement the fixes — update `next.config.ts`, `vercel.json`, and flag environment variable changes that need to be made in the Vercel dashboard.
+Then implement the fixes: update `next.config.ts`, `vercel.json`, and flag environment variable changes that need to be made in the Vercel dashboard.
 
 ---
 

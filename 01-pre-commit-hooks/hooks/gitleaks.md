@@ -1,6 +1,6 @@
 # gitleaks: Pattern-Based Secret Scanning (Recommended)
 
-**30-second summary:** gitleaks scans git repositories for hardcoded secrets using an extensive library of 200+ known patterns. It's the fastest, most accurate secret detector with <1% false positives. No baseline management needed—just run it and fail on any detected secret.
+**30-second summary:** gitleaks scans git repositories for hardcoded secrets using an extensive library of 200+ known patterns. It's the fastest, most accurate secret detector with <1% false positives. No baseline management needed: just run it and fail on any detected secret.
 
 ## What It Detects
 

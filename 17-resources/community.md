@@ -1,6 +1,6 @@
 # Community and Learning Resources
 
-Curated security learning resources for developers — focused on practical, applied security rather than theory.
+Curated security learning resources for developers: focused on practical, applied security rather than theory.
 
 ---
 
@@ -11,7 +11,7 @@ Curated security learning resources for developers — focused on practical, app
 **PortSwigger Web Security Academy** (portswigger.net/web-security)
 - The best free, hands-on web security training available
 - Labs covering every OWASP category: SQLi, XSS, CSRF, SSRF, IDOR, auth failures
-- Burp Suite built into the browser — no setup required
+- Burp Suite built into the browser: no setup required
 - Estimated time: 20-40 hours to complete all topics
 - **Recommended starting path:** Access Control → Authentication → CSRF → SQLi
 
@@ -27,7 +27,7 @@ Curated security learning resources for developers — focused on practical, app
 - **Best for:** Understanding attacker mindset, practising detection
 
 **TryHackMe** (tryhackme.com)
-- More guided than HackTheBox — good for beginners
+- More guided than HackTheBox: good for beginners
 - Free tier available
 - Good web application security paths
 
@@ -42,29 +42,29 @@ Curated security learning resources for developers — focused on practical, app
 
 ### Essential
 
-**The Web Application Hacker's Handbook** — Stuttard & Pinto
+**The Web Application Hacker's Handbook**: Stuttard & Pinto
 - Comprehensive guide to web application attacks and defences
-- Older but foundational — most attacks are still relevant
+- Older but foundational: most attacks are still relevant
 - Good reference for understanding *why* defences work
 
-**Real-World Bug Hunting** — Peter Yaworski
+**Real-World Bug Hunting**: Peter Yaworski
 - Case studies from HackerOne bug bounty reports
 - Shows how real bugs are found and reported
 - Great for understanding attacker methodology
 
-**The Tangled Web** — Michal Zalewski
+**The Tangled Web**: Michal Zalewski
 - Deep dive into browser security model
 - Explains how cookies, origins, and the web security model actually work
 - Technical but accessible
 
 ### Architecture and Design
 
-**Security Engineering** — Ross Anderson (free online at cl.cam.ac.uk)
+**Security Engineering**: Ross Anderson (free online at cl.cam.ac.uk)
 - Comprehensive security engineering textbook
 - Covers authentication, cryptography, distributed systems security
 - Free PDF available
 
-**Threat Modeling: Designing for Security** — Adam Shostack
+**Threat Modeling: Designing for Security**: Adam Shostack
 - Systematic approach to identifying threats
 - Practical STRIDE methodology
 - Applies to architecture review and code review
@@ -73,19 +73,19 @@ Curated security learning resources for developers — focused on practical, app
 
 ## Newsletters and Blogs
 
-**tl;dr sec** (tldrsec.com) — Clint Gibler
+**tl;dr sec** (tldrsec.com): Clint Gibler
 - Weekly digest of security research, tools, and conference talks
 - Very high signal-to-noise ratio
 - Free newsletter
 
-**Krebs on Security** (krebsonsecurity.com) — Brian Krebs
+**Krebs on Security** (krebsonsecurity.com): Brian Krebs
 - Investigative security journalism
 - Breach analysis and threat intelligence
 - Good for understanding the attacker ecosystem
 
 **Troy Hunt's Blog** (troyhunt.com)
 - Practical web security from a developer perspective
-- HIBP creator — excellent content on credential security and breach analysis
+- HIBP creator: excellent content on credential security and breach analysis
 - Free
 
 **The New Stack / OWASP Blog**
@@ -95,13 +95,13 @@ Curated security learning resources for developers — focused on practical, app
 
 ## Podcasts
 
-**Darknet Diaries** — Jack Rhysider
+**Darknet Diaries**: Jack Rhysider
 - True stories from the dark side of the internet
 - Breach stories, hacker interviews, espionage
 - Excellent for understanding real attack scenarios
 - Listen to: EP 52 (NotPetya), EP 74 (Ubiquiti), EP 112 (Dirty Cow)
 
-**Security Now** — Steve Gibson & Leo Laporte
+**Security Now**: Steve Gibson & Leo Laporte
 - Weekly deep dives into security topics
 - Technical depth on cryptography, protocols, vulnerabilities
 - Free
@@ -110,7 +110,7 @@ Curated security learning resources for developers — focused on practical, app
 - 5-minute daily podcast covering current threats
 - Good for staying current without a huge time investment
 
-**Risky Business** — Patrick Gray
+**Risky Business**: Patrick Gray
 - Weekly security news and analysis
 - Industry perspective on threats and defences
 
@@ -163,10 +163,10 @@ Curated security learning resources for developers — focused on practical, app
 
 ### For Bug Bounty / CTF
 
-**Gobuster / ffuf** — directory and parameter fuzzing
-**Nuclei** — template-based vulnerability scanner
-**httpx** — fast HTTP probe
-**Amass** — subdomain enumeration
+**Gobuster / ffuf**: directory and parameter fuzzing
+**Nuclei**: template-based vulnerability scanner
+**httpx**: fast HTTP probe
+**Amass**: subdomain enumeration
 
 ---
 
@@ -174,7 +174,7 @@ Curated security learning resources for developers — focused on practical, app
 
 **HackerOne** (hackerone.com)
 - Largest bug bounty platform
-- Good for reading disclosed reports — excellent learning resource
+- Good for reading disclosed reports: excellent learning resource
 - Free to browse disclosed reports
 
 **Bugcrowd** (bugcrowd.com)
@@ -186,18 +186,18 @@ Curated security learning resources for developers — focused on practical, app
 - Active community
 
 **Reading disclosed reports is the most efficient way to learn real-world vulnerabilities.**
-Start here: `hackerone.com/hacktivity` — filter by severity and web application type.
+Start here: `hackerone.com/hacktivity`: filter by severity and web application type.
 
 ---
 
 ## Standards and Reference
 
-- **OWASP Top 10** — owasp.org/www-project-top-ten
-- **OWASP ASVS** — Application Security Verification Standard
-- **NIST Cybersecurity Framework** — nist.gov/cyberframework
-- **MITRE ATT&CK** — attack.mitre.org
-- **CVE/NVD** — nvd.nist.gov
-- **CWE** — Common Weakness Enumeration — cwe.mitre.org
+- **OWASP Top 10**: owasp.org/www-project-top-ten
+- **OWASP ASVS**: Application Security Verification Standard
+- **NIST Cybersecurity Framework**: nist.gov/cyberframework
+- **MITRE ATT&CK**: attack.mitre.org
+- **CVE/NVD**: nvd.nist.gov
+- **CWE**: Common Weakness Enumeration, cwe.mitre.org
 
 ---
 

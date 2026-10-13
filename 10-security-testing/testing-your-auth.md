@@ -114,7 +114,7 @@ describe('Password Reset', () => {
 
 ```javascript
 describe('Authorisation', () => {
-  // IDOR — can user access other user's resource?
+  // IDOR: can user access other user's resource?
   it('cannot access another user\'s document', async () => {
     const userA = await loginAs('userA@test.com');
     const userB = await loginAs('userB@test.com');
@@ -124,7 +124,7 @@ describe('Authorisation', () => {
       .get(`/api/documents/${docId}`)
       .set('Cookie', userB.cookie);
     
-    expect(response.status).toBe(404); // not 403 — don't reveal existence
+    expect(response.status).toBe(404); // not 403: don't reveal existence
   });
 
   // Admin endpoint protection
@@ -142,11 +142,11 @@ describe('Authorisation', () => {
 
 ## Manual Checks (Can't Easily Automate)
 
-- [ ] Intercept login request with Burp/ZAP — can you replay it? (Should fail if CSRF-protected)
-- [ ] Copy auth cookie from browser to curl — does it authenticate? (It should until logout)
-- [ ] Use an expired JWT — does the server reject it?
-- [ ] Decode the JWT (jwt.io) — does the payload contain sensitive data?
-- [ ] Check cookie flags in browser DevTools — are HttpOnly and Secure set?
+- [ ] Intercept login request with Burp/ZAP: can you replay it? (Should fail if CSRF-protected)
+- [ ] Copy auth cookie from browser to curl: does it authenticate? (It should until logout)
+- [ ] Use an expired JWT: does the server reject it?
+- [ ] Decode the JWT (jwt.io): does the payload contain sensitive data?
+- [ ] Check cookie flags in browser DevTools: are HttpOnly and Secure set?
 
 ---
 

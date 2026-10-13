@@ -15,7 +15,7 @@ Each of the 18 domains gets a score based on findings:
 | ✓ PASS | +5 points |
 | ~ PARTIAL | +2 points |
 | ✗ FAIL | 0 points |
-| — NOT APPLICABLE | +5 points (doesn't count against you) |
+|, NOT APPLICABLE | +5 points (doesn't count against you) |
 
 **Formula:**
 ```
@@ -48,9 +48,9 @@ Across all 18 domains (~10 checks each, ~180 total checks):
 
 | Score Range | Verdict | Meaning |
 |------------|---------|---------|
-| 90–100 | 🟢 GREEN | Ship confidently. No critical issues. |
-| 70–89 | 🟡 AMBER | Ship with caution. Plan fixes for high/medium issues. |
-| 0–69 | 🔴 RED | Don't ship yet. Critical issues must be fixed. |
+| 90 to 100 | 🟢 GREEN | Ship confidently. No critical issues. |
+| 70 to 89 | 🟡 AMBER | Ship with caution. Plan fixes for high/medium issues. |
+| 0 to 69 | 🔴 RED | Don't ship yet. Critical issues must be fixed. |
 
 ---
 
@@ -138,25 +138,25 @@ All checks are weighted equally. A critical finding has the same point value as 
 
 ## Score Interpretation Guide
 
-**90–100: "You're shipping secure"**
+**90 to 100: "You're shipping secure"**
 - You've covered the fundamentals
 - Your architecture is sound
 - You have monitoring and logging
 - Incident response is ready
 
-**80–89: "Ship it, but watch for these"**
+**80 to 89: "Ship it, but watch for these"**
 - You have a solid foundation
 - Some gaps exist (usually in observability, testing, or compliance)
-- Fix within 30–90 days
+- Fix within 30 to 90 days
 - Monitor for exploitation of unfixed gaps
 
-**70–79: "Ship, but prioritize fixes"**
+**70 to 79: "Ship, but prioritize fixes"**
 - You're functional, but not hardened
 - Multiple medium/high issues exist
 - High likelihood of breach if issues are exploited
 - Allocate resources to security immediately post-launch
 
-**60–69: "Risky. Reconsider timeline."**
+**60 to 69: "Risky. Reconsider timeline."**
 - Your attack surface is large
 - Critical issues exist or are about to
 - Likelihood of breach in first 6 months is high
@@ -188,7 +188,7 @@ After fixes to critical domains:
 - Auth: 50% → 90% (+20 points)
 - API security: 60% → 100% (+20 points)
 
-New score: 75 (AMBER) — Ship with caution
+New score: 75 (AMBER): Ship with caution
 ```
 
 ---

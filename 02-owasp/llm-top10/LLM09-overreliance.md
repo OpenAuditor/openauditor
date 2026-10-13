@@ -1,6 +1,6 @@
 # LLM09: Overreliance
 
-**Rank #9 — OWASP LLM Top 10 2025 | Severity: Medium**
+**Rank #9: OWASP LLM Top 10 2025 | Severity: Medium**
 
 Systems or people rely on LLMs for critical decisions without appropriate oversight, leading to errors, hallucinations, and security failures that go unchallenged.
 
@@ -8,7 +8,7 @@ Systems or people rely on LLMs for critical decisions without appropriate oversi
 
 ## 30-Second Summary
 
-LLMs are probabilistic systems — they confidently produce wrong answers. Overreliance means treating LLM output as authoritative without verification. The security risks: generated code with vulnerabilities that gets shipped unreviewed, legal/compliance advice that's wrong, medical or financial decisions made on hallucinated information, and security assessments that miss real vulnerabilities.
+LLMs are probabilistic systems: they confidently produce wrong answers. Overreliance means treating LLM output as authoritative without verification. The security risks: generated code with vulnerabilities that gets shipped unreviewed, legal/compliance advice that's wrong, medical or financial decisions made on hallucinated information, and security assessments that miss real vulnerabilities.
 
 ---
 
@@ -41,7 +41,7 @@ function isAdmin(user) {
 // AI-GENERATED: Verify this logic independently before merging
 // Security-relevant: admin access check
 function isAdmin(userId: string): Promise<boolean> {
-  // Fetch from database — don't trust client-provided role claims
+  // Fetch from database: don't trust client-provided role claims
   const user = await db.users.findById(userId);
   return user?.role === 'admin';
 }
@@ -64,9 +64,9 @@ function isAdmin(userId: string): Promise<boolean> {
 # SECURE workflow:
 # AI review is INPUT to a human security review, not a replacement
 # Use the [Test Auth Flows prompt](../../10-security-testing/prompts/test-auth-flows.md)
-# Run SAST (Semgrep) — automated, deterministic
-# Run the manual testing checklist — human judgment
-# Perform threat modelling — architecture-level review
+# Run SAST (Semgrep): automated, deterministic
+# Run the manual testing checklist: human judgment
+# Perform threat modelling: architecture-level review
 ```
 
 ### 3. Hallucinated CVEs and Security Advice
@@ -74,7 +74,7 @@ function isAdmin(userId: string): Promise<boolean> {
 ```python
 # LLMs hallucinate CVE IDs, package names, and security advisories
 # "Is package X vulnerable to CVE-2024-99999?" 
-# LLM might say "Yes, upgrade to version Y" — for a CVE that doesn't exist
+# LLM might say "Yes, upgrade to version Y": for a CVE that doesn't exist
 
 # NEVER rely on LLM for CVE information
 # Always verify at:
@@ -82,7 +82,7 @@ function isAdmin(userId: string): Promise<boolean> {
 # - github.com/advisories
 # - The package's official security advisory
 
-# SECURE: Use LLMs to help you interpret CVEs — not as the source
+# SECURE: Use LLMs to help you interpret CVEs: not as the source
 # "I found CVE-2024-1234 in the NVD. Here's the description. 
 #  Help me understand if our usage pattern is affected."
 ```
@@ -94,7 +94,7 @@ function isAdmin(userId: string): Promise<boolean> {
 ### 1. Mandatory Review Gates for AI-Generated Code
 
 ```yaml
-# .github/pull_request_template.md — add a security section
+# .github/pull_request_template.md: add a security section
 ## Security checklist (for AI-assisted code)
 
 If this PR includes AI-generated code, confirm:
@@ -102,7 +102,7 @@ If this PR includes AI-generated code, confirm:
 - [ ] Security-relevant logic (auth, data access, input handling) reviewed by a second developer
 - [ ] Generated code run through `npm audit` / `semgrep` before merging
 - [ ] No AI-generated credentials, API keys, or secrets included
-- [ ] Business logic verified against requirements — not just "looks right"
+- [ ] Business logic verified against requirements, not just "looks right"
 ```
 
 ### 2. Confidence Indicators in AI Outputs
@@ -133,7 +133,7 @@ def process_security_response(response: str) -> dict:
 ### 3. Automated Verification Where Possible
 
 ```javascript
-// Don't just ask the AI if code is secure — run actual checks
+// Don't just ask the AI if code is secure: run actual checks
 const securityChecks = [
   { name: 'SAST (Semgrep)', command: 'semgrep --config p/security-audit .' },
   { name: 'Dependency audit', command: 'npm audit --audit-level=high' },
@@ -142,7 +142,7 @@ const securityChecks = [
 ];
 
 // These checks run before any AI-generated code can be merged
-// They catch what the AI missed — and they always catch something
+// They catch what the AI missed, and they always catch something
 ```
 
 ---
@@ -151,9 +151,9 @@ const securityChecks = [
 
 - [ ] AI-generated security-relevant code requires explicit human review before merging
 - [ ] PR template includes AI code checklist
-- [ ] CVE information always verified at NVD/GitHub advisories — never taken from LLM output
+- [ ] CVE information always verified at NVD/GitHub advisories: never taken from LLM output
 - [ ] Compliance requirements (GDPR, PCI, HIPAA) verified with legal counsel, not LLMs
-- [ ] SAST and dependency scanning runs automatically — don't rely on AI code review alone
+- [ ] SAST and dependency scanning runs automatically: don't rely on AI code review alone
 - [ ] LLM confidence level communicated to end users (not just "the AI said so")
 - [ ] Critical business decisions requiring AI input have a human approval step
 - [ ] AI-generated policies, contracts, or legal text reviewed by qualified humans

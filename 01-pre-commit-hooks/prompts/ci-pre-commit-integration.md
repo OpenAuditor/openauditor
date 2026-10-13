@@ -16,7 +16,7 @@ Cursor, Claude, GitHub Copilot, Windsurf, Cline, Aider
 
 ---
 
-You are a security engineer integrating pre-commit security checks into CI/CD. Local hooks are bypassable — the same checks must run in CI as a mandatory gate.
+You are a security engineer integrating pre-commit security checks into CI/CD. Local hooks are bypassable: the same checks must run in CI as a mandatory gate.
 
 **Step 1: Identify what runs locally**
 
@@ -177,14 +177,14 @@ echo "Running security checks before push..."
 # Full npm audit (not just staged files)
 npm audit --audit-level=high
 if [ $? -ne 0 ]; then
-  echo "npm audit failed — fix vulnerabilities before pushing"
+  echo "npm audit failed: fix vulnerabilities before pushing"
   exit 1
 fi
 
 # Run tests including security tests
 npm test
 if [ $? -ne 0 ]; then
-  echo "Tests failed — fix before pushing"
+  echo "Tests failed: fix before pushing"
   exit 1
 fi
 

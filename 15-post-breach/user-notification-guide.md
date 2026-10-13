@@ -13,8 +13,8 @@ You must notify users if:
 - GDPR or your jurisdiction's law requires it (generally: any breach of personal data)
 
 You should notify users even if:
-- You're not 100% certain — if there's a meaningful risk, disclose
-- The data seems low-risk — users have a right to know and protect themselves
+- You're not 100% certain: if there's a meaningful risk, disclose
+- The data seems low-risk: users have a right to know and protect themselves
 
 > **Note:** This is not legal advice. Consult a lawyer before sending breach notifications. GDPR notification requirements differ from voluntary best practice.
 
@@ -24,7 +24,7 @@ You should notify users even if:
 
 - **Legal minimum (GDPR):** Notify affected individuals "without undue delay" after becoming aware of high-risk breach
 - **Best practice:** Within 72 hours of confirming the breach scope
-- **Don't delay to protect your reputation** — this backfires. Early disclosure builds trust.
+- **Don't delay to protect your reputation**: this backfires. Early disclosure builds trust.
 
 ---
 
@@ -50,7 +50,7 @@ On [date], we became aware of [brief, factual description: e.g., "unauthorised a
 [Specific, actionable steps for users:]
 - Change your password at [link]
 - If you use the same password elsewhere, change it there too
-- Watch for phishing emails that claim to be from us — we will never ask for your password
+- Watch for phishing emails that claim to be from us: we will never ask for your password
 - [Any other specific actions]
 
 **We're sorry this happened.**
@@ -67,8 +67,8 @@ If you have questions, contact us at [security@yourapp.com].
 
 ## What NOT to Say
 
-- **Don't minimise.** "No harm occurred" is not yours to say — you don't know what users will experience.
-- **Don't use passive voice to obscure.** "Data was accessed" vs "Attackers accessed your data" — be clear.
+- **Don't minimise.** "No harm occurred" is not yours to say: you don't know what users will experience.
+- **Don't use passive voice to obscure.** "Data was accessed" vs "Attackers accessed your data": be clear.
 - **Don't make promises you can't keep.** "This will never happen again" is not credible.
 - **Don't over-reassure.** Users will be frustrated. Acknowledge it.
 - **Don't send PR language.** "We deeply regret any inconvenience" sounds like your comms team wrote it. Be human.
@@ -77,10 +77,10 @@ If you have questions, contact us at [security@yourapp.com].
 
 ## Channels to Use
 
-1. **Email** — primary channel, reaches everyone
-2. **In-app notification** — useful for active users
-3. **Status page** — for transparency with all users
-4. **Social media** — only if the breach is already public, to control the narrative
+1. **Email**: primary channel, reaches everyone
+2. **In-app notification**: useful for active users
+3. **Status page**: for transparency with all users
+4. **Social media**: only if the breach is already public, to control the narrative
 
 ---
 

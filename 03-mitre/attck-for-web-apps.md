@@ -1,6 +1,6 @@
 # ATT&CK for Web Applications
 
-> **30-second summary:** Every MITRE ATT&CK tactic maps directly to techniques attackers use against web apps. This file walks through each tactic, names the relevant techniques with their IDs, shows real-world examples, and tells you what defensive control addresses it — so you can design your app with the attacker's playbook in mind.
+> **30-second summary:** Every MITRE ATT&CK tactic maps directly to techniques attackers use against web apps. This file walks through each tactic, names the relevant techniques with their IDs, shows real-world examples, and tells you what defensive control addresses it, so you can design your app with the attacker's playbook in mind.
 
 ---
 
@@ -43,11 +43,11 @@ Each section covers one ATT&CK tactic. Under it you'll find:
 |-----------|----|-----------------------|
 | Exploit Public-Facing Application | T1190 | SQL injection, RCE via deserialization, path traversal |
 | Phishing | T1566 | Malicious link in email leading to credential harvest |
-| Valid Accounts | T1078 | Credential stuffing — trying breached username/password pairs |
+| Valid Accounts | T1078 | Credential stuffing: trying breached username/password pairs |
 | Supply Chain Compromise | T1195 | Malicious npm/PyPI package pulled into your build |
 | External Remote Services | T1133 | Exposed admin panel, Kubernetes dashboard, or dev server |
 
-**Real story:** The 2020 SolarWinds attack exploited T1195 — a malicious update to the Orion software build pipeline infected thousands of downstream customers without any vulnerability in the customers' own code.
+**Real story:** The 2020 SolarWinds attack exploited T1195: a malicious update to the Orion software build pipeline infected thousands of downstream customers without any vulnerability in the customers' own code.
 
 **Developer controls:**
 - Parameterise all database queries (prevents T1190 SQL injection)
@@ -93,7 +93,7 @@ Each section covers one ATT&CK tactic. Under it you'll find:
 **Real story:** Many breaches (e.g., Magecart attacks on e-commerce sites) persist through a JavaScript webshell injected into CMS templates, surviving database restores because the file was written to disk.
 
 **Developer controls:**
-- Enforce immutable deployments — servers should not be writable at runtime
+- Enforce immutable deployments: servers should not be writable at runtime
 - Audit admin accounts and OAuth application grants regularly
 - Monitor for new cron jobs or Lambda functions created outside normal deployment
 - Sign container images and enforce image provenance checks in your registry
@@ -111,7 +111,7 @@ Each section covers one ATT&CK tactic. Under it you'll find:
 | Abuse Elevation Control Mechanism | T1548 | Bypassing `sudo` or RBAC misconfiguration |
 | Access Token Manipulation | T1134 | Forging or tampering with a JWT to elevate role claims |
 
-**Real story:** The 2019 Capital One breach was driven by a SSRF vulnerability (T1190) that allowed the attacker to query the AWS EC2 metadata service (`169.254.169.254`), retrieve IAM role credentials, and then escalate to full S3 access — exfiltrating 100 million customer records.
+**Real story:** The 2019 Capital One breach was driven by a SSRF vulnerability (T1190) that allowed the attacker to query the AWS EC2 metadata service (`169.254.169.254`), retrieve IAM role credentials, and then escalate to full S3 access: exfiltrating 100 million customer records.
 
 **Developer controls:**
 - Block requests to cloud metadata endpoints (`169.254.169.254`, `fd00:ec2::254`) at the network level
@@ -131,7 +131,7 @@ Each section covers one ATT&CK tactic. Under it you'll find:
 | Masquerading | T1036 | Renaming malicious file `image.jpg.php` to bypass extension checks |
 | Indicator Removal | T1070 | Attacker deletes access logs after compromise |
 | Traffic Signalling | T1205 | Port knocking or cookie-based backdoor only triggered by specific requests |
-| Use Alternate Authentication Material | T1550 | Session token theft — reusing stolen cookies without knowing the password |
+| Use Alternate Authentication Material | T1550 | Session token theft: reusing stolen cookies without knowing the password |
 
 **Developer controls:**
 - Decode and inspect all data before processing, not just validate the surface format
@@ -153,14 +153,14 @@ Each section covers one ATT&CK tactic. Under it you'll find:
 | Unsecured Credentials | T1552 | `.env` file with DB password accidentally committed to public GitHub |
 | Adversary-in-the-Middle | T1557 | HTTPS stripping or DNS poisoning on a poorly secured network |
 
-**Real story:** Countless credential stuffing attacks (e.g. against Disney+, Spotify) leverage T1110 — automated tools try known breached email/password pairs against login endpoints. Rate limiting and MFA are the primary defences.
+**Real story:** Countless credential stuffing attacks (e.g. against Disney+, Spotify) leverage T1110: automated tools try known breached email/password pairs against login endpoints. Rate limiting and MFA are the primary defences.
 
 **Developer controls:**
 - Rate limit login endpoints; implement CAPTCHA after N failures
 - Set cookies with `HttpOnly`, `Secure`, and `SameSite=Strict`
 - Scan git history for secrets; use pre-commit hooks to prevent secret commits
 - Enforce HTTPS everywhere; use HSTS with a long `max-age`
-- Implement MFA — prevents credential stuffing even with valid stolen passwords
+- Implement MFA: prevents credential stuffing even with valid stolen passwords
 
 ---
 
@@ -179,7 +179,7 @@ Each section covers one ATT&CK tactic. Under it you'll find:
 **Developer controls:**
 - Never expose internal infrastructure details in error messages or API responses
 - Require authentication and authorisation on all API endpoints, including "read-only" ones
-- Implement network segmentation — containers should not be able to reach internal services they don't need
+- Implement network segmentation: containers should not be able to reach internal services they don't need
 - Remove framework/server version headers (`X-Powered-By`, `Server`)
 
 ---
@@ -195,7 +195,7 @@ Each section covers one ATT&CK tactic. Under it you'll find:
 | Use Alternate Authentication Material | T1550 | Stolen API keys used to access other internal services |
 | Software Deployment Tools | T1072 | Compromising CI/CD to push malicious code to other services |
 
-**Real story:** The SolarWinds attackers used T1072 — once inside the build environment, they could deploy to thousands of customers' networks, effectively using the software deployment pipeline as a lateral movement vehicle.
+**Real story:** The SolarWinds attackers used T1072: once inside the build environment, they could deploy to thousands of customers' networks, effectively using the software deployment pipeline as a lateral movement vehicle.
 
 **Developer controls:**
 - Implement zero-trust networking; services should authenticate to each other, not rely on network position
@@ -236,7 +236,7 @@ Each section covers one ATT&CK tactic. Under it you'll find:
 | Transfer Data to Cloud Account | T1537 | Copying RDS snapshot to attacker's AWS account |
 
 **Developer controls:**
-- Implement egress filtering — your web app should only talk to known external services
+- Implement egress filtering: your web app should only talk to known external services
 - Monitor for large or unusual outbound data transfers
 - Alert on cross-account cloud resource operations
 - Use DLP (Data Loss Prevention) tools on structured data stores

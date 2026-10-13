@@ -2,7 +2,7 @@
 
 Practical security guidance for the code you write every day.
 
-This section covers the most common areas where developers introduce vulnerabilities — not through ignorance, but through habit, speed, or following bad examples online. Each guide explains what to do, why it matters, and how to verify you've done it correctly.
+This section covers the most common areas where developers introduce vulnerabilities, not through ignorance, but through habit, speed, or following bad examples online. Each guide explains what to do, why it matters, and how to verify you've done it correctly.
 
 ---
 

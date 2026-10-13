@@ -2,7 +2,7 @@
 
 **Curated .gitignore files for all project types**
 
-These templates prevent accidental commits of secrets, credentials, and sensitive files. Use them as starting points for your project—customize based on your specific needs.
+These templates prevent accidental commits of secrets, credentials, and sensitive files. Use them as starting points for your project: customize based on your specific needs.
 
 ---
 

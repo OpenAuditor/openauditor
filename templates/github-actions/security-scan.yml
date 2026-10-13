@@ -61,7 +61,7 @@ jobs:
         # Fails if High or Critical Python package vulnerabilities found
 
   # ============================================================
-  # 2. SAST — Static Application Security Testing
+  # 2. SAST: Static Application Security Testing
   # ============================================================
   semgrep:
     name: Semgrep SAST
@@ -111,7 +111,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   # ============================================================
-  # 4. CodeQL (GitHub's own SAST — free for public repos)
+  # 4. CodeQL (GitHub's own SAST: free for public repos)
   # ============================================================
   codeql:
     name: CodeQL Analysis
@@ -139,7 +139,7 @@ jobs:
           category: codeql-${{ matrix.language }}
 
   # ============================================================
-  # 5. Snyk (optional — uncomment if SNYK_TOKEN is configured)
+  # 5. Snyk (optional: uncomment if SNYK_TOKEN is configured)
   # ============================================================
   # snyk:
   #   name: Snyk Security

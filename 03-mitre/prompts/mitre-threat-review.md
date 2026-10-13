@@ -42,7 +42,7 @@ grep -r "fetch(\|axios\.\|request(" --include="*.ts" --include="*.js" . | grep -
 
 For each attack surface, evaluate these MITRE techniques:
 
-**T1190 — Exploit Public-Facing Application**
+**T1190: Exploit Public-Facing Application**
 ```bash
 # Find public endpoints with complex input processing
 grep -rn "JSON\.parse\|req\.body\|req\.query\|req\.params" \
@@ -53,7 +53,7 @@ grep -rn '`SELECT\|`INSERT\|\.query(`\|exec(`' \
   --include="*.ts" --include="*.js" . | grep -v node_modules
 ```
 
-**T1078 — Valid Accounts (credential stuffing/phishing)**
+**T1078: Valid Accounts (credential stuffing/phishing)**
 ```bash
 # Assess authentication strength
 grep -rn "bcrypt\|argon2\|MD5\|SHA1" --include="*.ts" --include="*.js" . | grep -v node_modules
@@ -61,7 +61,7 @@ grep -rn "rateLimit\|Ratelimit" --include="*.ts" --include="*.js" . | grep -v no
 grep -rn "mfa\|totp\|two.factor\|2fa" --include="*.ts" --include="*.js" . | grep -v node_modules
 ```
 
-**T1195 — Supply Chain Compromise**
+**T1195: Supply Chain Compromise**
 ```bash
 # Check dependency health
 npm audit --json 2>/dev/null | head -50
@@ -70,7 +70,7 @@ grep -rn "npm install\|npm ci" .github/workflows/ 2>/dev/null
 grep -rn "uses:" .github/workflows/ 2>/dev/null | grep -v "@[a-f0-9]\{40\}"
 ```
 
-**T1133 — External Remote Services**
+**T1133: External Remote Services**
 ```bash
 # Find admin panels, management interfaces
 grep -rn "admin\|internal\|management\|debug" \
@@ -81,7 +81,7 @@ grep -rn "admin\|internal\|management\|debug" \
 
 Once initial access is achieved, what can an attacker do?
 
-**T1552 — Unsecured Credentials**
+**T1552: Unsecured Credentials**
 ```bash
 # Check for credentials in code or env
 git log --all --diff-filter=A -- '*.env' '*.env.*' 2>/dev/null
@@ -92,7 +92,7 @@ grep -rn "API_KEY\s*=\s*['\"]sk-\|secret\s*=\s*['\"]" --include="*.ts" --include
 git log --all --full-history -- '*.pem' '*.key' '*.p12'
 ```
 
-**T1530 — Data from Cloud Storage**
+**T1530: Data from Cloud Storage**
 ```bash
 # Find S3 or Supabase storage operations
 grep -rn "s3\.\|supabase\.storage\|getObject\|putObject\|\.upload(" \
@@ -103,7 +103,7 @@ grep -rn "ACL.*public\|public-read\|publicAccessBlock" \
   --include="*.ts" --include="*.js" . | grep -v node_modules
 ```
 
-**T1548 — Privilege Escalation**
+**T1548: Privilege Escalation**
 ```bash
 # Check for missing authorisation checks on sensitive operations
 grep -rn "admin\|role.*admin\|isAdmin\|hasRole" \
@@ -114,7 +114,7 @@ grep -rn "role.*update\|admin.*grant\|permission.*set" \
   --include="*.ts" --include="*.js" . | grep -v node_modules
 ```
 
-**T1562 — Impair Defences (disable/bypass logging)**
+**T1562: Impair Defences (disable/bypass logging)**
 ```bash
 # Check if logs can be tampered
 grep -rn "logger\.\|console\.\|winston\|pino" \
@@ -125,7 +125,7 @@ grep -rn "axiom\|logtail\|datadog\|papertrail\|cloudwatch" \
   --include="*.ts" --include="*.js" . | grep -v node_modules
 ```
 
-**T1090 — Proxy / SSRF**
+**T1090: Proxy / SSRF**
 ```bash
 # Find URL fetching that accepts user input
 grep -rn "fetch(\|axios\.get(\|request(" \
@@ -170,7 +170,7 @@ For each MITRE technique identified, rate your current defence:
 
 | Technique | Attack Vector | Current Control | Rating | Gap |
 |-----------|--------------|-----------------|--------|-----|
-| T1190 Exploit App | SQL injection | Parameterised queries | Strong | — |
+| T1190 Exploit App | SQL injection | Parameterised queries | Strong | n/a |
 | T1078 Valid Accounts | Credential stuffing | Rate limiting 5/15m | Medium | No MFA |
 | T1195 Supply Chain | Malicious package | npm audit weekly | Weak | No npm ci --ignore-scripts |
 | T1552 Unsecured Creds | .env in git | gitleaks pre-commit | Medium | No rotation policy |
@@ -182,13 +182,13 @@ Rating: **Strong** (blocks attack), **Medium** (slows attacker), **Weak** (easy 
 
 Based on the gap analysis, create prioritised tasks:
 
-**Critical (P1) — blocks active attack chains:**
+**Critical (P1): blocks active attack chains:**
 - [ ] [Gap description] → [specific fix] at [file:line]
 
-**High (P2) — significantly reduces attack surface:**
+**High (P2): significantly reduces attack surface:**
 - [ ] [Gap description] → [specific fix]
 
-**Medium (P3) — defence in depth improvements:**
+**Medium (P3): defence in depth improvements:**
 - [ ] [Gap description] → [specific fix]
 
 Implement all P1 and P2 fixes in this session.

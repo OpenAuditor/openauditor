@@ -39,16 +39,16 @@ grep -rn 'find({.*req\.\|findOne({.*req\.' \
 For each finding, fix using parameterised queries:
 
 ```typescript
-// VULNERABLE — string interpolation in query
+// VULNERABLE: string interpolation in query
 const result = await db.query(`SELECT * FROM users WHERE email = '${email}'`);
 
-// SECURE — parameterised query
+// SECURE: parameterised query
 const result = await db.query('SELECT * FROM users WHERE email = $1', [email]);
 
-// SECURE — ORM (Prisma example)
+// SECURE: ORM (Prisma example)
 const user = await prisma.users.findUnique({ where: { email } });
 
-// SECURE — Supabase (always parameterised)
+// SECURE: Supabase (always parameterised)
 const { data } = await supabase.from('users').select().eq('email', email);
 ```
 
@@ -56,10 +56,10 @@ const { data } = await supabase.from('users').select().eq('email', email);
 # VULNERABLE
 cursor.execute(f"SELECT * FROM users WHERE email = '{email}'")
 
-# SECURE — parameterised
+# SECURE: parameterised
 cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
 
-# SECURE — SQLAlchemy ORM
+# SECURE: SQLAlchemy ORM
 user = session.query(User).filter(User.email == email).first()
 ```
 
@@ -80,15 +80,15 @@ grep -rn "exec(`\|exec(\`" --include="*.ts" --include="*.js" . | grep -v node_mo
 For each finding, eliminate shell execution or use safe alternatives:
 
 ```javascript
-// VULNERABLE — user input in shell command
+// VULNERABLE: user input in shell command
 const { exec } = require('child_process');
 exec(`convert ${userFilename} output.png`); // command injection
 
-// SECURE — use execFile with argument array (no shell interpolation)
+// SECURE: use execFile with argument array (no shell interpolation)
 const { execFile } = require('child_process');
 execFile('convert', [sanitizedFilename, 'output.png'], { timeout: 30000 });
 
-// BETTER — use a library instead of shell commands
+// BETTER: use a library instead of shell commands
 const sharp = require('sharp'); // image processing without shell
 await sharp(inputPath).toFile(outputPath);
 ```
@@ -98,10 +98,10 @@ await sharp(inputPath).toFile(outputPath);
 import subprocess
 subprocess.run(f"convert {filename} output.png", shell=True)
 
-# SECURE — argument array, shell=False
+# SECURE: argument array, shell=False
 subprocess.run(["convert", filename, "output.png"], shell=False, timeout=30)
 
-# BETTER — use Python libraries directly
+# BETTER: use Python libraries directly
 from PIL import Image
 img = Image.open(input_path)
 img.save(output_path)
@@ -127,21 +127,21 @@ grep -rn "document\.write(" --include="*.ts" --include="*.js" . | grep -v node_m
 For each XSS finding:
 
 ```typescript
-// VULNERABLE — rendering user content directly as HTML
+// VULNERABLE: rendering user content directly as HTML
 element.innerHTML = userContent;
 <div dangerouslySetInnerHTML={{ __html: userContent }} />
 
-// SECURE — use textContent for plain text
+// SECURE: use textContent for plain text
 element.textContent = userContent;
 
-// SECURE — sanitise if HTML is required
+// SECURE: sanitise if HTML is required
 import DOMPurify from 'dompurify';
 element.innerHTML = DOMPurify.sanitize(userContent);
 
-// SECURE — React renders text safely by default
+// SECURE: React renders text safely by default
 <div>{userContent}</div>  // React escapes this automatically
 
-// SECURE — if you need formatted content in Next.js
+// SECURE: if you need formatted content in Next.js
 import sanitizeHtml from 'sanitize-html';
 const clean = sanitizeHtml(userContent, {
   allowedTags: ['p', 'b', 'i', 'em', 'strong', 'ul', 'li'],
@@ -162,18 +162,18 @@ grep -rn "eval\(`\|Function\(`" --include="*.ts" --include="*.js" . | grep -v no
 ```
 
 ```python
-# VULNERABLE — user-controlled template string
+# VULNERABLE: user-controlled template string
 from jinja2 import Template
-template = Template(user_input)  # SSTI — can execute Python code
+template = Template(user_input)  # SSTI: can execute Python code
 result = template.render()
 
-# SECURE — use a sandboxed environment
+# SECURE: use a sandboxed environment
 from jinja2.sandbox import SandboxedEnvironment
 env = SandboxedEnvironment()
 template = env.from_string(user_input)
 result = template.render(**safe_context)
 
-# BETTER — don't allow user-controlled templates at all
+# BETTER: don't allow user-controlled templates at all
 # Use a fixed template with user-supplied data:
 template = Template("Hello, {{ name }}!")
 result = template.render(name=user_name)
@@ -204,7 +204,7 @@ describe('Injection Prevention', () => {
     // The name should be stored and returned as plain text
     // not executed as HTML
     expect(product.name).toBe(maliciousName); // stored as-is
-    // But when rendered, it should be escaped — test in browser
+    // But when rendered, it should be escaped: test in browser
   });
 });
 ```

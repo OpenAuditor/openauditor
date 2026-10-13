@@ -9,7 +9,7 @@ Security headers are free protection. Most take under an hour to configure and p
 CSP tells the browser which sources of content are allowed to load. It's your primary defence against Cross-Site Scripting (XSS).
 
 ```javascript
-// next.config.js — add CSP header
+// next.config.js: add CSP header
 const securityHeaders = [
   {
     key: 'Content-Security-Policy',
@@ -50,7 +50,7 @@ CORS controls which domains can make requests to your API.
 ### The Wrong Way
 
 ```javascript
-// WRONG — allows any origin
+// WRONG: allows any origin
 app.use(cors()); // or Access-Control-Allow-Origin: *
 ```
 

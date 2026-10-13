@@ -1,14 +1,14 @@
-# API9:2023 — Improper Inventory Management
+# API9:2023: Improper Inventory Management
 
-> **30-second summary:** APIs that organisations have forgotten about — old API versions, shadow APIs created by third parties, staging endpoints exposed publicly, or undocumented internal APIs. Attackers find these with automated discovery tools; defenders often have no idea they exist.
+> **30-second summary:** APIs that organisations have forgotten about: old API versions, shadow APIs created by third parties, staging endpoints exposed publicly, or undocumented internal APIs. Attackers find these with automated discovery tools; defenders often have no idea they exist.
 
 ## Severity
 
-**Medium** — Forgotten APIs often lack authentication, rate limiting, and monitoring. They are the path of least resistance into an organisation's data.
+**Medium**: Forgotten APIs often lack authentication, rate limiting, and monitoring. They are the path of least resistance into an organisation's data.
 
 ## Real-World Breach: Optus (2022)
 
-Optus, Australia's second-largest telco, exposed 11 million customer records through an API endpoint that had been inadvertently left accessible on the public internet during a cloud migration. The API (`/api/v1/customers`) required no authentication and returned full customer records — name, date of birth, phone number, email, driver's licence, and passport numbers. The endpoint had been used for testing and was never removed. No authentication had been added because it was "only supposed to be internal."
+Optus, Australia's second-largest telco, exposed 11 million customer records through an API endpoint that had been inadvertently left accessible on the public internet during a cloud migration. The API (`/api/v1/customers`) required no authentication and returned full customer records: name, date of birth, phone number, email, driver's licence, and passport numbers. The endpoint had been used for testing and was never removed. No authentication had been added because it was "only supposed to be internal."
 
 ## How It Happens
 
@@ -76,7 +76,7 @@ site:api.example.com
 site:example.com inurl:api
 "api.example.com" filetype:json
 
-# Wayback Machine — finds old API endpoints
+# Wayback Machine: finds old API endpoints
 curl "http://web.archive.org/cdx/search/cdx?url=api.example.com/*&output=text&limit=100"
 ```
 
@@ -85,7 +85,7 @@ curl "http://web.archive.org/cdx/search/cdx?url=api.example.com/*&output=text&li
 ### 1. Maintain an API Inventory
 
 ```yaml
-# api-inventory.yml — maintain this as part of your codebase
+# api-inventory.yml: maintain this as part of your codebase
 apis:
   - name: "User API v3"
     base_url: "https://api.example.com/v3"
@@ -107,7 +107,7 @@ apis:
     base_url: "https://api.example.com/v1"
     status: "deprecated"
     deprecation_date: "2023-06-01"
-    removal_date: "2024-03-01"  # PAST — should have been removed
+    removal_date: "2024-03-01"  # PAST: should have been removed
     authentication: "API Key (deprecated)"
     owner: "platform-team"
 ```
@@ -122,7 +122,7 @@ apis:
 echo "=== API Endpoint Discovery ==="
 echo "Checking registered routes..."
 
-# Node.js — print all registered routes
+# Node.js: print all registered routes
 node -e "
 const app = require('./src/app');
 const routes = [];
@@ -175,7 +175,7 @@ export function versionGuard(req: Request, res: Response, next: NextFunction) {
   const removedDate = new Date(deprecation.removedAt);
   
   if (new Date() > removedDate) {
-    // Version is past its removal date — return 410 Gone
+    // Version is past its removal date: return 410 Gone
     return res.status(410).json({
       error: 'API version no longer available',
       version,

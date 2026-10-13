@@ -18,10 +18,10 @@ You are a security engineer. Implement rate limiting on this application.
 
 **Step 1: Identify endpoints that need rate limiting**
 List all API endpoints and classify them:
-- Authentication (login, register, password reset, 2FA) — STRICT limits needed
-- Public data endpoints — MODERATE limits
-- Authenticated user API endpoints — PER-USER limits
-- Admin endpoints — VERY STRICT + alert on repeated failures
+- Authentication (login, register, password reset, 2FA): STRICT limits needed
+- Public data endpoints: MODERATE limits
+- Authenticated user API endpoints: PER-USER limits
+- Admin endpoints: VERY STRICT + alert on repeated failures
 
 **Step 2: Determine the stack**
 Check whether this is:

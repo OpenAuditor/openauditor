@@ -1,6 +1,6 @@
 # Threat Modeling 101: Think Like an Attacker
 
-In 30 seconds: Threat modeling is asking "what could go wrong?" *before* you ship. You draw a diagram of your system, identify where data flows, and ask questions at each point: Can this be intercepted? Is this validated? Who has access? You don't need fancy tools—a whiteboard works. The goal is to find vulnerabilities before users are affected.
+In 30 seconds: Threat modeling is asking "what could go wrong?" *before* you ship. You draw a diagram of your system, identify where data flows, and ask questions at each point: Can this be intercepted? Is this validated? Who has access? You don't need fancy tools: a whiteboard works. The goal is to find vulnerabilities before users are affected.
 
 ## What is threat modeling?
 
@@ -11,7 +11,7 @@ It answers three questions:
 2. **What could go wrong?** (Threats to each component)
 3. **What are we going to do about it?** (Mitigations and controls)
 
-Done right, threat modeling prevents most of the vulnerabilities in [Why Security Matters](./why-security-matters.md)—because you spot them during design, not after a breach.
+Done right, threat modeling prevents most of the vulnerabilities in [Why Security Matters](./why-security-matters.md), because you spot them during design, not after a breach.
 
 ## The basic process
 
@@ -63,20 +63,20 @@ For each component and data flow, ask:
 
 Standard threat categories (from STRIDE):
 
-- **Spoofing** — Pretending to be someone else (fake login, IP spoofing)
-- **Tampering** — Modifying data in transit or at rest
-- **Repudiation** — Denying you did something (bad logging/auditing)
-- **Information Disclosure** — Exposing data to unauthorized people
-- **Denial of Service** — Making the system unavailable
-- **Elevation of Privilege** — Getting more permissions than you should
+- **Spoofing**: Pretending to be someone else (fake login, IP spoofing)
+- **Tampering**: Modifying data in transit or at rest
+- **Repudiation**: Denying you did something (bad logging/auditing)
+- **Information Disclosure**: Exposing data to unauthorized people
+- **Denial of Service**: Making the system unavailable
+- **Elevation of Privilege**: Getting more permissions than you should
 
 Most web app vulnerabilities fall into these buckets.
 
 ### Step 4: Prioritize and mitigate
 
 Not all threats are equal. Rate each by:
-- **Likelihood** — How easy is it to exploit?
-- **Impact** — What damage if it's exploited?
+- **Likelihood**: How easy is it to exploit?
+- **Impact**: What damage if it's exploited?
 
 Then add controls:
 
@@ -99,16 +99,16 @@ Then add controls:
 - Posts cached in Redis
 
 **Threats:**
-1. **Someone deletes another author's post** — Broken access control
+1. **Someone deletes another author's post**: Broken access control
    - Mitigation: Check that POST `/api/posts/{id}` verifies the user owns the post before deleting
 
-2. **Someone injects SQL in blog title** — SQL injection
+2. **Someone injects SQL in blog title**: SQL injection
    - Mitigation: Use parameterized queries; never concatenate user input into SQL
 
-3. **Attacker eavesdrops on author password** — Man-in-the-middle
+3. **Attacker eavesdrops on author password**: Man-in-the-middle
    - Mitigation: Enforce HTTPS everywhere; set secure/HttpOnly cookies
 
-4. **Cache server compromised, attacker replaces all posts** — Tampering
+4. **Cache server compromised, attacker replaces all posts**: Tampering
    - Mitigation: Encrypt cache data; use authentication tokens for cache access
 
 ### Example 2: Payment processing
@@ -120,26 +120,26 @@ Then add controls:
 - Transaction stored in database
 
 **Threats:**
-1. **Frontend sends card data as plain HTTP** — Eavesdropping
+1. **Frontend sends card data as plain HTTP**: Eavesdropping
    - Mitigation: Always HTTPS; tokenize cards on frontend before sending (Stripe.js)
 
-2. **Attacker intercepts card data in logs** — Information disclosure
+2. **Attacker intercepts card data in logs**: Information disclosure
    - Mitigation: Never log full card numbers; only log last 4 digits
 
-3. **Attacker replaces payment processor URL in code** — Tampering
+3. **Attacker replaces payment processor URL in code**: Tampering
    - Mitigation: Use environment variables for processor URL; sign requests
 
-4. **Attacker modifies transaction amount before sending** — Tampering
+4. **Attacker modifies transaction amount before sending**: Tampering
    - Mitigation: Verify amount server-side before processing; sign requests
 
 ## Threat modeling tools (optional)
 
 You don't need fancy software. A whiteboard or Google Doc works fine. But if you want structure:
 
-- **Microsoft Threat Modeling Tool** — Free, Windows-focused
-- **Draw.io** — Simple diagrams, free
-- **Miro** — Collaborative whiteboard
-- **IriusRisk** — Purpose-built for threat modeling (paid)
+- **Microsoft Threat Modeling Tool**: Free, Windows-focused
+- **Draw.io**: Simple diagrams, free
+- **Miro**: Collaborative whiteboard
+- **IriusRisk**: Purpose-built for threat modeling (paid)
 
 Most teams find a whiteboard session with developers, product, and security is worth more than any tool.
 
@@ -181,10 +181,10 @@ Most teams find a whiteboard session with developers, product, and security is w
 ## Why this matters
 
 Threat modeling prevents:
-- **Costly rework** — Finding a flaw after launch costs 10-100x more to fix
-- **User breaches** — Your users' data is protected by design, not luck
-- **Regulatory issues** — You can show regulators you thought about security
-- **Public shame** — You won't be the next case study of "how did they miss this?"
+- **Costly rework**: Finding a flaw after launch costs 10-100x more to fix
+- **User breaches**: Your users' data is protected by design, not luck
+- **Regulatory issues**: You can show regulators you thought about security
+- **Public shame**: You won't be the next case study of "how did they miss this?"
 
 Developers who threat model ship faster because they don't have to rewrite authentication or redo database schema after a security review.
 
@@ -208,17 +208,17 @@ Developers who threat model ship faster because they don't have to rewrite authe
 ## Agent-assisted threat modeling
 
 The OpenAuditor prompts folder includes agent prompts you can use:
-- **[Threat Discovery Agent](./prompts/threat-discovery.md)** — Generates threats for your architecture
-- **[STRIDE Analysis Agent](./prompts/stride-analysis.md)** — Applies STRIDE framework
-- **[Risk Prioritization Agent](./prompts/risk-prioritization.md)** — Helps you prioritize by impact/likelihood
+- **[Threat Discovery Agent](./prompts/threat-discovery.md)**: Generates threats for your architecture
+- **[STRIDE Analysis Agent](./prompts/stride-analysis.md)**: Applies STRIDE framework
+- **[Risk Prioritization Agent](./prompts/risk-prioritization.md)**: Helps you prioritize by impact/likelihood
 
 Use these when threat modeling with your team.
 
 ## What comes next
 
-- **[Secure by Default](./secure-by-default.md)** — Now that you know what to look for, learn the principles that prevent threats
-- **[Risk Appetite Framework](./risk-appetite-framework.md)** — How to decide what level of risk is acceptable
-- **01-architecture/** — Design patterns for building threat-resistant systems
+- **[Secure by Default](./secure-by-default.md)**: Now that you know what to look for, learn the principles that prevent threats
+- **[Risk Appetite Framework](./risk-appetite-framework.md)**: How to decide what level of risk is acceptable
+- **01-architecture/**: Design patterns for building threat-resistant systems
 
 ---
 

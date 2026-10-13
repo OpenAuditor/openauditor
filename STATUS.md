@@ -32,7 +32,7 @@
 
 ## Current Version
 
-**v1.0.0 — Initial Complete Release** (2026-04-27)
+**v1.0.0: Initial Complete Release** (2026-04-27)
 
 All 18 sections are complete with production-quality content, real-world breach examples, and copy-paste agent prompts for Claude, Cursor, GitHub Copilot, Windsurf, Cline, and Aider.
 
@@ -40,7 +40,7 @@ All 18 sections are complete with production-quality content, real-world breach 
 
 ### Content
 - ⚠ OWASP Web Top 10 (2021 edition; update to the 2025 edition in progress)
-- ✓ OWASP API Top 10 (2023) — all 10 categories with code fixes
+- ✓ OWASP API Top 10 (2023): all 10 categories with code fixes
 - ⚠ OWASP LLM Top 10 (currently the 2023 v1.1 list; update to the 2025 edition in progress)
 - ✓ MITRE ATT&CK for Web, SaaS, and AI apps
 - ✓ MITRE to OWASP cross-reference mapping
@@ -93,10 +93,10 @@ All 18 sections are complete with production-quality content, real-world breach 
 
 ## Known Limitations
 
-- **Not a certification program** — This is guidance, not a formal compliance audit
-- **Not a replacement for security professionals** — For critical apps, hire specialists
-- **Stack coverage** — Primarily Next.js, Python, Node.js, Django. Other stacks may vary.
-- **Point-in-time advice** — Security evolves; check back for updates and watch for CVE advisories
+- **Not a certification program**: This is guidance, not a formal compliance audit
+- **Not a replacement for security professionals**: For critical apps, hire specialists
+- **Stack coverage**: Primarily Next.js, Python, Node.js, Django. Other stacks may vary.
+- **Point-in-time advice**: Security evolves; check back for updates and watch for CVE advisories
 
 ## How to Use
 

@@ -2,7 +2,7 @@
 
 ## When to use this
 
-Use this 6-12 months before your planned SOC 2 audit, or when a prospect asks "are you SOC 2 compliant?" and you need to assess your current state. This gives you an honest gap analysis — not preparation theatre.
+Use this 6-12 months before your planned SOC 2 audit, or when a prospect asks "are you SOC 2 compliant?" and you need to assess your current state. This gives you an honest gap analysis, not preparation theatre.
 
 ## Works with
 
@@ -26,11 +26,11 @@ Identify:
 - CI/CD pipeline
 - Secret management approach
 
-**Step 2: Assess CC6 — Logical and Physical Access Controls**
+**Step 2: Assess CC6: Logical and Physical Access Controls**
 
 Check each of these:
 
-**CC6.1 — Logical access security:**
+**CC6.1: Logical access security:**
 - [ ] Is MFA enforced for all production access?
 - [ ] Is there a formal user provisioning/deprovisioning process?
 - [ ] Are access reviews conducted at least quarterly?
@@ -38,52 +38,52 @@ Check each of these:
 
 Evidence needed: Screenshots of MFA enforcement settings, access review records, user list.
 
-**CC6.2 — New user registration:**
+**CC6.2: New user registration:**
 - [ ] Is there a documented onboarding process for new employees?
 - [ ] Are access requests documented with business justification?
 
-**CC6.3 — Modification and removal of access:**
+**CC6.3: Modification and removal of access:**
 - [ ] Is offboarding documented with timelines?
 - [ ] Are access changes logged?
 
-**CC6.6 — Boundary protection:**
+**CC6.6: Boundary protection:**
 - [ ] Are all externally exposed endpoints inventoried?
 - [ ] Is there a WAF or API gateway?
 - [ ] Are unnecessary ports and services closed?
 
-**CC6.7 — Encryption in transit and at rest:**
+**CC6.7: Encryption in transit and at rest:**
 - [ ] Is HTTPS enforced everywhere?
 - [ ] Are databases encrypted at rest?
 - [ ] Are backups encrypted?
 
 For each item: report current status, evidence available, and what's missing.
 
-**Step 3: Assess CC7 — System Operations**
+**Step 3: Assess CC7: System Operations**
 
-**CC7.1 — Detection of anomalies:**
+**CC7.1: Detection of anomalies:**
 - [ ] Is there centralised logging?
 - [ ] Are logs retained for ≥90 days?
 - [ ] Are there alerts for security events (failed logins, error spikes)?
 
-**CC7.2 — Monitoring:**
+**CC7.2: Monitoring:**
 - [ ] Is there uptime monitoring?
 - [ ] Are security alerts sent to the right people?
 - [ ] Is there a documented process for investigating alerts?
 
-**CC7.3 — Incident response:**
+**CC7.3: Incident response:**
 - [ ] Is there a written incident response plan?
 - [ ] Have roles been assigned (incident commander, communications)?
 - [ ] Has the plan been tested in the last 12 months?
 
-**CC7.4 — Response to incidents:**
+**CC7.4: Response to incidents:**
 - [ ] Is there a post-mortem process?
 - [ ] Are post-mortems documented and retained?
 
 For each item: current status, evidence, and gaps.
 
-**Step 4: Assess CC8 — Change Management**
+**Step 4: Assess CC8: Change Management**
 
-**CC8.1 — Changes to infrastructure and software:**
+**CC8.1: Changes to infrastructure and software:**
 - [ ] Is there a code review process (PR reviews required)?
 - [ ] Is there branch protection on the main branch?
 - [ ] Are CI tests required to pass before deployment?
@@ -92,9 +92,9 @@ For each item: current status, evidence, and gaps.
 
 Check the repository settings and CI/CD configuration and report findings.
 
-**Step 5: Assess CC9 — Risk Mitigation**
+**Step 5: Assess CC9: Risk Mitigation**
 
-**CC9.2 — Vendor management:**
+**CC9.2: Vendor management:**
 - [ ] Is there a list of critical vendors?
 - [ ] Do critical vendors have SOC 2 or equivalent certifications?
 - [ ] Are Data Processing Agreements (DPAs) in place for vendors who process personal data?
@@ -116,10 +116,10 @@ Produce a gap analysis table:
 |-----|---------|--------|-----|----------|--------|
 | CC6.1 | MFA enforced | ✗ Fail | MFA not required for GitHub | P0 | Low |
 | CC7.3 | Incident response plan | ✗ Fail | No documented plan | P1 | Medium |
-| CC8.1 | Branch protection | ✓ Pass | Required reviews in place | — | — |
+| CC8.1 | Branch protection | ✓ Pass | Required reviews in place | n/a | n/a |
 
 **Priority:**
-- P0: Auditors will flag this as a finding — fix before the audit window
+- P0: Auditors will flag this as a finding: fix before the audit window
 - P1: Should be in place but some auditors may accept compensating controls
 - P2: Good practice, strengthens the audit
 

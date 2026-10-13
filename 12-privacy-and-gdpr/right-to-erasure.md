@@ -23,7 +23,7 @@ You can refuse when:
 
 You must delete personal data from:
 - Your primary database
-- Backups (within reasonable timeframes — typically next backup cycle)
+- Backups (within reasonable timeframes: typically next backup cycle)
 - Caches and temporary storage
 - Email lists and CRM
 - Analytics platforms (where possible)
@@ -62,7 +62,7 @@ CREATE TABLE public.comments (
 ## Implementation: Deletion Service (Node.js)
 
 ```javascript
-// Deletion service — handles all related data
+// Deletion service: handles all related data
 async function deleteUserData(userId: string, requestedBy: string): Promise<void> {
   // Log the erasure request for compliance
   await db.auditLogs.create({
@@ -93,7 +93,7 @@ async function deleteUserData(userId: string, requestedBy: string): Promise<void
         userId: null,             // dissociate from user
         email: '[deleted]',       // replace PII
         name: '[deleted]',
-        // Retain: amount, date, product — for accounting
+        // Retain: amount, date, product: for accounting
       },
     });
     
@@ -128,7 +128,7 @@ Data Erasure in Backups Policy:
 ## Self-Service Deletion UI
 
 ```javascript
-// Settings page — allow users to delete their own account
+// Settings page: allow users to delete their own account
 app.delete('/api/users/me', authenticate, async (req, res) => {
   const { confirmation } = req.body;
   

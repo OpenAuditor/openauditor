@@ -1,6 +1,6 @@
 # API Security
 
-Every API endpoint is an attack surface. Authentication, authorisation, rate limiting, and input validation are required — not optional.
+Every API endpoint is an attack surface. Authentication, authorisation, rate limiting, and input validation are required, not optional.
 
 ---
 
@@ -9,12 +9,12 @@ Every API endpoint is an attack surface. Authentication, authorisation, rate lim
 The most common API vulnerability is forgetting to check authentication on some routes.
 
 ```javascript
-// WRONG — auth middleware only on some routes
+// WRONG: auth middleware only on some routes
 app.get('/api/public', handler);
 app.get('/api/users', authMiddleware, handler);
 app.get('/api/admin', handler); // forgot auth!
 
-// RIGHT — apply globally, then relax for public routes
+// RIGHT: apply globally, then relax for public routes
 app.use('/api', authMiddleware); // protect everything
 app.use('/api/public', relaxAuth); // then explicitly open public routes
 ```
@@ -73,13 +73,13 @@ export async function GET(req: Request) {
 After authenticating, check the user owns the resource.
 
 ```javascript
-// WRONG — checks auth but not ownership
+// WRONG: checks auth but not ownership
 app.get('/api/invoices/:id', auth, async (req, res) => {
   const invoice = await db.invoices.findOne({ id: req.params.id });
   res.json(invoice); // any user can read any invoice!
 });
 
-// RIGHT — check ownership
+// RIGHT: check ownership
 app.get('/api/invoices/:id', auth, async (req, res) => {
   const invoice = await db.invoices.findOne({
     where: { id: req.params.id, userId: req.user.id } // ownership check
@@ -97,7 +97,7 @@ app.get('/api/invoices/:id', auth, async (req, res) => {
 Never reveal internal information in API errors.
 
 ```javascript
-// WRONG — leaks DB schema, stack trace, or internal paths
+// WRONG: leaks DB schema, stack trace, or internal paths
 app.use((err, req, res, next) => {
   console.error(err);
   res.status(500).json({
@@ -107,7 +107,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-// RIGHT — generic error, details logged server-side only
+// RIGHT: generic error, details logged server-side only
 app.use((err, req, res, next) => {
   const errorId = crypto.randomUUID();
   console.error({ errorId, error: err.message, stack: err.stack });
@@ -174,13 +174,13 @@ See [Rate Limiting](./rate-limiting.md) for implementation. Apply to every publi
 ## Pagination (Don't Allow Full Table Dumps)
 
 ```javascript
-// WRONG — returns potentially millions of rows
+// WRONG: returns potentially millions of rows
 app.get('/api/users', auth, async (req, res) => {
   const users = await db.users.findMany();
   res.json(users);
 });
 
-// RIGHT — paginate and cap
+// RIGHT: paginate and cap
 const MAX_PAGE_SIZE = 100;
 app.get('/api/users', auth, async (req, res) => {
   const page = parseInt(req.query.page) || 1;

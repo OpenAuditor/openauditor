@@ -34,7 +34,7 @@ You need consent for marketing that the user hasn't specifically signed up for. 
 Privacy-preserving analytics (Plausible, Fathom) may qualify for legitimate interests. Google Analytics with cookie tracking requires consent.
 
 **Security logging → Legitimate interests**  
-Logging IP addresses and auth events for security purposes typically qualifies as legitimate interests — your interest in security doesn't override user rights.
+Logging IP addresses and auth events for security purposes typically qualifies as legitimate interests: your interest in security doesn't override user rights.
 
 **Fraud prevention → Legitimate interests**  
 Checking payments for fraud patterns is a legitimate interest that can be balanced against user privacy.
@@ -44,17 +44,17 @@ Checking payments for fraud patterns is a legitimate interest that can be balanc
 ## Consent: How to Do It Right
 
 Valid consent must be:
-- **Freely given** — not bundled with terms of service, not required for service access
-- **Specific** — for a specific purpose, not a blanket agreement
-- **Informed** — users must know what they're consenting to
-- **Unambiguous** — clear affirmative action (not pre-ticked boxes)
+- **Freely given**, not bundled with terms of service, not required for service access
+- **Specific**: for a specific purpose, not a blanket agreement
+- **Informed**: users must know what they're consenting to
+- **Unambiguous**: clear affirmative action (not pre-ticked boxes)
 
 ```javascript
-// WRONG — consent bundled with terms, pre-selected
+// WRONG: consent bundled with terms, pre-selected
 <input type="checkbox" checked name="marketing" />
 By creating an account you agree to marketing emails.
 
-// RIGHT — separate, explicit, not required
+// RIGHT: separate, explicit, not required
 <input type="checkbox" name="marketing" />  // not checked by default
 I'd like to receive product updates and newsletter (optional)
 ```

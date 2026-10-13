@@ -2,7 +2,7 @@
 
 ## When to use this
 
-Use this when building or reviewing an AI agent that can take actions — call tools, access the filesystem, send messages, query databases, or execute code. The more tools an agent has, the larger the attack surface.
+Use this when building or reviewing an AI agent that can take actions: call tools, access the filesystem, send messages, query databases, or execute code. The more tools an agent has, the larger the attack surface.
 
 ## Works with
 
@@ -48,13 +48,13 @@ Flag any tool that:
 Every tool implementation must enforce user context independently of what the LLM requests:
 
 ```javascript
-// WRONG — tool trusts LLM to pass correct userId
+// WRONG: tool trusts LLM to pass correct userId
 async function readDocument({ documentId, userId }) {
   return db.documents.findOne({ where: { id: documentId, userId } });
   // LLM could pass any userId!
 }
 
-// RIGHT — tool gets userId from authenticated request context
+// RIGHT: tool gets userId from authenticated request context
 async function readDocument({ documentId }, { requestContext }) {
   return db.documents.findOne({ 
     where: { id: documentId, userId: requestContext.user.id } // from auth

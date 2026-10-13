@@ -27,10 +27,10 @@ If you discover a vulnerability in OpenAuditor or its guidance, please report it
 ## Scope
 
 This policy covers:
-- **Documentation vulnerabilities** — Guidance that could lead to insecure implementations
-- **Broken links or outdated advice** — Links to defunct tools, deprecated APIs
-- **Missing critical guidance** — Major OWASP, MITRE, or CVE topics we should cover
-- **Code examples with security flaws** — Examples that demonstrate insecurity
+- **Documentation vulnerabilities**: Guidance that could lead to insecure implementations
+- **Broken links or outdated advice**: Links to defunct tools, deprecated APIs
+- **Missing critical guidance**: Major OWASP, MITRE, or CVE topics we should cover
+- **Code examples with security flaws**: Examples that demonstrate insecurity
 
 This policy does NOT cover:
 - Requests for new features or sections (use GitHub issues instead)

@@ -65,7 +65,7 @@ app.use((err, req, res, next) => {
   
   res.status(statusCode).json({
     error: isOperational ? err.message : 'Internal server error',
-    errorId, // safe to share — helps with support
+    errorId, // safe to share: helps with support
   });
 });
 
@@ -128,10 +128,10 @@ if (!isDev) {
 ```
 
 ```python
-# Django — NEVER in production
+# Django: NEVER in production
 DEBUG = os.environ.get('DJANGO_DEBUG', 'False').lower() == 'true'
 
-# FastAPI — disable debug in production
+# FastAPI: disable debug in production
 app = FastAPI(debug=False)
 ```
 
@@ -170,10 +170,10 @@ try {
 Be consistent. Don't reveal whether a resource exists to unauthorised users.
 
 ```javascript
-// WRONG — reveals that resource exists
+// WRONG: reveals that resource exists
 if (!isOwner) return res.status(403).json({ error: 'Forbidden' });
 
-// RIGHT — treat unauthorised access as not-found
+// RIGHT: treat unauthorised access as not-found
 const resource = await db.items.findOne({
   where: { id, userId: req.user.id } // only returns result if user owns it
 });

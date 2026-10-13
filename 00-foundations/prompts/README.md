@@ -22,11 +22,11 @@ Use **[Breach Response Runbook prompt](../../15-post-breach/prompts/breach-respo
 
 ## Prompts in this folder
 
-- **[threat-discovery.md](./threat-discovery.md)** — Generate threats for your architecture
-- **[stride-analysis.md](./stride-analysis.md)** — Apply STRIDE framework to find attack vectors
-- **[risk-prioritization.md](./risk-prioritization.md)** — Prioritize threats by impact/likelihood
-- **[web-top10-audit.md](../../02-owasp/prompts/web-top10-audit.md)** — Review code for common vulnerabilities
-- **[breach-response-runbook.md](../../15-post-breach/prompts/breach-response-runbook.md)** — Analyze what happened during an incident
+- **[threat-discovery.md](./threat-discovery.md)**: Generate threats for your architecture
+- **[stride-analysis.md](./stride-analysis.md)**: Apply STRIDE framework to find attack vectors
+- **[risk-prioritization.md](./risk-prioritization.md)**: Prioritize threats by impact/likelihood
+- **[web-top10-audit.md](../../02-owasp/prompts/web-top10-audit.md)**: Review code for common vulnerabilities
+- **[breach-response-runbook.md](../../15-post-breach/prompts/breach-response-runbook.md)**: Analyze what happened during an incident
 
 ---
 
@@ -50,9 +50,9 @@ Answer truthfully. The more honest you are, the more useful the output.
 ## Integration with OpenAuditor sections
 
 These prompts reference:
-- [Threat Modeling 101](../threat-modeling-101.md) — The framework these prompts use
-- [Secure by Default](../secure-by-default.md) — Principles the prompts check for
-- [Risk Appetite Framework](../risk-appetite-framework.md) — How to evaluate and prioritize risks
+- [Threat Modeling 101](../threat-modeling-101.md): The framework these prompts use
+- [Secure by Default](../secure-by-default.md): Principles the prompts check for
+- [Risk Appetite Framework](../risk-appetite-framework.md): How to evaluate and prioritize risks
 
 ---
 

@@ -37,7 +37,7 @@ gh api repos/{owner}/{repo}/branches/main/protection \
   --field restrictions=null
 ```
 
-### Rulesets (Newer API — Recommended)
+### Rulesets (Newer API: Recommended)
 
 GitHub Rulesets supersede branch protection rules and apply to the entire repository, including forks:
 
@@ -83,10 +83,10 @@ The `CODEOWNERS` file automatically assigns reviewers to pull requests based on 
 ```
 # .github/CODEOWNERS
 
-# Global fallback — all PRs require at least one review from the team
+# Global fallback: all PRs require at least one review from the team
 *                           @your-org/engineering
 
-# Authentication and authorisation — always needs a security review
+# Authentication and authorisation: always needs a security review
 /src/auth/                  @your-org/security-team
 /src/middleware/            @your-org/security-team
 
@@ -96,13 +96,13 @@ The `CODEOWNERS` file automatically assigns reviewers to pull requests based on 
 /Dockerfile                 @your-org/devops
 /docker-compose*.yml        @your-org/devops
 
-# Database migrations — needs DBA sign-off
+# Database migrations: needs DBA sign-off
 /db/migrations/             @your-org/dba-team
 
 # Payment and financial logic
 /src/billing/               @your-org/payments-team @your-org/security-team
 
-# Dependencies — changes to these are high-risk
+# Dependencies: changes to these are high-risk
 package.json                @your-org/security-team
 package-lock.json           @your-org/security-team
 requirements.txt            @your-org/security-team
@@ -121,7 +121,7 @@ GitHub's secret scanning detects accidentally committed credentials and alerts y
 
 1. **Repository → Settings → Security & Analysis**
 2. Enable **Secret scanning** (free for public repos; requires GitHub Advanced Security for private)
-3. Enable **Push protection** — this blocks pushes containing detected secrets
+3. Enable **Push protection**: this blocks pushes containing detected secrets
 
 ```bash
 # Enable via GitHub CLI
@@ -144,7 +144,7 @@ patterns:
 
 ### If a Secret Is Detected
 
-1. **Rotate the secret immediately** — assume it was already read by automated scanners
+1. **Rotate the secret immediately**: assume it was already read by automated scanners
 2. Revoke the exposed credential at the issuing service
 3. Audit logs at that service for any usage of the exposed key
 4. Remove the secret from git history using `git-filter-repo`:
@@ -217,7 +217,7 @@ updates:
 
 ## GitHub Actions Security
 
-GitHub Actions is a privileged CI/CD system — it has access to secrets and can deploy to production. A compromised workflow is a critical incident.
+GitHub Actions is a privileged CI/CD system: it has access to secrets and can deploy to production. A compromised workflow is a critical incident.
 
 ### Minimum-Privilege Token
 
@@ -250,14 +250,14 @@ jobs:
 
 ### Pin Actions to Commit SHA
 
-Pinning to a tag (e.g., `@v4`) is vulnerable to tag mutation — a compromised action maintainer can change what `v4` points to. Pin to the full SHA instead:
+Pinning to a tag (e.g., `@v4`) is vulnerable to tag mutation: a compromised action maintainer can change what `v4` points to. Pin to the full SHA instead:
 
 ```yaml
 steps:
-  # Bad — tag can be moved
+  # Bad: tag can be moved
   - uses: actions/checkout@v4
 
-  # Good — immutable commit reference
+  # Good: immutable commit reference
   - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
   # Add a comment to track the version
@@ -269,10 +269,10 @@ steps:
 When using `${{ github.event.pull_request.title }}` or other user-controlled inputs in `run:` steps, an attacker can inject shell commands via the PR title.
 
 ```yaml
-# Vulnerable — user controls github.event.pull_request.title
+# Vulnerable: user controls github.event.pull_request.title
 - run: echo "Processing PR: ${{ github.event.pull_request.title }}"
 
-# Safe — pass via environment variable (shell does not interpret it)
+# Safe: pass via environment variable (shell does not interpret it)
 - name: Process PR title
   env:
     PR_TITLE: ${{ github.event.pull_request.title }}
@@ -284,7 +284,7 @@ When using `${{ github.event.pull_request.title }}` or other user-controlled inp
 Pull requests from forks do not have access to repository secrets. Never grant them access:
 
 ```yaml
-# Safe pattern — separate jobs for trusted vs untrusted code
+# Safe pattern: separate jobs for trusted vs untrusted code
 on:
   pull_request_target:  # Runs in context of base repo
     types: [opened, synchronize]
@@ -307,7 +307,7 @@ jobs:
 ### Secrets in Actions
 
 ```yaml
-# Reference secrets — never hardcode
+# Reference secrets: never hardcode
 - name: Deploy
   env:
     VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
@@ -361,7 +361,7 @@ jobs:
 ### Enable All Free Security Features
 
 ```bash
-# Via GitHub CLI — enable all free security features at once
+# Via GitHub CLI: enable all free security features at once
 gh api repos/{owner}/{repo} \
   --method PATCH \
   --field has_vulnerability_alerts=true

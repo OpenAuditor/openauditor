@@ -1,4 +1,4 @@
-# API2 — Broken Authentication
+# API2: Broken Authentication
 
 ## 30-second summary
 
@@ -11,7 +11,7 @@ Authentication is broken when an API accepts weak credentials, issues insecure t
 ## Vulnerable code example
 
 ```typescript
-// Express.js + JWT — VULNERABLE
+// Express.js + JWT: VULNERABLE
 import jwt from 'jsonwebtoken';
 
 app.post('/api/login', async (req, res) => {
@@ -29,11 +29,11 @@ app.post('/api/login', async (req, res) => {
   return res.json({ token });
 });
 
-// Token verification — VULNERABLE
+// Token verification: VULNERABLE
 app.get('/api/me', (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];
   try {
-    // Accepts 'none' algorithm — attacker can forge tokens
+    // Accepts 'none' algorithm: attacker can forge tokens
     const decoded = jwt.verify(token, process.env.JWT_SECRET, {
       algorithms: undefined  // accepts all algorithms including 'none'
     });
@@ -55,7 +55,7 @@ Problems:
 ## Fixed code example
 
 ```typescript
-// Express.js + JWT — FIXED
+// Express.js + JWT: FIXED
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import rateLimit from 'express-rate-limit';
@@ -94,7 +94,7 @@ app.post('/api/login', loginLimiter, async (req, res) => {
   return res.json({ token });
 });
 
-// Token verification — FIXED
+// Token verification: FIXED
 app.get('/api/me', (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];
   if (!token) return res.status(401).json({ error: 'No token provided' });
@@ -114,9 +114,9 @@ app.get('/api/me', (req, res) => {
 
 ## Real-world breach scenario
 
-**Optus (2022):** An unauthenticated API endpoint was accessible on the public internet — no token required at all. The API returned full customer records including passport and driving licence numbers. Approximately 10 million Australians were affected. The attacker simply iterated customer IDs against the exposed endpoint.
+**Optus (2022):** An unauthenticated API endpoint was accessible on the public internet: no token required at all. The API returned full customer records including passport and driving licence numbers. Approximately 10 million Australians were affected. The attacker simply iterated customer IDs against the exposed endpoint.
 
-**Credential stuffing — Dunkin' Donuts (2019):** Attackers used breach data from other sites to test email/password combinations against the Dunkin' loyalty API. No rate limiting existed. Thousands of accounts were taken over and rewards points were sold.
+**Credential stuffing: Dunkin' Donuts (2019):** Attackers used breach data from other sites to test email/password combinations against the Dunkin' loyalty API. No rate limiting existed. Thousands of accounts were taken over and rewards points were sold.
 
 ---
 
@@ -168,14 +168,14 @@ done
 ```
 
 **Tools:**
-- Burp Suite — intercept and modify JWT header/payload.
-- `jwt_tool` — comprehensive JWT attack suite.
-- Hydra / ffuf — credential stuffing simulation (with authorisation).
+- Burp Suite: intercept and modify JWT header/payload.
+- `jwt_tool`: comprehensive JWT attack suite.
+- Hydra / ffuf: credential stuffing simulation (with authorisation).
 
 ---
 
 ## Why this matters
 
-Authentication failures are account takeover. For a B2C API this means accessing personal data, making purchases, and impersonating users. For a B2B API it can mean full tenant compromise. The damage is compounded when the API has no rate limiting — a single attacker can attempt millions of credential combinations in hours.
+Authentication failures are account takeover. For a B2C API this means accessing personal data, making purchases, and impersonating users. For a B2B API it can mean full tenant compromise. The damage is compounded when the API has no rate limiting: a single attacker can attempt millions of credential combinations in hours.
 
-Broken JWT validation is particularly dangerous because it affects every protected endpoint simultaneously. A single `algorithms: undefined` bug does not just expose one user — it allows forging tokens for *any* user ID, including administrators.
+Broken JWT validation is particularly dangerous because it affects every protected endpoint simultaneously. A single `algorithms: undefined` bug does not just expose one user: it allows forging tokens for *any* user ID, including administrators.

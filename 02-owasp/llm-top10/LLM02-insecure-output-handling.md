@@ -1,8 +1,8 @@
 # LLM02: Insecure Output Handling
 
-**Rank #2 — OWASP LLM Top 10 2025 | Severity: High**
+**Rank #2: OWASP LLM Top 10 2025 | Severity: High**
 
-LLM outputs are treated as trusted data and used downstream without sanitisation — in HTML, SQL, shell commands, or code execution contexts. This creates secondary injection vulnerabilities driven by model output.
+LLM outputs are treated as trusted data and used downstream without sanitisation: in HTML, SQL, shell commands, or code execution contexts. This creates secondary injection vulnerabilities driven by model output.
 
 ---
 
@@ -17,7 +17,7 @@ If an LLM generates HTML that gets rendered in a browser without escaping, that'
 ## XSS via LLM Output
 
 ```javascript
-// VULNERABLE — rendering LLM output as HTML
+// VULNERABLE: rendering LLM output as HTML
 async function generateProductDescription(prompt) {
   const response = await openai.chat.completions.create({
     model: 'gpt-4o',
@@ -26,12 +26,12 @@ async function generateProductDescription(prompt) {
   
   const description = response.choices[0].message.content;
   
-  // Rendered directly — attacker with prompt injection control can inject XSS
+  // Rendered directly: attacker with prompt injection control can inject XSS
   document.getElementById('description').innerHTML = description;
   // Attacker injects: <script>document.cookie // stolen</script>
 }
 
-// SECURE — always sanitise LLM output before rendering as HTML
+// SECURE: always sanitise LLM output before rendering as HTML
 import DOMPurify from 'dompurify';
 import { marked } from 'marked';
 
@@ -58,12 +58,12 @@ async function generateProductDescription(prompt) {
 ### Server-Side Rendering
 
 ```typescript
-// Next.js — VULNERABLE
+// Next.js: VULNERABLE
 export default function Page({ aiContent }: { aiContent: string }) {
   return <div dangerouslySetInnerHTML={{ __html: aiContent }} />; // XSS
 }
 
-// Next.js — SECURE
+// Next.js: SECURE
 import sanitizeHtml from 'sanitize-html';
 
 export default function Page({ aiContent }: { aiContent: string }) {
@@ -73,7 +73,7 @@ export default function Page({ aiContent }: { aiContent: string }) {
   });
   return <div dangerouslySetInnerHTML={{ __html: clean }} />;
   
-  // Or better — render as text only:
+  // Or better: render as text only:
   return <p>{aiContent}</p>; // React escapes by default
 }
 ```
@@ -83,7 +83,7 @@ export default function Page({ aiContent }: { aiContent: string }) {
 ## SQL Injection via LLM Output
 
 ```python
-# VULNERABLE — using LLM-generated SQL directly
+# VULNERABLE: using LLM-generated SQL directly
 def natural_language_query(user_input: str) -> list:
     # Ask the LLM to generate a SQL query
     sql = llm.chat(f"Write a SQL query to: {user_input}")
@@ -95,7 +95,7 @@ def natural_language_query(user_input: str) -> list:
 # Example of what could go wrong:
 # LLM output: "SELECT * FROM users; DROP TABLE users; --"
 
-# SECURE — constrain LLM to only generate the WHERE clause, parameterised
+# SECURE: constrain LLM to only generate the WHERE clause, parameterised
 def natural_language_query_safe(user_input: str, allowed_columns: list) -> list:
     # Ask LLM to extract search parameters as structured data
     params = llm.chat_structured(
@@ -131,7 +131,7 @@ def natural_language_query_safe(user_input: str, allowed_columns: list) -> list:
 ## Command Injection via LLM Output
 
 ```python
-# VULNERABLE — executing LLM-generated shell commands
+# VULNERABLE: executing LLM-generated shell commands
 import subprocess
 
 def run_user_task(description: str) -> str:
@@ -139,7 +139,7 @@ def run_user_task(description: str) -> str:
     result = subprocess.run(command, shell=True, capture_output=True)
     return result.stdout
 
-# SECURE — avoid shell execution; use structured commands with explicit allow list
+# SECURE: avoid shell execution; use structured commands with explicit allow list
 import shlex
 
 ALLOWED_COMMANDS = {
@@ -162,17 +162,17 @@ def run_safe_task(task_name: str) -> str:
 ## Code Generation Security
 
 ```javascript
-// VULNERABLE — executing AI-generated code
+// VULNERABLE: executing AI-generated code
 async function runUserCode(prompt) {
   const code = await llm.generate(`Write JavaScript code to: ${prompt}`);
-  eval(code); // NEVER — code injection, XSS, data exfiltration
+  eval(code); // NEVER: code injection, XSS, data exfiltration
 }
 
-// ALSO VULNERABLE — using Function() constructor
+// ALSO VULNERABLE: using Function() constructor
 const fn = new Function(llm.generate(prompt));
 fn(); // same risk as eval
 
-// SECURE — run generated code in a sandbox (Node.js vm module with restrictions)
+// SECURE: run generated code in a sandbox (Node.js vm module with restrictions)
 import { VM } from 'vm2';
 
 async function runSafeCode(prompt) {
@@ -194,7 +194,7 @@ async function runSafeCode(prompt) {
   }
 }
 
-// Even better — use a dedicated execution service (e2b.dev, Pyodide, etc.)
+// Even better: use a dedicated execution service (e2b.dev, Pyodide, etc.)
 ```
 
 ---
@@ -202,7 +202,7 @@ async function runSafeCode(prompt) {
 ## LLM Output in Email Templates
 
 ```python
-# VULNERABLE — LLM output inserted directly into email HTML
+# VULNERABLE: LLM output inserted directly into email HTML
 def send_ai_email(user_id: str, topic: str):
     content = llm.generate(f"Write a marketing email about {topic}")
     
@@ -211,7 +211,7 @@ def send_ai_email(user_id: str, topic: str):
         html=f"<html><body>{content}</body></html>",  # XSS in email clients
     )
 
-# SECURE — treat LLM output as text, not HTML
+# SECURE: treat LLM output as text, not HTML
 import html
 
 def send_ai_email_safe(user_id: str, topic: str):
@@ -250,7 +250,7 @@ class LLMEmailDraft(BaseModel):
             raise ValueError('Body too long')
         return v
 
-# Parse LLM output with Pydantic — fails fast if model hallucinates structure
+# Parse LLM output with Pydantic: fails fast if model hallucinates structure
 raw_output = llm.chat_structured(prompt, schema=LLMEmailDraft)
 validated = LLMEmailDraft(**raw_output)  # validates and raises on bad data
 ```

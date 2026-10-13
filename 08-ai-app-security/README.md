@@ -7,11 +7,11 @@ AI applications introduce a new category of vulnerabilities. This section covers
 ## Why AI Apps Are Different
 
 Traditional web apps have well-understood attack surfaces. AI apps add:
-- **Prompt injection** — users can override your system prompt
-- **Indirect injection** — malicious content in documents or data poisons the LLM's context
-- **Excessive agency** — agents with too many permissions can be weaponised
-- **Output trust** — using LLM output in code execution or database writes without validation
-- **Supply chain** — models and plugins from untrusted sources
+- **Prompt injection**: users can override your system prompt
+- **Indirect injection**: malicious content in documents or data poisons the LLM's context
+- **Excessive agency**: agents with too many permissions can be weaponised
+- **Output trust**: using LLM output in code execution or database writes without validation
+- **Supply chain**: models and plugins from untrusted sources
 
 ---
 

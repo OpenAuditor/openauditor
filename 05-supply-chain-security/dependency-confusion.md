@@ -1,6 +1,6 @@
 # Dependency Confusion
 
-> **30-second summary:** Dependency confusion attacks trick package managers into downloading a malicious public package instead of your private internal one — by exploiting how registries are resolved when the same name exists in both a private and public registry.
+> **30-second summary:** Dependency confusion attacks trick package managers into downloading a malicious public package instead of your private internal one: by exploiting how registries are resolved when the same name exists in both a private and public registry.
 
 ---
 
@@ -28,7 +28,7 @@ The attack works like this:
 
 5. npm resolves the public registry first (or alongside private)
 
-6. Higher version on public npm wins — malware installed
+6. Higher version on public npm wins: malware installed
 ```
 
 ---
@@ -38,16 +38,16 @@ The attack works like this:
 Security researcher Alex Birsan demonstrated this attack at scale in February 2021. He:
 
 1. Found internal package names in public repositories and npm error logs for Apple, Microsoft, Yelp, Netflix, PayPal, Shopify, and 30+ other companies
-2. Published empty packages with those names on public npm — but with **high version numbers** (e.g., `99.0.0`)
-3. Received execution callbacks from inside those companies' internal systems — proving the packages were auto-installed in CI pipelines
+2. Published empty packages with those names on public npm, but with **high version numbers** (e.g., `99.0.0`)
+3. Received execution callbacks from inside those companies' internal systems: proving the packages were auto-installed in CI pipelines
 
-He was paid **over $130,000 in bug bounties** for the research. The attack was entirely passive — he did nothing more than register package names.
+He was paid **over $130,000 in bug bounties** for the research. The attack was entirely passive: he did nothing more than register package names.
 
 ---
 
 ## Why It Happens
 
-Package managers like npm resolve dependencies across multiple registries. The default behaviour when a package exists in both a private and public registry is often **version-based resolution** — whichever registry has the highest version number wins.
+Package managers like npm resolve dependencies across multiple registries. The default behaviour when a package exists in both a private and public registry is often **version-based resolution**: whichever registry has the highest version number wins.
 
 ```
 npm lookup process:
@@ -111,7 +111,7 @@ This ensures if someone looks up your internal package name on public npm, it re
 If using a private registry that proxies/mirrors public npm:
 
 ```ini
-# .npmrc — route ALL traffic through your private registry
+# .npmrc: route ALL traffic through your private registry
 registry=https://your-private-registry.com
 
 # The private registry should be configured to:
@@ -125,7 +125,7 @@ Most enterprise registries (Artifactory, Nexus) have a setting to **prefer inter
 ### 4. Pin Exact Versions and Use Lockfiles
 
 ```bash
-# Install with exact versions — no range resolution
+# Install with exact versions: no range resolution
 npm install --save-exact @mycompany/auth-utils
 
 # Always commit your lockfile
@@ -133,14 +133,14 @@ git add package-lock.json
 git commit -m "chore: add auth utils dependency"
 ```
 
-Lockfiles specify exact resolved URLs — not just version numbers. If your lockfile says the package resolves to `https://your-private-registry.com/...`, a public npm version at `99.0.0` won't override it.
+Lockfiles specify exact resolved URLs, not just version numbers. If your lockfile says the package resolves to `https://your-private-registry.com/...`, a public npm version at `99.0.0` won't override it.
 
 ### 5. Verify Package Integrity in CI
 
 ```yaml
 # .github/workflows/ci.yml
 - name: Install dependencies
-  run: npm ci  # Uses lockfile — does not resolve differently
+  run: npm ci  # Uses lockfile: does not resolve differently
 
 - name: Verify registry sources
   run: |
@@ -195,7 +195,7 @@ check('root', data)
 ### Maven / Java
 
 ```xml
-<!-- settings.xml — configure private repo with higher priority -->
+<!-- settings.xml: configure private repo with higher priority -->
 <mirrors>
   <mirror>
     <id>private-repo</id>

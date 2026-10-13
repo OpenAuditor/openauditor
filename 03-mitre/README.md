@@ -1,6 +1,6 @@
 # MITRE ATT&CK for Developers
 
-> **30-second summary:** MITRE ATT&CK is a globally accessible knowledge base of adversary tactics and techniques based on real-world observations. For developers, it provides a shared language for describing how attackers operate — so you can design systems that resist known attack patterns, not just pass a compliance checklist.
+> **30-second summary:** MITRE ATT&CK is a globally accessible knowledge base of adversary tactics and techniques based on real-world observations. For developers, it provides a shared language for describing how attackers operate, so you can design systems that resist known attack patterns, not just pass a compliance checklist.
 
 ---
 
@@ -8,12 +8,12 @@
 
 MITRE ATT&CK (Adversarial Tactics, Techniques, and Common Knowledge) is a curated framework maintained by the non-profit MITRE Corporation. It documents the real methods that threat actors use at every stage of an attack, from the first reconnaissance scan to data exfiltration and system destruction.
 
-Unlike a vulnerability database (which catalogues flaws), ATT&CK catalogues **behaviours** — what an attacker *does*, not just what is broken. This makes it useful for:
+Unlike a vulnerability database (which catalogues flaws), ATT&CK catalogues **behaviours**: what an attacker *does*, not just what is broken. This makes it useful for:
 
-- **Threat modelling** — "Which techniques could be used against our login endpoint?"
-- **Security control mapping** — "Does our WAF block T1190 (Exploit Public-Facing Application)?"
-- **Incident response** — "The logs show lateral movement; which technique matches?"
-- **Red/blue team communication** — shared vocabulary across offensive and defensive teams
+- **Threat modelling**: "Which techniques could be used against our login endpoint?"
+- **Security control mapping**: "Does our WAF block T1190 (Exploit Public-Facing Application)?"
+- **Incident response**: "The logs show lateral movement; which technique matches?"
+- **Red/blue team communication**: shared vocabulary across offensive and defensive teams
 
 ---
 
@@ -33,20 +33,20 @@ Most web and SaaS developers work primarily within the **Enterprise** matrix, sp
 
 Tactics represent the adversary's **goal** at each stage of an attack. They form a rough kill chain:
 
-1. **Reconnaissance** — gathering information before attacking
-2. **Resource Development** — building infrastructure, acquiring tools
-3. **Initial Access** — getting a foothold into the target
-4. **Execution** — running malicious code
-5. **Persistence** — maintaining access across reboots/logins
-6. **Privilege Escalation** — gaining higher-level permissions
-7. **Defence Evasion** — avoiding detection
-8. **Credential Access** — stealing usernames and passwords
-9. **Discovery** — learning about the environment
-10. **Lateral Movement** — pivoting to other systems
-11. **Collection** — gathering data of interest
-12. **Command and Control** — communicating with compromised systems
-13. **Exfiltration** — stealing data out of the environment
-14. **Impact** — disrupting, destroying, or manipulating systems
+1. **Reconnaissance**: gathering information before attacking
+2. **Resource Development**: building infrastructure, acquiring tools
+3. **Initial Access**: getting a foothold into the target
+4. **Execution**: running malicious code
+5. **Persistence**: maintaining access across reboots/logins
+6. **Privilege Escalation**: gaining higher-level permissions
+7. **Defence Evasion**: avoiding detection
+8. **Credential Access**: stealing usernames and passwords
+9. **Discovery**: learning about the environment
+10. **Lateral Movement**: pivoting to other systems
+11. **Collection**: gathering data of interest
+12. **Command and Control**: communicating with compromised systems
+13. **Exfiltration**: stealing data out of the environment
+14. **Impact**: disrupting, destroying, or manipulating systems
 
 ---
 
@@ -87,7 +87,7 @@ Visit [attack.mitre.org](https://attack.mitre.org) and filter by platform (e.g. 
 For each relevant technique, ask: "Do we have a control for this?" If not, is the risk acceptable or does it need addressing?
 
 ### 4. Use the ATT&CK Navigator
-The free [ATT&CK Navigator](https://mitre-attack.github.io/attack-navigator/) lets you colour-code the matrix to show your coverage — a useful artifact for threat modelling workshops.
+The free [ATT&CK Navigator](https://mitre-attack.github.io/attack-navigator/) lets you colour-code the matrix to show your coverage: a useful artifact for threat modelling workshops.
 
 ---
 
@@ -96,7 +96,7 @@ The free [ATT&CK Navigator](https://mitre-attack.github.io/attack-navigator/) le
 | File | Purpose |
 |------|---------|
 | `attck-for-web-apps.md` | ATT&CK tactics mapped to web application attacks |
-| `attck-for-saas.md` | ATT&CK for SaaS products — initial access, persistence, lateral movement |
+| `attck-for-saas.md` | ATT&CK for SaaS products: initial access, persistence, lateral movement |
 | `attck-for-ai-apps.md` | ATT&CK adapted for AI/LLM-powered applications |
 | `mitre-to-owasp-mapping.md` | Cross-reference table: ATT&CK techniques ↔ OWASP Top 10 |
 | `prompts/mitre-threat-review.md` | Agent prompt to map ATT&CK threats to your application |
@@ -108,4 +108,4 @@ The free [ATT&CK Navigator](https://mitre-attack.github.io/attack-navigator/) le
 - [MITRE ATT&CK official site](https://attack.mitre.org)
 - [ATT&CK Navigator](https://mitre-attack.github.io/attack-navigator/)
 - [ATT&CK for Cloud](https://attack.mitre.org/matrices/enterprise/cloud/)
-- [MITRE D3FEND](https://d3fend.mitre.org/) — the defensive counterpart to ATT&CK
+- [MITRE D3FEND](https://d3fend.mitre.org/): the defensive counterpart to ATT&CK

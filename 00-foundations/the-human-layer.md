@@ -1,6 +1,6 @@
 # The Human Layer: Why Training and Process Matter
 
-In 30 seconds: Security isn't just code—it's people. The best encryption won't save you if someone leaves the database password in a git commit. Or if an employee falls for a phishing email. Or if your team doesn't know what to do during an attack. This section covers training, incident response, and the processes that make security stick across your entire organization.
+In 30 seconds: Security isn't just code: it's people. The best encryption won't save you if someone leaves the database password in a git commit. Or if an employee falls for a phishing email. Or if your team doesn't know what to do during an attack. This section covers training, incident response, and the processes that make security stick across your entire organization.
 
 ## The hardest part of security is people
 
@@ -21,7 +21,7 @@ You can build the most secure code possible, but if:
 
 ## Security training: What everyone needs
 
-Everyone on your team—developers, designers, product, ops, even leadership—needs basic security training.
+Everyone on your team, developers, designers, product, ops, even leadership, needs basic security training.
 
 ### Level 1: Everyone (30 minutes, annual)
 
@@ -399,10 +399,10 @@ Companies that neglect this layer:
 
 ## What comes next
 
-- **[Why Security Matters](./why-security-matters.md)** — Understand the business case for security culture
-- **[Risk Appetite Framework](./risk-appetite-framework.md)** — Use this to prioritize human-layer investments
-- **01-architecture/** — Design systems that are easy to operate securely
-- **02-code/** — Code review practices that catch vulnerabilities
+- **[Why Security Matters](./why-security-matters.md)**: Understand the business case for security culture
+- **[Risk Appetite Framework](./risk-appetite-framework.md)**: Use this to prioritize human-layer investments
+- **01-architecture/**: Design systems that are easy to operate securely
+- **02-code/**: Code review practices that catch vulnerabilities
 
 ---
 

@@ -1,6 +1,6 @@
 # Auditing a Package Before Installing
 
-> **30-second summary:** Before adding any new npm package, spend 5 minutes vetting it. This single habit prevents the most common supply chain attack vector — installing a malicious or compromised package.
+> **30-second summary:** Before adding any new npm package, spend 5 minutes vetting it. This single habit prevents the most common supply chain attack vector: installing a malicious or compromised package.
 
 ---
 
@@ -10,7 +10,7 @@ When you're about to run `npm install some-package`, do this first:
 
 ---
 
-### Step 1 — Verify the Package Exists and Check Metadata
+### Step 1: Verify the Package Exists and Check Metadata
 
 ```bash
 npm info <package-name>
@@ -30,7 +30,7 @@ published 6 months ago by known-author <author@example.com>
 - Published very recently (days or weeks ago)
 - Maintainer you've never heard of with no other packages
 - No `homepage` or `repository` field
-- Version number is very high (e.g., `99.0.0`) — possible confusion attack
+- Version number is very high (e.g., `99.0.0`): possible confusion attack
 
 ```bash
 # Check when the package was first created
@@ -45,7 +45,7 @@ npm info <package-name> time --json
 
 ---
 
-### Step 2 — Inspect the Repository
+### Step 2: Inspect the Repository
 
 ```bash
 npm info <package-name> repository
@@ -54,11 +54,11 @@ npm info <package-name> repository
 
 Then visit the GitHub repository and check:
 
-- **Stars and forks** — popular packages have community engagement
-- **Recent commits** — when was the last commit?
-- **Issues and PRs** — is it actively maintained?
-- **Contributors** — single contributor or a team?
-- **License** — is there one? Is it appropriate for your use?
+- **Stars and forks**: popular packages have community engagement
+- **Recent commits**: when was the last commit?
+- **Issues and PRs**: is it actively maintained?
+- **Contributors**: single contributor or a team?
+- **License**: is there one? Is it appropriate for your use?
 
 ```bash
 # Open repository directly from terminal
@@ -67,7 +67,7 @@ npm info <package-name> homepage | xargs open
 
 ---
 
-### Step 3 — Check the Install Scripts
+### Step 3: Check the Install Scripts
 
 Many attacks use `postinstall` scripts. Check if the package has any:
 
@@ -95,7 +95,7 @@ Or inspect directly on npm's website: `https://www.npmjs.com/package/<name>?acti
 
 ---
 
-### Step 4 — Run npm Audit
+### Step 4: Run npm Audit
 
 ```bash
 # Check for known vulnerabilities in your current dependencies
@@ -114,7 +114,7 @@ npm audit --json | jq '.vulnerabilities | to_entries[] | {name: .key, severity: 
 
 ---
 
-### Step 5 — Check Download Statistics
+### Step 5: Check Download Statistics
 
 ```bash
 # Use npms.io for comprehensive stats
@@ -128,15 +128,15 @@ curl "https://api.npmjs.org/downloads/point/last-week/<package-name>"
 
 | Weekly Downloads | Risk Level |
 |---|---|
-| > 1 million | Low — heavily scrutinised |
-| 100k–1M | Low-Medium — reasonably popular |
-| 10k–100k | Medium — some scrutiny |
-| 1k–10k | Medium-High — limited scrutiny |
-| < 1k | High — almost no scrutiny |
+| > 1 million | Low: heavily scrutinised |
+| 100k: 1M | Low-Medium: reasonably popular |
+| 10k: 100k | Medium: some scrutiny |
+| 1k: 10k | Medium-High: limited scrutiny |
+| < 1k | High: almost no scrutiny |
 
 ---
 
-### Step 6 — Cross-Reference the Source Code
+### Step 6: Cross-Reference the Source Code
 
 Verify that what's published on npm matches what's in the GitHub repository:
 
@@ -156,7 +156,7 @@ Legitimate packages publish readable source or a build artefact that clearly cor
 
 ---
 
-### Step 7 — Check for Recent Owner Transfers
+### Step 7: Check for Recent Owner Transfers
 
 ```bash
 # See full version history with dates
@@ -259,12 +259,12 @@ Have there been any suspicious recent maintainer changes?
 
 ## Checklist
 
-- [ ] `npm info` run — verified maintainer identity and publication date
+- [ ] `npm info` run: verified maintainer identity and publication date
 - [ ] Repository URL confirmed and GitHub page reviewed
 - [ ] Install scripts (`preinstall`, `postinstall`) inspected
-- [ ] `npm audit` run — no high/critical vulnerabilities
-- [ ] Download statistics reviewed — package is appropriately popular
-- [ ] Source code spot-checked — no suspicious obfuscation
-- [ ] Version history reviewed — no suspicious ownership changes
+- [ ] `npm audit` run: no high/critical vulnerabilities
+- [ ] Download statistics reviewed: package is appropriately popular
+- [ ] Source code spot-checked: no suspicious obfuscation
+- [ ] Version history reviewed: no suspicious ownership changes
 - [ ] Alternative packages considered if risk is high
 - [ ] Decision documented for team (e.g., in PR description or ADR)

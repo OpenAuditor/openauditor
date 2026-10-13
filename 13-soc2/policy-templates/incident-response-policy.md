@@ -17,7 +17,7 @@ This policy defines [COMPANY NAME]'s approach to identifying, containing, invest
 
 ## 2. Scope
 
-This policy applies to all security incidents affecting [COMPANY NAME]'s systems, data, or operations — including those caused by third-party service providers.
+This policy applies to all security incidents affecting [COMPANY NAME]'s systems, data, or operations, including those caused by third-party service providers.
 
 ## 3. Definitions
 
@@ -29,23 +29,23 @@ This policy applies to all security incidents affecting [COMPANY NAME]'s systems
 
 | Level | Definition | Example |
 |-------|-----------|---------|
-| P0 — Critical | Active breach, data exfiltration, complete service outage | Confirmed ransomware; database dump on dark web |
-| P1 — High | Significant security event requiring immediate action | Credential compromise; major service degradation |
-| P2 — Medium | Security event requiring prompt response | Suspicious access patterns; minor vulnerability exploited |
-| P3 — Low | Minor security event | Single failed login; low-severity CVE discovered |
+| P0: Critical | Active breach, data exfiltration, complete service outage | Confirmed ransomware; database dump on dark web |
+| P1: High | Significant security event requiring immediate action | Credential compromise; major service degradation |
+| P2: Medium | Security event requiring prompt response | Suspicious access patterns; minor vulnerability exploited |
+| P3: Low | Minor security event | Single failed login; low-severity CVE discovered |
 
 ## 4. Incident Response Team
 
-**Incident Commander:** [ROLE — usually CISO or CTO]  
+**Incident Commander:** [ROLE, usually CISO or CTO]  
 Responsibilities: Overall response coordination, external communications, final decisions
 
-**Technical Lead:** [ROLE — usually Senior Engineer or DevOps Lead]  
+**Technical Lead:** [ROLE, usually Senior Engineer or DevOps Lead]  
 Responsibilities: Technical investigation, containment, remediation
 
-**Communications Lead:** [ROLE — usually CEO or Head of Marketing]  
+**Communications Lead:** [ROLE, usually CEO or Head of Marketing]  
 Responsibilities: Customer and stakeholder communications, PR
 
-**Legal/Privacy Lead:** [ROLE — DPO or Legal Counsel]  
+**Legal/Privacy Lead:** [ROLE: DPO or Legal Counsel]  
 Responsibilities: Regulatory notifications, legal obligations
 
 ## 5. Incident Response Process
@@ -170,7 +170,7 @@ What information was involved: [Specific data types]
 
 What we are doing: [Containment, remediation steps]
 
-What you should do: [Specific actions — password reset, monitor account, etc.]
+What you should do: [Specific actions: password reset, monitor account, etc.]
 
 We take the security of your information seriously. We are sorry this happened.
 

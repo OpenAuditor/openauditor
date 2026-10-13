@@ -36,7 +36,7 @@ Tools that probe a running application from the outside.
 | **w3af** | Python-based web application attack and audit framework | Yes (open source) | https://w3af.org |
 | **OWASP Amass** | Attack surface discovery; DNS enumeration, subdomain discovery | Yes (open source) | https://github.com/owasp-amass/amass |
 
-**Limitations to know:** DAST requires a running target — not suitable for pre-deployment. Burp Suite Community cannot save projects or run automated scans; the Pro licence costs ~$449/year.
+**Limitations to know:** DAST requires a running target, not suitable for pre-deployment. Burp Suite Community cannot save projects or run automated scans; the Pro licence costs ~$449/year.
 
 ---
 
@@ -129,4 +129,4 @@ Tools that audit third-party packages for known vulnerabilities.
 
 ---
 
-*Last reviewed: April 2026. Tool landscapes change — always verify current pricing and features on the official site.*
+*Last reviewed: April 2026. Tool landscapes change: always verify current pricing and features on the official site.*

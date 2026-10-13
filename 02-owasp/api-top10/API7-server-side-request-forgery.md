@@ -1,8 +1,8 @@
-# API7 — Server Side Request Forgery (SSRF)
+# API7: Server Side Request Forgery (SSRF)
 
 ## 30-second summary
 
-SSRF occurs when an API accepts a URL as input and makes a server-side HTTP request to that URL without validating it. Attackers supply internal network addresses or cloud metadata endpoints, causing the server to fetch data it should never be able to access — including cloud provider credentials, internal service responses, and infrastructure metadata.
+SSRF occurs when an API accepts a URL as input and makes a server-side HTTP request to that URL without validating it. Attackers supply internal network addresses or cloud metadata endpoints, causing the server to fetch data it should never be able to access, including cloud provider credentials, internal service responses, and infrastructure metadata.
 
 > **Critical:** Never allow user-supplied URLs to be fetched by your server without strict allowlisting. The server lives inside your network; you do not.
 
@@ -11,20 +11,20 @@ SSRF occurs when an API accepts a URL as input and makes a server-side HTTP requ
 ## Vulnerable code example
 
 ```typescript
-// Express.js — VULNERABLE
+// Express.js: VULNERABLE
 // A webhook or link preview feature that fetches user-supplied URLs
 
 app.post('/api/webhooks/test', authenticate, async (req, res) => {
   const { url } = req.body;
 
-  // Fetches whatever URL the user supplies — no validation
+  // Fetches whatever URL the user supplies: no validation
   const response = await fetch(url);
   const data = await response.text();
 
   return res.json({ status: response.status, preview: data.slice(0, 500) });
 });
 
-// Image proxy — also vulnerable
+// Image proxy: also vulnerable
 app.get('/api/proxy/image', async (req, res) => {
   const { src } = req.query;
 
@@ -41,7 +41,7 @@ An attacker sends `url=http://169.254.169.254/latest/meta-data/iam/security-cred
 ## Fixed code example
 
 ```typescript
-// Express.js — FIXED
+// Express.js: FIXED
 import { URL } from 'url';
 import dns from 'dns/promises';
 import net from 'net';
@@ -59,7 +59,7 @@ async function isPrivateIP(hostname: string): Promise<boolean> {
     const result = await dns.lookup(hostname, { all: true });
     addresses = result.map((r) => r.address);
   } catch {
-    return true; // DNS failure — treat as unsafe
+    return true; // DNS failure: treat as unsafe
   }
 
   return addresses.some((addr) => {
@@ -94,7 +94,7 @@ async function validateWebhookUrl(rawUrl: string): Promise<URL> {
     throw new Error('Host not in allowlist');
   }
 
-  // DNS rebinding protection — resolve and verify IP range
+  // DNS rebinding protection: resolve and verify IP range
   if (await isPrivateIP(parsed.hostname)) {
     throw new Error('URL resolves to a private or restricted IP address');
   }
@@ -188,15 +188,15 @@ done
 ```
 
 **Tools:**
-- Burp Suite Collaborator — detect out-of-band SSRF where response is not returned.
-- `interactsh` — open-source alternative to Burp Collaborator.
-- `ssrfmap` — automated SSRF exploitation and detection tool.
+- Burp Suite Collaborator: detect out-of-band SSRF where response is not returned.
+- `interactsh`: open-source alternative to Burp Collaborator.
+- `ssrfmap`: automated SSRF exploitation and detection tool.
 
 ---
 
 ## Why this matters
 
-SSRF turns your API server into a proxy for attacking your own internal infrastructure. The server has network access that the attacker does not — it can reach internal databases, admin panels, cloud metadata services, and other microservices that are not exposed to the internet.
+SSRF turns your API server into a proxy for attacking your own internal infrastructure. The server has network access that the attacker does not: it can reach internal databases, admin panels, cloud metadata services, and other microservices that are not exposed to the internet.
 
 In cloud environments, the impact is particularly severe. The EC2/GCP/Azure metadata endpoint returns temporary credentials that grant access to every resource the instance role is permitted to access. This is the pattern that led to the Capital One breach: one SSRF vulnerability, one metadata request, one set of credentials, 100 million records.
 

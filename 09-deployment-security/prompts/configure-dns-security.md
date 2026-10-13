@@ -33,7 +33,7 @@ dig TXT [YOUR_DOMAIN] | grep spf
 # Check DMARC record
 dig TXT _dmarc.[YOUR_DOMAIN] | grep dmarc
 
-# Check DKIM (need to know the selector — check with email provider)
+# Check DKIM (need to know the selector: check with email provider)
 dig TXT [SELECTOR]._domainkey.[YOUR_DOMAIN]
 
 # Check for subdomain takeover risks
@@ -76,7 +76,7 @@ SPF (Sender Policy Framework) specifies which mail servers can send email on beh
 **Important SPF rules:**
 - Use `~all` (softfail) initially; graduate to `-all` (hardfail) after testing
 - Maximum 10 DNS lookups (count each `include:` and `mx` as one lookup)
-- Do NOT have two SPF records — combine into one
+- Do NOT have two SPF records: combine into one
 
 **Step 3: Configure DKIM**
 
@@ -111,7 +111,7 @@ curl -s "https://api.sendgrid.com/v3/whitelabel/domains" \
 
 DMARC tells receivers what to do when SPF/DKIM fails.
 
-**Phase 1 — Monitor (deploy immediately)**
+**Phase 1: Monitor (deploy immediately)**
 ```
 Name: _dmarc.[YOUR_DOMAIN]
 Type: TXT
@@ -123,13 +123,13 @@ Wait 2 weeks and review the aggregate reports. Free tools for reading DMARC repo
 - dmarc.postmarkapp.com (free)
 - Google Postmaster Tools (for Gmail senders)
 
-**Phase 2 — Quarantine (after 2 weeks of clean reports)**
+**Phase 2: Quarantine (after 2 weeks of clean reports)**
 ```
 Value: v=DMARC1; p=quarantine; pct=10; rua=mailto:dmarc-reports@[YOUR_DOMAIN]; fo=1
 ```
 Start at `pct=10` (10% of failing messages quarantined) and gradually increase to 100%.
 
-**Phase 3 — Reject (the goal)**
+**Phase 3: Reject (the goal)**
 ```
 Value: v=DMARC1; p=reject; rua=mailto:dmarc-reports@[YOUR_DOMAIN]; fo=1; adkim=s; aspf=s
 ```
@@ -138,7 +138,7 @@ Value: v=DMARC1; p=reject; rua=mailto:dmarc-reports@[YOUR_DOMAIN]; fo=1; adkim=s
 
 ```bash
 # List all DNS records for your domain
-# (Use your DNS provider's export — Cloudflare, Route 53, etc.)
+# (Use your DNS provider's export: Cloudflare, Route 53, etc.)
 
 # Check each CNAME for dangling references
 # Dangerous targets include:
@@ -219,8 +219,8 @@ dig TXT _dmarc.[YOUR_DOMAIN]
 | SPF | ✅ / ❌ | v=spf1 ... | |
 | DKIM | ✅ / ❌ | selector: [name] | |
 | DMARC | ✅ Phase 1 / ❌ | p=none/quarantine/reject | |
-| DNSSEC | ✅ / ❌ | — | |
-| Subdomain takeover | ✅ / ⚠️ N found | — | |
+| DNSSEC | ✅ / ❌ | n/a | |
+| Subdomain takeover | ✅ / ⚠️ N found | n/a | |
 
 **Actions taken:**
 - [List each DNS record added or modified]

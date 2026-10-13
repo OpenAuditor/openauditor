@@ -258,11 +258,11 @@ This is the master index of every agent prompt in OpenAuditor, organized by what
 
 ## 💡 Tips for Using These Prompts
 
-1. **Copy the whole prompt** — Paste the entire agent prompt into your AI tool
-2. **Give it context** — Tell the agent about your app first (what stack, what does it do)
-3. **Follow its findings** — If it says "Critical", act on it before shipping
-4. **Re-audit after fixes** — Run the same prompt again to confirm the fix worked
-5. **Link to the deep-dive** — If a finding confuses you, read the linked OpenAuditor section
+1. **Copy the whole prompt**: Paste the entire agent prompt into your AI tool
+2. **Give it context**: Tell the agent about your app first (what stack, what does it do)
+3. **Follow its findings**: If it says "Critical", act on it before shipping
+4. **Re-audit after fixes**: Run the same prompt again to confirm the fix worked
+5. **Link to the deep-dive**: If a finding confuses you, read the linked OpenAuditor section
 
 ---
 

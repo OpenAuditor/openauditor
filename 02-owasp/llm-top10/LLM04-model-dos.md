@@ -1,6 +1,6 @@
 # LLM04: Model Denial of Service
 
-**Rank #4 — OWASP LLM Top 10 2025 | Severity: Medium**
+**Rank #4: OWASP LLM Top 10 2025 | Severity: Medium**
 
 Attackers send computationally expensive requests to LLM-powered applications, causing service degradation, excessive costs, or complete unavailability.
 
@@ -8,7 +8,7 @@ Attackers send computationally expensive requests to LLM-powered applications, c
 
 ## 30-Second Summary
 
-LLM inference is expensive — both in compute time and API cost. A single request with a 100,000-token context window can cost £1–5 and take 30+ seconds. Without rate limiting and token limits, an attacker can run up your API bill by thousands of pounds or make your service unavailable for real users.
+LLM inference is expensive: both in compute time and API cost. A single request with a 100,000-token context window can cost £1 to 5 and take 30+ seconds. Without rate limiting and token limits, an attacker can run up your API bill by thousands of pounds or make your service unavailable for real users.
 
 **Real cost impact:** Unrestricted LLM API access costs real money. At $15/million output tokens (GPT-4), a single request generating 100,000 tokens costs $1.50. 1,000 concurrent such requests = $1,500. Without limits, this attack is trivially achievable.
 
@@ -52,7 +52,7 @@ response = openai.chat.completions.create(
 ### 3. Recursive Agent Chains
 
 ```python
-# VULNERABLE — agent can spawn agents indefinitely
+# VULNERABLE: agent can spawn agents indefinitely
 def run_agent(task: str, depth: int = 0):
     response = llm.chat(f"Break this task into subtasks: {task}")
     subtasks = parse_subtasks(response)
@@ -101,7 +101,7 @@ def truncate_input(text: str, max_chars: int = 10000) -> str:
 from upstash_ratelimit import Ratelimit, FixedWindow
 from upstash_redis import Redis
 
-# Rate limit by user — not just by IP (authenticated users can still DoS)
+# Rate limit by user: not just by IP (authenticated users can still DoS)
 ratelimit = Ratelimit(
     redis=Redis.from_env(),
     limiter=FixedWindow(max_requests=10, window="1 m"),  # 10 LLM calls/minute
@@ -160,7 +160,7 @@ class LLMCostMonitor:
     
     async def track_usage(self, user_id: str, model: str, 
                           input_tokens: int, output_tokens: int):
-        # Pricing (approximate — check current OpenAI pricing)
+        # Pricing (approximate: check current OpenAI pricing)
         COSTS_PER_1K = {
             'gpt-4o': {'input': 0.0025, 'output': 0.01},
             'gpt-4o-mini': {'input': 0.00015, 'output': 0.0006},
@@ -193,7 +193,7 @@ class LLMCostMonitor:
 ### 5. Agent Depth and Action Limits
 
 ```python
-# SECURE — limit recursive agent depth and total actions
+# SECURE: limit recursive agent depth and total actions
 class BoundedAgent:
     MAX_DEPTH = 3
     MAX_ACTIONS_PER_RUN = 20
@@ -231,7 +231,7 @@ class BoundedAgent:
 - [ ] Rate limiting applied to LLM endpoints by user (not just IP)
 - [ ] Daily/monthly cost caps per user implemented
 - [ ] Request timeout configured (fail fast, don't hang forever)
-- [ ] LLM API spend monitored — alerts configured for anomalous usage
+- [ ] LLM API spend monitored: alerts configured for anomalous usage
 - [ ] Agentic loops have max depth and max action count limits
 - [ ] Concurrent LLM requests limited per user (prevent parallel attacks)
 - [ ] Free tier users have stricter limits than paid users

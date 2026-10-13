@@ -26,10 +26,10 @@ The LinkedIn breach (2012) involved 117 million unsalted SHA-1 hashes. The major
 
 ### Recommendation Order
 
-1. **Argon2id** — Winner of the Password Hashing Competition (2015). Recommended by OWASP and NIST. Resistant to both GPU and side-channel attacks.
-2. **bcrypt** — Proven algorithm, widely supported. Use if Argon2 is unavailable.
-3. **PBKDF2** — Acceptable when FIPS compliance is required. Less memory-hard than the above.
-4. **scrypt** — Strong but harder to tune safely than Argon2id.
+1. **Argon2id**: Winner of the Password Hashing Competition (2015). Recommended by OWASP and NIST. Resistant to both GPU and side-channel attacks.
+2. **bcrypt**: Proven algorithm, widely supported. Use if Argon2 is unavailable.
+3. **PBKDF2**: Acceptable when FIPS compliance is required. Less memory-hard than the above.
+4. **scrypt**: Strong but harder to tune safely than Argon2id.
 
 > **Critical:** Never use MD5, SHA-1, SHA-256, or any general-purpose hash function directly for password storage. They are not designed for this purpose and will be cracked rapidly.
 
@@ -45,7 +45,7 @@ Argon2id is the recommended algorithm. It has three parameters:
 | `timeCost` | Iterations | 2 | 3 |
 | `parallelism` | Threads | 1 | 4 |
 
-### Node.js — Argon2id
+### Node.js: Argon2id
 
 ```bash
 npm install argon2
@@ -83,7 +83,7 @@ const isValid = await verifyPassword(hash, 'correct horse battery staple');
 // => true
 ```
 
-### Python — Argon2id (passlib)
+### Python: Argon2id (passlib)
 
 ```bash
 pip install passlib[argon2]
@@ -144,11 +144,11 @@ The work factor is an exponent: bcrypt performs `2^N` iterations of its internal
 | 14 | ~1.6s | High-security contexts |
 | 6 | ~1ms | Never use in production |
 
-> **Critical:** The work factor must be tuned to your hardware. Target 200–500ms per hash on production hardware. Benchmark with `bcrypt.getRounds()` and time your operations. Increase the factor annually as hardware improves.
+> **Critical:** The work factor must be tuned to your hardware. Target 200 to 500ms per hash on production hardware. Benchmark with `bcrypt.getRounds()` and time your operations. Increase the factor annually as hardware improves.
 
 bcrypt also has a **72-byte input limit**. Passwords longer than 72 characters are silently truncated. If you need to support longer passphrases, pre-hash with SHA-256 before passing to bcrypt (see below).
 
-### Node.js — bcrypt
+### Node.js: bcrypt
 
 ```bash
 npm install bcryptjs
@@ -174,7 +174,7 @@ async function hashPassword(plaintext) {
   return bcrypt.hash(plaintext, WORK_FACTOR);
 }
 
-// Verifying a password — MUST use bcrypt.compare, NOT string comparison
+// Verifying a password: MUST use bcrypt.compare, NOT string comparison
 async function verifyPassword(plaintext, hash) {
   if (Buffer.byteLength(plaintext, 'utf8') > 72) {
     const crypto = require('crypto');
@@ -183,7 +183,7 @@ async function verifyPassword(plaintext, hash) {
       .update(plaintext)
       .digest('hex');
   }
-  // bcrypt.compare is timing-safe — always use it, never ===
+  // bcrypt.compare is timing-safe: always use it, never ===
   return bcrypt.compare(plaintext, hash);
 }
 
@@ -196,7 +196,7 @@ function benchmarkWorkFactor() {
 }
 ```
 
-### Python — bcrypt (passlib)
+### Python: bcrypt (passlib)
 
 ```bash
 pip install passlib[bcrypt]
@@ -209,7 +209,7 @@ from passlib.context import CryptContext
 pwd_context = CryptContext(
     schemes=['bcrypt'],
     deprecated='auto',        # Auto-upgrade old hashes on next login
-    bcrypt__rounds=12,        # Work factor — tune for your hardware
+    bcrypt__rounds=12,        # Work factor: tune for your hardware
 )
 
 def hash_password(plaintext: str) -> str:
@@ -229,7 +229,7 @@ hashed = hash_password('my-secure-password')
 is_valid, needs_rehash = verify_password('my-secure-password', hashed)
 
 if is_valid and needs_rehash:
-    # Store the new hash — user's password stays the same, params upgraded
+    # Store the new hash: user's password stays the same, params upgraded
     store_new_hash(new_hash)
 ```
 
@@ -247,7 +247,7 @@ Use PBKDF2 only when FIPS 140-2 compliance is required, as it is less memory-har
 | PBKDF2-HMAC-SHA512 | 210,000 |
 | PBKDF2-HMAC-SHA1 | 1,300,000 |
 
-### Node.js — PBKDF2
+### Node.js: PBKDF2
 
 ```javascript
 const crypto = require('crypto');
@@ -289,10 +289,10 @@ Always use:
 - **Java**: `MessageDigest.isEqual(a, b)`.
 
 ```javascript
-// WRONG — vulnerable to timing attack
+// WRONG: vulnerable to timing attack
 if (userHash === storedHash) { ... }
 
-// CORRECT — constant-time comparison
+// CORRECT: constant-time comparison
 const crypto = require('crypto');
 if (crypto.timingSafeEqual(
   Buffer.from(userHash),
@@ -324,14 +324,14 @@ All modern password hashing libraries (bcrypt, argon2, passlib) handle salting a
 
 ## Re-hashing on Login (Algorithm Upgrades)
 
-When you upgrade your hashing algorithm or work factor, you cannot retroactively rehash stored passwords — you don't know the plaintext. The correct approach:
+When you upgrade your hashing algorithm or work factor, you cannot retroactively rehash stored passwords: you don't know the plaintext. The correct approach:
 
 1. On successful login, check if the stored hash uses the current parameters.
 2. If not, hash the plaintext with the new parameters and update the stored hash.
 3. Old hashes are migrated transparently as users log in.
 
 ```javascript
-// Node.js — rehash on login if work factor has changed
+// Node.js: rehash on login if work factor has changed
 const CURRENT_WORK_FACTOR = 12;
 
 async function login(plaintext, storedHash) {
@@ -367,6 +367,6 @@ async function login(plaintext, storedHash) {
 ## Further Reading
 
 - [OWASP Password Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html)
-- [NIST SP 800-63B Section 5.1.1 — Memorised Secrets](https://pages.nist.gov/800-63-3/sp800-63b.html)
+- [NIST SP 800-63B Section 5.1.1: Memorised Secrets](https://pages.nist.gov/800-63-3/sp800-63b.html)
 - [Argon2 Reference Implementation](https://github.com/P-H-C/phc-winner-argon2)
 - [Password Hashing Competition](https://www.password-hashing.net/)

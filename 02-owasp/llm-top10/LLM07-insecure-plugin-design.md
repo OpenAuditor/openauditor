@@ -1,8 +1,8 @@
 # LLM07: Insecure Plugin Design
 
-**Rank #7 — OWASP LLM Top 10 2025 | Severity: High**
+**Rank #7: OWASP LLM Top 10 2025 | Severity: High**
 
-LLM plugins (tools, function calls, actions) are often designed without adequate authorisation, input validation, or rate limiting — making them a high-value attack target.
+LLM plugins (tools, function calls, actions) are often designed without adequate authorisation, input validation, or rate limiting: making them a high-value attack target.
 
 ---
 
@@ -17,7 +17,7 @@ Plugins extend LLM capabilities by giving them access to external tools: databas
 ### 1. No Authentication on Plugin Endpoints
 
 ```python
-# VULNERABLE — plugin endpoint has no auth check
+# VULNERABLE: plugin endpoint has no auth check
 @app.post("/plugins/send-email")
 async def send_email_plugin(request: dict):
     # No authentication! Anyone who knows this URL can send emails
@@ -28,7 +28,7 @@ async def send_email_plugin(request: dict):
     )
     return {"success": True}
 
-# SECURE — verify the caller is your LLM system
+# SECURE: verify the caller is your LLM system
 @app.post("/plugins/send-email")
 async def send_email_plugin(
     request: dict,
@@ -45,14 +45,14 @@ async def send_email_plugin(
 ### 2. No Input Validation
 
 ```python
-# VULNERABLE — plugin blindly uses LLM-provided arguments
+# VULNERABLE: plugin blindly uses LLM-provided arguments
 @app.post("/plugins/query-database")
 async def query_database_plugin(query: str):
-    # The LLM provides the query — attacker can inject SQL via prompt
+    # The LLM provides the query: attacker can inject SQL via prompt
     result = await db.execute(query)  # SQL injection
     return result
 
-# SECURE — validate and sanitise plugin inputs
+# SECURE: validate and sanitise plugin inputs
 from pydantic import BaseModel, validator
 from enum import Enum
 
@@ -96,21 +96,21 @@ async def query_database_plugin(input: DatabaseQueryInput):
 ### 3. Overly Broad Permissions
 
 ```python
-# VULNERABLE — email plugin can send to anyone, any subject
+# VULNERABLE: email plugin can send to anyone, any subject
 class EmailPlugin:
     async def send(self, to: str, subject: str, body: str):
         await smtp.send(to=to, subject=subject, body=body)
         # LLM (via prompt injection) could send emails to competitors,
         # spam users, exfiltrate data
 
-# SECURE — scope the plugin to specific allowed operations
+# SECURE: scope the plugin to specific allowed operations
 class ScopedEmailPlugin:
     # Only allowed to send to the current authenticated user
     def __init__(self, current_user_email: str):
         self.current_user_email = current_user_email
     
     async def send_summary_to_user(self, subject: str, body: str):
-        # Can ONLY send to the logged-in user — not to arbitrary addresses
+        # Can ONLY send to the logged-in user: not to arbitrary addresses
         if len(body) > 5000:
             raise ValueError("Email body too long")
         
@@ -124,7 +124,7 @@ class ScopedEmailPlugin:
             raise ValueError("Invalid email subject")
         
         await smtp.send(
-            to=self.current_user_email,  # Fixed — not from LLM input
+            to=self.current_user_email,  # Fixed, not from LLM input
             subject=subject,
             body=body,
         )
@@ -133,10 +133,10 @@ class ScopedEmailPlugin:
 ### 4. No Rate Limiting on Plugins
 
 ```python
-# VULNERABLE — plugin can be called unlimited times
+# VULNERABLE: plugin can be called unlimited times
 # LLM agent in a loop can trigger 1000 API calls
 
-# SECURE — rate limit each plugin call
+# SECURE: rate limit each plugin call
 from ratelimit import limits, sleep_and_retry
 
 class RateLimitedPlugin:
@@ -160,13 +160,13 @@ class RateLimitedPlugin:
 ### 5. Plugin Returns Too Much Data
 
 ```python
-# VULNERABLE — plugin returns full database record
+# VULNERABLE: plugin returns full database record
 async def get_user_info_plugin(user_id: str) -> dict:
     user = await db.users.get(user_id)
     return user.to_dict()  # Returns: {id, email, phone, address, payment_methods, ...}
     # LLM may then relay this to the attacker via prompt injection
 
-# SECURE — return only what the LLM needs for the task
+# SECURE: return only what the LLM needs for the task
 async def get_user_info_plugin(user_id: str) -> dict:
     user = await db.users.get(user_id)
     return {

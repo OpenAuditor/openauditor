@@ -1,6 +1,6 @@
 # Encryption Basics
 
-Encryption protects data confidentiality — it makes data unreadable without the correct key. This guide covers the two main categories of encryption, when to use each, and how to implement them correctly.
+Encryption protects data confidentiality: it makes data unreadable without the correct key. This guide covers the two main categories of encryption, when to use each, and how to implement them correctly.
 
 ---
 
@@ -9,7 +9,7 @@ Encryption protects data confidentiality — it makes data unreadable without th
 | Property | Symmetric | Asymmetric |
 |----------|-----------|------------|
 | Keys | One shared secret key | Public key + private key pair |
-| Speed | Very fast | 100–1000x slower |
+| Speed | Very fast | 100 to 1000x slower |
 | Key distribution | Requires secure key exchange | Public key can be shared openly |
 | Data size limits | None (stream/block modes) | Small data only (e.g. < 446 bytes for RSA-4096) |
 | Common algorithms | AES-256 | RSA, ECDH, Ed25519 |
@@ -19,24 +19,24 @@ Encryption protects data confidentiality — it makes data unreadable without th
 
 ---
 
-## AES-256-GCM — The Right Choice for Symmetric Encryption
+## AES-256-GCM: The Right Choice for Symmetric Encryption
 
 AES (Advanced Encryption Standard) with a 256-bit key in GCM (Galois/Counter Mode) is the recommended symmetric encryption algorithm.
 
 ### Why GCM?
 
 GCM is an **authenticated encryption** mode. It provides:
-- **Confidentiality** — data is encrypted
-- **Integrity** — any tampering is detected
-- **Authenticity** — the authentication tag proves the ciphertext was produced by someone with the key
+- **Confidentiality**: data is encrypted
+- **Integrity**: any tampering is detected
+- **Authenticity**: the authentication tag proves the ciphertext was produced by someone with the key
 
 > **Critical:** Never use AES in ECB (Electronic Codebook) mode. ECB encrypts each block independently, so identical plaintext blocks produce identical ciphertext blocks. This leaks structural information. The famous Adobe breach involved ECB-mode 3DES, allowing researchers to deduce passwords from the ciphertexts.
 
 | Mode | Authenticated | Parallelisable | Notes |
 |------|--------------|----------------|-------|
-| ECB | No | Yes | Never use — leaks patterns |
+| ECB | No | Yes | Never use: leaks patterns |
 | CBC | No | Decrypt only | Vulnerable to padding oracle attacks |
-| CTR | No | Yes | No authentication — data can be tampered |
+| CTR | No | Yes | No authentication: data can be tampered |
 | GCM | Yes | Yes | **Recommended** |
 | CCM | Yes | No | Use for constrained environments |
 | ChaCha20-Poly1305 | Yes | Yes | Good alternative, especially on mobile |
@@ -48,7 +48,7 @@ GCM requires an **Initialisation Vector (IV)**, also called a nonce (number used
 - **Must be unique for every encryption operation with the same key.** Never reuse an IV.
 - **Must be randomly generated** (not a counter, not derived from message content).
 - **Standard length is 96 bits (12 bytes).**
-- The IV is not secret — it is stored or transmitted alongside the ciphertext.
+- The IV is not secret: it is stored or transmitted alongside the ciphertext.
 
 > **Critical:** Reusing a nonce with GCM is catastrophic. With a single reused nonce, an attacker can recover the authentication key and decrypt all messages encrypted with that key. Always generate a fresh random IV for every encryption operation.
 
@@ -61,7 +61,7 @@ const crypto = require('crypto');
 
 const ALGORITHM = 'aes-256-gcm';
 const KEY_LENGTH = 32;   // 256 bits
-const IV_LENGTH = 12;    // 96 bits — recommended for GCM
+const IV_LENGTH = 12;    // 96 bits: recommended for GCM
 const TAG_LENGTH = 16;   // 128-bit authentication tag
 
 /**
@@ -114,7 +114,7 @@ function decrypt(encryptedBuffer, key) {
     ]);
     return decrypted.toString('utf8');
   } catch (err) {
-    // Authentication failed — data was tampered or key is wrong
+    // Authentication failed: data was tampered or key is wrong
     throw new Error('Decryption failed: authentication tag mismatch');
   }
 }
@@ -155,7 +155,7 @@ import os
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 
 KEY_LENGTH = 32   # 256 bits
-IV_LENGTH = 12    # 96 bits — recommended for GCM
+IV_LENGTH = 12    # 96 bits: recommended for GCM
 
 def generate_key() -> bytes:
     """Generate a cryptographically secure 256-bit AES key."""
@@ -215,7 +215,7 @@ def decrypt_with_aad(data: bytes, key: bytes, aad: bytes) -> str:
 
 ---
 
-## RSA — Asymmetric Encryption
+## RSA: Asymmetric Encryption
 
 RSA is used for key exchange, digital signatures, and encrypting small payloads. Use RSA-4096 for new systems; RSA-2048 is acceptable if 4096 introduces unacceptable latency.
 
@@ -329,7 +329,7 @@ ECC provides equivalent security to RSA with much shorter keys, making it ideal 
 | X25519 | 255-bit | RSA-3072 | Diffie-Hellman key exchange |
 | Ed25519 | 255-bit | RSA-3072 | Digital signatures (preferred) |
 
-Ed25519 is the recommended algorithm for digital signatures in new systems — it is fast, secure, and immune to several classes of implementation mistakes that affect ECDSA.
+Ed25519 is the recommended algorithm for digital signatures in new systems: it is fast, secure, and immune to several classes of implementation mistakes that affect ECDSA.
 
 ---
 
@@ -350,8 +350,8 @@ Ed25519 is the recommended algorithm for digital signatures in new systems — i
 
 ## Further Reading
 
-- [NIST SP 800-175B — Guideline for Using Cryptographic Standards](https://csrc.nist.gov/publications/detail/sp/800-175b/rev-1/final)
+- [NIST SP 800-175B: Guideline for Using Cryptographic Standards](https://csrc.nist.gov/publications/detail/sp/800-175b/rev-1/final)
 - [OWASP Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html)
-- [Serious Cryptography by Jean-Philippe Aumasson](https://nostarch.com/seriouscrypto) — Practical reference
+- [Serious Cryptography by Jean-Philippe Aumasson](https://nostarch.com/seriouscrypto): Practical reference
 - [Node.js crypto documentation](https://nodejs.org/api/crypto.html)
 - [Python cryptography library documentation](https://cryptography.io/en/latest/)

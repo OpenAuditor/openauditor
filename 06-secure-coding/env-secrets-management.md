@@ -6,11 +6,11 @@ Never hardcode secrets. Never commit .env files. Use environment variables and a
 
 ## The Problem
 
-Secrets — database credentials, API keys, JWT signing keys, third-party tokens — end up in source code constantly. They get committed to git, pushed to GitHub (public or private), and leaked. GitHub scans public repos continuously and attackers do the same.
+Secrets, database credentials, API keys, JWT signing keys, third-party tokens, end up in source code constantly. They get committed to git, pushed to GitHub (public or private), and leaked. GitHub scans public repos continuously and attackers do the same.
 
 **The LinkedIn 2016 breach** included hardcoded credentials. **The Uber 2016 breach** exposed AWS keys left in a private GitHub repository that attackers accessed. **GitHub's own 2022 incident** involved OAuth tokens extracted from third-party integrations.
 
-> **Critical:** If a secret is committed to git, it is compromised — even if you delete it in a later commit. Treat it as leaked and rotate it immediately.
+> **Critical:** If a secret is committed to git, it is compromised, even if you delete it in a later commit. Treat it as leaked and rotate it immediately.
 
 ---
 
@@ -32,7 +32,7 @@ Secrets — database credentials, API keys, JWT signing keys, third-party tokens
 ### Local Development
 
 ```bash
-# .env.local (never committed — add to .gitignore)
+# .env.local (never committed: add to .gitignore)
 DATABASE_URL=postgresql://user:password@localhost:5432/mydb
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
@@ -41,7 +41,7 @@ JWT_SECRET=a-long-random-string-here
 ```
 
 ```bash
-# .env.example (committed — safe placeholder values only)
+# .env.example (committed: safe placeholder values only)
 DATABASE_URL=postgresql://user:password@localhost:5432/mydb
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=your-service-role-key-here

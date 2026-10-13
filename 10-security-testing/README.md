@@ -6,7 +6,7 @@ Testing is the only way to know if your security controls actually work. This se
 
 ## Why This Matters
 
-You can read every guide in OpenAuditor and still have vulnerabilities if you don't test. Security controls fail silently. A misplaced middleware, a misconfigured CSP, or a forgotten auth check won't announce itself — you have to look.
+You can read every guide in OpenAuditor and still have vulnerabilities if you don't test. Security controls fail silently. A misplaced middleware, a misconfigured CSP, or a forgotten auth check won't announce itself: you have to look.
 
 ---
 

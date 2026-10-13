@@ -18,7 +18,7 @@ GDPR Article 25 requires privacy by design and by default:
 The most privacy-protective option should be the default.
 
 ```javascript
-// WRONG — public profile by default, users must opt out
+// WRONG: public profile by default, users must opt out
 const newUser = {
   email,
   profileVisibility: 'public',    // default is maximum exposure
@@ -26,7 +26,7 @@ const newUser = {
   analyticsOptIn: true,           // auto-enrolled
 };
 
-// RIGHT — private by default, users opt in
+// RIGHT: private by default, users opt in
 const newUser = {
   email,
   profileVisibility: 'private',   // default is minimum exposure

@@ -1,18 +1,18 @@
 # Anomaly Detection
 
-An anomaly is a deviation from expected behaviour. Attackers rely on blending into normal traffic — your job is to define what "normal" looks like well enough to notice when it changes.
+An anomaly is a deviation from expected behaviour. Attackers rely on blending into normal traffic: your job is to define what "normal" looks like well enough to notice when it changes.
 
 ---
 
 ## Why anomaly detection matters
 
-Signature-based detection (blocking known bad IPs, known malware hashes) catches amateur attackers. Anomaly-based detection catches the rest. The most dangerous attacks — insider threats, sophisticated credential stuffing, slow data exfiltration — look like normal traffic individually. Only by establishing a baseline does the pattern become visible.
+Signature-based detection (blocking known bad IPs, known malware hashes) catches amateur attackers. Anomaly-based detection catches the rest. The most dangerous attacks, insider threats, sophisticated credential stuffing, slow data exfiltration, look like normal traffic individually. Only by establishing a baseline does the pattern become visible.
 
 ---
 
 ## Establishing a baseline
 
-Before you can detect anomalies, you need to know what normal looks like. Collect baseline metrics for at least 2–4 weeks before enabling anomaly alerts.
+Before you can detect anomalies, you need to know what normal looks like. Collect baseline metrics for at least 2 to 4 weeks before enabling anomaly alerts.
 
 ### Baseline metrics to track
 
@@ -84,9 +84,9 @@ def detect_impossible_travel(user_id, new_login):
 
 ## Pattern 2: Credential stuffing
 
-**What it is:** Automated login attempts using username/password pairs obtained from other data breaches. Success rates are typically low (0.1–2%) but the volume is enormous.
+**What it is:** Automated login attempts using username/password pairs obtained from other data breaches. Success rates are typically low (0.1 to 2%) but the volume is enormous.
 
-**Real example:** In 2019, a UK bank saw 14,000 login attempts in 4 minutes from 800 different IP addresses. Only 40 (0.3%) succeeded. They detected it by monitoring the ratio of failed to successful logins — which jumped from a baseline of 8:1 to 350:1 during the attack.
+**Real example:** In 2019, a UK bank saw 14,000 login attempts in 4 minutes from 800 different IP addresses. Only 40 (0.3%) succeeded. They detected it by monitoring the ratio of failed to successful logins, which jumped from a baseline of 8:1 to 350:1 during the attack.
 
 **Key signals:**
 
@@ -251,7 +251,7 @@ async function detectEnumeration(ipAddress: string) {
 - Requests with invalid/empty body for POST endpoints
 
 ```bash
-# Common probe paths — block immediately on first hit
+# Common probe paths: block immediately on first hit
 /.env
 /.git/config
 /wp-admin
@@ -268,7 +268,7 @@ async function detectEnumeration(ipAddress: string) {
 
 ## Building your anomaly detection baseline
 
-### Week 1–2: Collect baseline data
+### Week 1 to 2: Collect baseline data
 
 Deploy logging (see `what-to-log.md`) and collect data without alerting.
 
@@ -301,11 +301,11 @@ def compute_baseline(values: list[float]) -> dict:
 
 ## Attacks detected too late: real lessons
 
-### Lesson 1 — The insider who left the door open
+### Lesson 1: The insider who left the door open
 A support engineer at a fintech company was made redundant. IT revoked their email but not their API key. Over the following 3 months, they used the API key to access customer records. The access pattern was identical to their normal working behaviour, so no thresholds were breached. **Lesson:** Log and alert on access using credentials that belong to former employees. Integrate with your HR offboarding process.
 
-### Lesson 2 — The breach that wasn't logged
-A startup was breached through a misconfigured S3 bucket. The attacker downloaded 40GB of user data. The breach was discovered 4 months later. When investigators reviewed logs, there were no API access logs for the S3 bucket — S3 access logging was disabled. **Lesson:** Enable access logging on every data storage resource, not just your application.
+### Lesson 2: The breach that wasn't logged
+A startup was breached through a misconfigured S3 bucket. The attacker downloaded 40GB of user data. The breach was discovered 4 months later. When investigators reviewed logs, there were no API access logs for the S3 bucket: S3 access logging was disabled. **Lesson:** Enable access logging on every data storage resource, not just your application.
 
-### Lesson 3 — The alert that wasn't actionable
+### Lesson 3: The alert that wasn't actionable
 A team set up a Datadog monitor that fired 200+ times per day. Within 3 weeks, engineers had muted it. A real attack 2 months later went undetected because the alert was silenced. **Lesson:** An alert that fires too often is worse than no alert. Tune aggressively. One false positive per day is the maximum sustainable rate.

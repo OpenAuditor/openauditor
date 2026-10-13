@@ -1,12 +1,12 @@
 # Risk Appetite Framework: Accept Risk Consciously
 
-In 30 seconds: Every system has risk. You can't eliminate it all—you'd never ship anything. This framework helps you decide what level of risk is acceptable for your app. What risks are worth taking? What risks must you avoid? Document your decisions, monitor them, and change course if reality doesn't match your appetite.
+In 30 seconds: Every system has risk. You can't eliminate it all: you'd never ship anything. This framework helps you decide what level of risk is acceptable for your app. What risks are worth taking? What risks must you avoid? Document your decisions, monitor them, and change course if reality doesn't match your appetite.
 
 ## What is risk appetite?
 
 Risk appetite is **the amount and type of risk your organization is willing to accept** in pursuit of strategic goals.
 
-Example: A startup with $5M in funding might accept high operational risk (MVP can go down, data isn't backed up yet) to ship fast. A bank can't accept high operational risk—downtime loses millions per minute.
+Example: A startup with $5M in funding might accept high operational risk (MVP can go down, data isn't backed up yet) to ship fast. A bank can't accept high operational risk: downtime loses millions per minute.
 
 Both are rational. Both require different security investments.
 
@@ -15,15 +15,15 @@ Both are rational. Both require different security investments.
 Every risk has two dimensions:
 
 **Likelihood:** How probable is the attack?
-- **Critical/High** — Attackers actively exploit this; tooling is public
-- **Medium** — Exploit possible but requires more skill/luck
-- **Low** — Possible but rare; would require targeted effort
+- **Critical/High**: Attackers actively exploit this; tooling is public
+- **Medium**: Exploit possible but requires more skill/luck
+- **Low**: Possible but rare; would require targeted effort
 
 **Impact:** What happens if you're breached?
-- **Critical** — Company failure, major data loss, regulatory action
-- **High** — Significant operational disruption, media coverage, customer loss
-- **Medium** — Manageable operational impact, fixable within days
-- **Low** — Minor annoyance, easily recovered
+- **Critical**: Company failure, major data loss, regulatory action
+- **High**: Significant operational disruption, media coverage, customer loss
+- **Medium**: Manageable operational impact, fixable within days
+- **Low**: Minor annoyance, easily recovered
 
 **Risk = Likelihood × Impact**
 
@@ -119,9 +119,9 @@ We are a [SaaS/marketplace/social network] serving [users/businesses].
 - **Impact:** Critical (attacker gets access to all user data)
 
 **Options:**
-- Optional MFA (users choose) — Low overhead, but 90% of users skip it
-- Required MFA (everyone) — Prevents account takeover; some user friction
-- Risk acceptance (no MFA) — Fast registration; hope your customer base is small enough that breaches don't matter
+- Optional MFA (users choose): Low overhead, but 90% of users skip it
+- Required MFA (everyone): Prevents account takeover; some user friction
+- Risk acceptance (no MFA): Fast registration; hope your customer base is small enough that breaches don't matter
 
 **Typical appetite:** 
 - Startups: Optional MFA
@@ -279,10 +279,10 @@ Your risk appetite changes over time:
 
 ## What comes next
 
-- **[Threat Modeling 101](./threat-modeling-101.md)** — Use this framework to prioritize your threat model
-- **[The Human Layer](./the-human-layer.md)** — Risk appetite requires buy-in from the whole team
-- **01-architecture/** — Design decisions should be checked against your risk appetite
-- **02-code/** — Implementation decisions should follow your risk appetite
+- **[Threat Modeling 101](./threat-modeling-101.md)**: Use this framework to prioritize your threat model
+- **[The Human Layer](./the-human-layer.md)**: Risk appetite requires buy-in from the whole team
+- **01-architecture/**: Design decisions should be checked against your risk appetite
+- **02-code/**: Implementation decisions should follow your risk appetite
 
 ---
 

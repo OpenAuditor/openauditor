@@ -15,7 +15,7 @@ Use this template to document your Production Readiness Audit results.
 
 ## Executive Summary
 
-**Overall Score:** [0–100]  
+**Overall Score:** [0 to 100]  
 **Verdict:** 🟢 GREEN / 🟡 AMBER / 🔴 RED  
 
 **In Plain English:**
@@ -38,13 +38,13 @@ Use this template to document your Production Readiness Audit results.
 
 ## Verdict Details
 
-### 🟢 GREEN — Ship Confidently (90–100)
+### 🟢 GREEN: Ship Confidently (90 to 100)
 Your application meets baseline production security standards. You're ready to launch.
 
-### 🟡 AMBER — Ship with Caution (70–89)
+### 🟡 AMBER: Ship with Caution (70 to 89)
 Your application is functionally secure, but has gaps. Plan to fix high/medium issues within 30 days of launch. Monitor for exploitation of unfixed issues.
 
-### 🔴 RED — Don't Ship (0–69)
+### 🔴 RED: Don't Ship (0 to 69)
 Your application has critical security issues that must be fixed before launch. Shipping now will likely result in compromise within weeks.
 
 **Current verdict:** [Choose one and explain why]
@@ -55,24 +55,24 @@ Your application has critical security issues that must be fixed before launch. 
 
 | Domain | Score | Status | Priority |
 |--------|-------|--------|----------|
-| 1. Secrets & Environment | [%] | PASS / PARTIAL / FAIL | — |
-| 2. Dependencies & Supply Chain | [%] | PASS / PARTIAL / FAIL | — |
-| 3. Authentication | [%] | PASS / PARTIAL / FAIL | — |
-| 4. Authorization | [%] | PASS / PARTIAL / FAIL | — |
-| 5. Input Validation | [%] | PASS / PARTIAL / FAIL | — |
-| 6. Security Headers & CORS | [%] | PASS / PARTIAL / FAIL | — |
-| 7. Database Security | [%] | PASS / PARTIAL / FAIL | — |
-| 8. API Security | [%] | PASS / PARTIAL / FAIL | — |
-| 9. File Upload Security | [%] | PASS / PARTIAL / FAIL | — |
-| 10. Error Handling | [%] | PASS / PARTIAL / FAIL | — |
-| 11. Logging & Monitoring | [%] | PASS / PARTIAL / FAIL | — |
-| 12. CI/CD Security | [%] | PASS / PARTIAL / FAIL | — |
-| 13. Preview/Staging | [%] | PASS / PARTIAL / FAIL | — |
-| 14. DNS & Domain | [%] | PASS / PARTIAL / FAIL | — |
-| 15. Third-Party Scripts | [%] | PASS / PARTIAL / FAIL | — |
-| 16. Privacy & Data | [%] | PASS / PARTIAL / FAIL | — |
-| 17. Backup & Recovery | [%] | PASS / PARTIAL / FAIL | — |
-| 18. Incident Response | [%] | PASS / PARTIAL / FAIL | — |
+| 1. Secrets & Environment | [%] | PASS / PARTIAL / FAIL | n/a |
+| 2. Dependencies & Supply Chain | [%] | PASS / PARTIAL / FAIL | n/a |
+| 3. Authentication | [%] | PASS / PARTIAL / FAIL | n/a |
+| 4. Authorization | [%] | PASS / PARTIAL / FAIL | n/a |
+| 5. Input Validation | [%] | PASS / PARTIAL / FAIL | n/a |
+| 6. Security Headers & CORS | [%] | PASS / PARTIAL / FAIL | n/a |
+| 7. Database Security | [%] | PASS / PARTIAL / FAIL | n/a |
+| 8. API Security | [%] | PASS / PARTIAL / FAIL | n/a |
+| 9. File Upload Security | [%] | PASS / PARTIAL / FAIL | n/a |
+| 10. Error Handling | [%] | PASS / PARTIAL / FAIL | n/a |
+| 11. Logging & Monitoring | [%] | PASS / PARTIAL / FAIL | n/a |
+| 12. CI/CD Security | [%] | PASS / PARTIAL / FAIL | n/a |
+| 13. Preview/Staging | [%] | PASS / PARTIAL / FAIL | n/a |
+| 14. DNS & Domain | [%] | PASS / PARTIAL / FAIL | n/a |
+| 15. Third-Party Scripts | [%] | PASS / PARTIAL / FAIL | n/a |
+| 16. Privacy & Data | [%] | PASS / PARTIAL / FAIL | n/a |
+| 17. Backup & Recovery | [%] | PASS / PARTIAL / FAIL | n/a |
+| 18. Incident Response | [%] | PASS / PARTIAL / FAIL | n/a |
 
 ---
 

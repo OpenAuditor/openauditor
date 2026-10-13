@@ -1,8 +1,8 @@
-# A05 — Security Misconfiguration
+# A05: Security Misconfiguration
 
 ## Summary
 
-Security misconfiguration is the most broadly occurring vulnerability in the OWASP Top 10 — it appears in 90% of applications tested. It covers any case where a system is not correctly hardened: default credentials left in place, overly permissive CORS policies, unnecessary features or ports left enabled, verbose error messages leaking stack traces, cloud storage buckets set to public, debug mode left on in production, and missing security headers. Misconfiguration is almost never intentional — it results from moving fast, not reading documentation, or copying configuration from development into production without review.
+Security misconfiguration is the most broadly occurring vulnerability in the OWASP Top 10, it appears in 90% of applications tested. It covers any case where a system is not correctly hardened: default credentials left in place, overly permissive CORS policies, unnecessary features or ports left enabled, verbose error messages leaking stack traces, cloud storage buckets set to public, debug mode left on in production, and missing security headers. Misconfiguration is almost never intentional, it results from moving fast, not reading documentation, or copying configuration from development into production without review.
 
 ---
 
@@ -11,23 +11,23 @@ Security misconfiguration is the most broadly occurring vulnerability in the OWA
 ### Debug mode enabled in production
 
 ```python
-# Flask — VULNERABLE: debug=True in production
+# Flask: VULNERABLE: debug=True in production
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0")
 ```
 
 ```javascript
-// Next.js — verbose errors exposed to users
-// next.config.js — VULNERABLE
+// Next.js: verbose errors exposed to users
+// next.config.js: VULNERABLE
 const nextConfig = {
-  // No error page customisation — raw stack traces shown to users in some configurations
+  // No error page customisation: raw stack traces shown to users in some configurations
 };
 ```
 
 ### Overly permissive CORS
 
 ```javascript
-// Express — VULNERABLE: allows any origin with credentials
+// Express: VULNERABLE: allows any origin with credentials
 const cors = require("cors");
 app.use(cors({
   origin: "*",          // Allows any domain
@@ -38,7 +38,7 @@ app.use(cors({
 ### Missing security headers
 
 ```javascript
-// Next.js — VULNERABLE: no security headers set
+// Next.js: VULNERABLE: no security headers set
 // An application without X-Frame-Options, CSP, HSTS, etc.
 module.exports = {
   // No headers configuration at all
@@ -48,31 +48,31 @@ module.exports = {
 ### Public S3 / cloud storage bucket
 
 ```javascript
-// AWS SDK — VULNERABLE: bucket created without blocking public access
+// AWS SDK: VULNERABLE: bucket created without blocking public access
 const s3 = new AWS.S3();
 await s3.createBucket({
   Bucket: "user-uploads",
-  // No BlockPublicAcls: true — defaults may allow public access depending on account settings
+  // No BlockPublicAcls: true: defaults may allow public access depending on account settings
 }).promise();
 ```
 
 ### Default admin credentials
 
 ```yaml
-# Docker Compose — VULNERABLE: default PostgreSQL credentials
+# Docker Compose: VULNERABLE: default PostgreSQL credentials
 version: "3"
 services:
   db:
     image: postgres:15
     environment:
-      POSTGRES_PASSWORD: postgres  # Default credentials — change immediately
+      POSTGRES_PASSWORD: postgres  # Default credentials: change immediately
       POSTGRES_USER: postgres
 ```
 
 ### Verbose error messages exposing internals
 
 ```javascript
-// Express — VULNERABLE: stack traces exposed to users
+// Express: VULNERABLE: stack traces exposed to users
 app.use((err, req, res, next) => {
   res.status(500).json({ error: err.message, stack: err.stack }); // Never expose stack in production
 });
@@ -85,7 +85,7 @@ app.use((err, req, res, next) => {
 ### Disable debug mode in production
 
 ```python
-# Flask — FIXED
+# Flask: FIXED
 import os
 
 app.run(
@@ -97,7 +97,7 @@ app.run(
 ### Restrict CORS to known origins
 
 ```javascript
-// Express — FIXED
+// Express: FIXED
 const allowedOrigins = [
   "https://yourapp.com",
   "https://www.yourapp.com",
@@ -119,7 +119,7 @@ app.use(cors({
 ### Add security headers in Next.js
 
 ```javascript
-// next.config.js — FIXED
+// next.config.js: FIXED
 const securityHeaders = [
   { key: "X-DNS-Prefetch-Control", value: "on" },
   { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
@@ -155,7 +155,7 @@ module.exports = {
 ### Block public access on S3 buckets
 
 ```javascript
-// AWS SDK — FIXED
+// AWS SDK: FIXED
 await s3.putPublicAccessBlock({
   Bucket: "user-uploads",
   PublicAccessBlockConfiguration: {
@@ -170,7 +170,7 @@ await s3.putPublicAccessBlock({
 ### Generic error responses in production
 
 ```javascript
-// Express — FIXED
+// Express: FIXED
 app.use((err, req, res, next) => {
   // Log full error internally (to your logging service)
   console.error(err);
@@ -189,8 +189,8 @@ app.use((err, req, res, next) => {
 
 ## Real-World Breach
 
-**Capital One — 2019**
-A misconfigured AWS Web Application Firewall allowed attacker Paige Thompson to exploit a Server-Side Request Forgery (SSRF) vulnerability to access the EC2 instance metadata service. The metadata service returned AWS credentials, which Thompson used to access over 100 S3 buckets. The result was the exposure of over 100 million customer records including Social Security numbers and bank account details. Capital One paid a $80 million fine. The root cause was a configuration error — the WAF was not correctly restricting outbound SSRF requests, and the IAM role attached to the EC2 instance had excessive permissions. Both are misconfigurations.
+**Capital One: 2019**
+A misconfigured AWS Web Application Firewall allowed attacker Paige Thompson to exploit a Server-Side Request Forgery (SSRF) vulnerability to access the EC2 instance metadata service. The metadata service returned AWS credentials, which Thompson used to access over 100 S3 buckets. The result was the exposure of over 100 million customer records including Social Security numbers and bank account details. Capital One paid a $80 million fine. The root cause was a configuration error: the WAF was not correctly restricting outbound SSRF requests, and the IAM role attached to the EC2 instance had excessive permissions. Both are misconfigurations.
 
 ---
 
@@ -209,7 +209,7 @@ npx observatory-cli https://yourapp.com
 ### Check for open S3 buckets
 
 ```bash
-# AWS CLI — check bucket public access block settings
+# AWS CLI: check bucket public access block settings
 aws s3api get-public-access-block --bucket your-bucket-name
 
 # Check bucket ACL
@@ -247,7 +247,7 @@ curl https://yourapp.com/debug/pprof   # Go
 
 - [ ] Debug mode is disabled in all production environments
 - [ ] Security headers are set: HSTS, CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy
-- [ ] CORS policy explicitly lists allowed origins — wildcard `*` is not used with credentials
+- [ ] CORS policy explicitly lists allowed origins: wildcard `*` is not used with credentials
 - [ ] All cloud storage buckets block public access by default
 - [ ] Default credentials have been changed on all services (databases, admin panels, message queues)
 - [ ] Verbose error messages (stack traces, internal paths) are suppressed in production responses
@@ -264,8 +264,8 @@ Misconfiguration is the easiest vulnerability for attackers to find at scale. Au
 
 ## Learn More
 
-- [OWASP A05:2021 — Security Misconfiguration](https://owasp.org/Top10/A05_2021-Security_Misconfiguration/)
-- [Mozilla Observatory — Security Header Scanner](https://observatory.mozilla.org/)
+- [OWASP A05:2021: Security Misconfiguration](https://owasp.org/Top10/A05_2021-Security_Misconfiguration/)
+- [Mozilla Observatory: Security Header Scanner](https://observatory.mozilla.org/)
 - [OWASP Secure Headers Project](https://owasp.org/www-project-secure-headers/)
-- [OpenAuditor: Secure Coding — CORS and CSP Headers](../../06-secure-coding/cors-csp-headers.md)
+- [OpenAuditor: Secure Coding: CORS and CSP Headers](../../06-secure-coding/cors-csp-headers.md)
 - [OpenAuditor: Deployment Security](../../09-deployment-security/)

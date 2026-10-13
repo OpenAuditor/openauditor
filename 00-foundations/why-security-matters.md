@@ -1,14 +1,14 @@
 # Why Security Matters: The Business Case
 
-In 30 seconds: Breaches cost millions—not just in recovery, but in fines, lost customers, and destroyed trust. Most companies don't recover from major security incidents. You're not just preventing attacks; you're protecting the business. Real examples: Uber's $100M+ data breach, Twitch exposing 400GB of source code, and companies going under after ransomware. Security is survival.
+In 30 seconds: Breaches cost millions, not just in recovery, but in fines, lost customers, and destroyed trust. Most companies don't recover from major security incidents. You're not just preventing attacks; you're protecting the business. Real examples: Uber's $100M+ data breach, Twitch exposing 400GB of source code, and companies going under after ransomware. Security is survival.
 
 ## The real numbers
 
 According to IBM's Cost of a Data Breach 2024 report:
 - **Average breach cost: $4.45 million** (up from $4.24M the year before)
 - **Lost customers: 15% on average** leave within a year
-- **Time to detect: 200+ days** for many breaches—attacks often sit in your systems for months
-- **Regulatory fines**: GDPR violations up to €20 million or 4% of global revenue; SOX violations $100k–$5M per incident
+- **Time to detect: 200+ days** for many breaches: attacks often sit in your systems for months
+- **Regulatory fines**: GDPR violations up to €20 million or 4% of global revenue; SOX violations $100k: $5M per incident
 
 A single vulnerability in your authentication system could force:
 - Mandatory customer notification (sometimes SEC filings)
@@ -21,7 +21,7 @@ A single vulnerability in your authentication system could force:
 ## Real-world breaches: lessons from the industry
 
 ### Uber (2016)
-**What happened:** Attackers accessed Uber's GitHub account with hardcoded AWS credentials. They found 57 million records of drivers and riders—names, email addresses, phone numbers, encrypted location data.
+**What happened:** Attackers accessed Uber's GitHub account with hardcoded AWS credentials. They found 57 million records of drivers and riders: names, email addresses, phone numbers, encrypted location data.
 
 **Root cause:** Credentials in version control (yes, people still do this). No alerts when the GitHub account accessed production systems.
 
@@ -86,7 +86,7 @@ A single vulnerability in your authentication system could force:
 
 **Root cause:** Broken access control (OWASP #1 vulnerability). The application trusted client-side checks instead of validating on the server.
 
-**Impact:** 885 million records exposed, but the company didn't discover it—a researcher did.
+**Impact:** 885 million records exposed, but the company didn't discover it: a researcher did.
 
 **Your lesson:** Never trust the client. Always validate access on the server.
 
@@ -96,13 +96,13 @@ A single vulnerability in your authentication system could force:
 
 Most breaches fall into predictable categories:
 
-1. **Weak/stolen credentials** — Phishing, password reuse, default passwords
-2. **Unpatched software** — Running old versions with known exploits
-3. **Misconfiguration** — Public S3 buckets, exposed databases, open ports
-4. **Broken access control** — Users seeing data they shouldn't; overprivileged accounts
-5. **Injection attacks** — SQL injection, command injection, XSS
-6. **Insecure data transmission** — Sending sensitive data over HTTP, hardcoding secrets
-7. **Third-party risk** — Vendors with poor security, supply chain attacks
+1. **Weak/stolen credentials**: Phishing, password reuse, default passwords
+2. **Unpatched software**: Running old versions with known exploits
+3. **Misconfiguration**: Public S3 buckets, exposed databases, open ports
+4. **Broken access control**: Users seeing data they shouldn't; overprivileged accounts
+5. **Injection attacks**: SQL injection, command injection, XSS
+6. **Insecure data transmission**: Sending sensitive data over HTTP, hardcoding secrets
+7. **Third-party risk**: Vendors with poor security, supply chain attacks
 
 **The pattern:** Most aren't sophisticated. They're basics done wrong or not done at all.
 
@@ -122,11 +122,11 @@ A security team can write policies and run scans, but **developers write the cod
 
 If you operate in certain industries or geographies, you *have to* care:
 
-- **GDPR (EU)** — Up to €20M or 4% of revenue in fines for mishandling personal data
-- **HIPAA (US healthcare)** — Up to $50k per violation for handling medical records insecurely
-- **PCI-DSS (payment processing)** — Required if you handle credit cards; violations can lose you payment processor access
-- **SOX (public companies)** — Must have reasonable security controls over financial data
-- **CCPA (California)** — Similar to GDPR; up to $7,500 per intentional violation
+- **GDPR (EU)**: Up to €20M or 4% of revenue in fines for mishandling personal data
+- **HIPAA (US healthcare)**: Up to $50k per violation for handling medical records insecurely
+- **PCI-DSS (payment processing)**: Required if you handle credit cards; violations can lose you payment processor access
+- **SOX (public companies)**: Must have reasonable security controls over financial data
+- **CCPA (California)**: Similar to GDPR; up to $7,500 per intentional violation
 
 Even if you're not in these industries, **your users' data is still their property**. Protecting it is a moral obligation.
 
@@ -140,11 +140,11 @@ Ask yourself:
 - If your source code leaked, would competitors have an advantage?
 - If your API was taken down by attackers, how long before revenue suffered?
 
-Most companies can't answer these questions honestly. That's the starting point—understanding what you're protecting and why.
+Most companies can't answer these questions honestly. That's the starting point: understanding what you're protecting and why.
 
 ## The business value of security
 
-Done right, security isn't just risk avoidance—it's a competitive advantage:
+Done right, security isn't just risk avoidance: it's a competitive advantage:
 
 - **Customers trust you more** when they know you take security seriously
 - **You sell to enterprises** easier if you can prove your security posture

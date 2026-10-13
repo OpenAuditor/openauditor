@@ -18,7 +18,7 @@ gemini
 > [paste the audit prompt]
 ```
 
-**Note:** Gemini CLI has filesystem access when run inside your project directory. Specify `--yolo` flag with caution — always review suggested changes before applying.
+**Note:** Gemini CLI has filesystem access when run inside your project directory. Specify `--yolo` flag with caution: always review suggested changes before applying.
 
 ---
 
@@ -57,7 +57,7 @@ const response = await client.chat.completions.create({
 1. Open Windsurf IDE
 2. Press `Cmd/Ctrl + L` to open Cascade chat
 3. Paste the full audit prompt
-4. Cascade has access to your entire codebase — use `@codebase` if it needs broader context
+4. Cascade has access to your entire codebase: use `@codebase` if it needs broader context
 
 **Tip:** Windsurf's Cascade is particularly good at multi-file refactoring. After audit findings, ask it to "implement all High severity fixes" and review the diff before accepting.
 
@@ -101,7 +101,7 @@ aider --model gpt-4o
 4. Lovable will analyse your project structure and suggest fixes
 5. Accept changes through Lovable's diff view
 
-**Note:** Lovable is a full-stack AI builder. It may suggest larger refactors than intended — paste the prompt with "audit only, don't change any code yet" to get findings first.
+**Note:** Lovable is a full-stack AI builder. It may suggest larger refactors than intended: paste the prompt with "audit only, don't change any code yet" to get findings first.
 
 ---
 
@@ -130,7 +130,7 @@ aider --model gpt-4o
 3. Paste the audit prompt
 4. Replit Agent has access to your entire project and can run commands
 
-**Security note for Replit:** Replit runs in a shared cloud environment. Be careful with secrets — never paste real API keys into the chat. Use Replit Secrets for sensitive configuration.
+**Security note for Replit:** Replit runs in a shared cloud environment. Be careful with secrets: never paste real API keys into the chat. Use Replit Secrets for sensitive configuration.
 
 ---
 
@@ -139,7 +139,7 @@ aider --model gpt-4o
 1. **Give version context:** Start with "I'm using Next.js 15, Supabase v2, Node.js 22" so the tool uses current patterns
 2. **Reference official docs:** Ask the tool to "verify against current [library] documentation" for security-sensitive patterns  
 3. **Audit before fixing:** Ask for the full findings list before asking the tool to apply any changes
-4. **Review every change:** No AI tool should apply security changes without your review — especially to auth, database access, and secrets handling
+4. **Review every change:** No AI tool should apply security changes without your review, especially to auth, database access, and secrets handling
 5. **Re-audit after fixes:** Run the relevant section of the audit again after fixes are applied
 
 ## Learn More

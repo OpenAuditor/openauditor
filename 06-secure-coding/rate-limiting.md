@@ -89,7 +89,7 @@ export default async function handler(req, res) {
 }
 ```
 
-### Using in-memory (Single Instance Only — Not Suitable for Serverless)
+### Using in-memory (Single Instance Only: Not Suitable for Serverless)
 
 ```javascript
 // Only use this for non-serverless Node.js apps
@@ -141,7 +141,7 @@ async def get_data(request: Request):
 | **Token Bucket** | Tokens refill at steady rate, burst allowed | High-traffic APIs |
 | **Leaky Bucket** | Queue requests, drain at steady rate | Background jobs |
 
-Use sliding window for auth endpoints — fixed windows have edge cases where attackers can send 2x allowed requests at window boundaries.
+Use sliding window for auth endpoints: fixed windows have edge cases where attackers can send 2x allowed requests at window boundaries.
 
 ---
 
@@ -173,7 +173,7 @@ X-RateLimit-Reset: 1714123456
 Retry-After: 60
 ```
 
-Return HTTP 429 with a clear message. Don't return 403 or 500 — that confuses clients.
+Return HTTP 429 with a clear message. Don't return 403 or 500: that confuses clients.
 
 ---
 

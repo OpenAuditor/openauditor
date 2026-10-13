@@ -1,6 +1,6 @@
 # LLM05: Supply Chain Vulnerabilities
 
-**Rank #5 — OWASP LLM Top 10 2025 | Severity: High**
+**Rank #5: OWASP LLM Top 10 2025 | Severity: High**
 
 LLM applications depend on third-party models, datasets, plugins, and services. A compromise anywhere in this supply chain propagates to your application.
 
@@ -8,7 +8,7 @@ LLM applications depend on third-party models, datasets, plugins, and services. 
 
 ## 30-Second Summary
 
-LLM supply chain risks mirror traditional software supply chain risks but with unique twists. You're not just trusting code — you're trusting the *behaviour* of a model trained on data you've never seen. A compromised model provider, a malicious community plugin, or a poisoned prompt template can all compromise your application without any code changes on your end.
+LLM supply chain risks mirror traditional software supply chain risks but with unique twists. You're not just trusting code: you're trusting the *behaviour* of a model trained on data you've never seen. A compromised model provider, a malicious community plugin, or a poisoned prompt template can all compromise your application without any code changes on your end.
 
 ---
 
@@ -19,7 +19,7 @@ Your Application
     ├── LLM API Provider (OpenAI, Anthropic, Google)
     │       └── Their model training data and infrastructure
     ├── Third-party models (Hugging Face Hub, custom fine-tunes)
-    │       └── Model weights — could contain backdoors
+    │       └── Model weights: could contain backdoors
     ├── Prompt templates and libraries
     │       └── LangChain, LlamaIndex, community prompts
     ├── Vector databases and embedding models
@@ -37,7 +37,7 @@ Your Application
 ### 1. Compromised Model Weights
 
 ```python
-# VULNERABLE — loading model weights without verification
+# VULNERABLE: loading model weights without verification
 from transformers import AutoModelForCausalLM
 
 model = AutoModelForCausalLM.from_pretrained(
@@ -45,12 +45,12 @@ model = AutoModelForCausalLM.from_pretrained(
     # No integrity check
 )
 
-# SECURE — verify model file integrity before loading
+# SECURE: verify model file integrity before loading
 import hashlib
 from pathlib import Path
 
 KNOWN_SAFE_HASHES = {
-    # Hash of the model config and weights — verify against official release notes
+    # Hash of the model config and weights: verify against official release notes
     "config.json": "sha256:abc123...",
     "model.safetensors": "sha256:def456...",
 }
@@ -69,14 +69,14 @@ def verify_model_files(model_dir: str):
 
 # Also prefer .safetensors format over .bin (pickle-based)
 # .bin files (PyTorch format) can execute arbitrary code on load
-# .safetensors cannot — much safer
+# .safetensors cannot: much safer
 model = AutoModelForCausalLM.from_pretrained("org/model", use_safetensors=True)
 ```
 
 ### 2. Malicious Community Plugins
 
 ```python
-# VULNERABLE — loading community plugins without review
+# VULNERABLE: loading community plugins without review
 # LangChain tool from an unknown community source:
 from langchain_community.tools import SomeCommunityTool
 tool = SomeCommunityTool()  # What does this actually do?
@@ -84,7 +84,7 @@ tool = SomeCommunityTool()  # What does this actually do?
 # Plugin could: exfiltrate prompts, make unexpected API calls,
 # read environment variables, or execute arbitrary code
 
-# SECURE — audit every plugin you use
+# SECURE: audit every plugin you use
 # Before adding any community plugin:
 # 1. Review the source code on GitHub
 # 2. Check the number of downloads and reviews
@@ -93,7 +93,7 @@ tool = SomeCommunityTool()  # What does this actually do?
 # 5. Run in a sandboxed environment first
 # 6. Review what network access and filesystem access it requests
 
-# Implement tool allowlisting — only approved tools can be registered
+# Implement tool allowlisting: only approved tools can be registered
 APPROVED_TOOLS = {
     'search_database': SearchDatabaseTool,
     'send_email': EmailTool,  # internal implementation you've reviewed
@@ -110,7 +110,7 @@ def register_tool(name: str, tool_class: type):
 ### 3. Prompt Template Libraries
 
 ```python
-# VULNERABLE — using community prompt templates without review
+# VULNERABLE: using community prompt templates without review
 from langchain import hub
 
 # These prompts are community-contributed and could contain:
@@ -119,7 +119,7 @@ from langchain import hub
 # - Jailbreaks that look like legitimate templates
 prompt = hub.pull("some-user/agent-prompt")
 
-# SECURE — maintain your own prompt library
+# SECURE: maintain your own prompt library
 # Store prompts in your version-controlled codebase:
 PROMPTS = {
     "customer_service": """You are a customer service assistant for Acme Corp.
@@ -130,7 +130,7 @@ If asked anything outside this scope, say: "I can help with product and order qu
 """,
 }
 
-# Access via internal function — never from external source
+# Access via internal function: never from external source
 def get_prompt(name: str) -> str:
     if name not in PROMPTS:
         raise KeyError(f"Unknown prompt: {name}")
@@ -145,7 +145,7 @@ def get_prompt(name: str) -> str:
 # - Make certain documents always/never retrieved
 # - Cause semantic search to return attacker-controlled content
 
-# SECURE — use official, versioned embedding models from major providers
+# SECURE: use official, versioned embedding models from major providers
 from openai import OpenAI
 
 client = OpenAI()
@@ -192,7 +192,7 @@ def sanitise_before_llm(text: str) -> str:
 # 3. Log what you send to external providers (privacy-compliant summary)
 logger.info({'event': 'llm.request', 'provider': 'openai', 
              'prompt_length': len(prompt), 'model': 'gpt-4o'})
-# Never log the full prompt — it may contain PII
+# Never log the full prompt: it may contain PII
 ```
 
 ---
@@ -206,7 +206,7 @@ logger.info({'event': 'llm.request', 'provider': 'openai',
 - [ ] Embedding models pinned to a specific, official version
 - [ ] LLM API provider is a major, reputable organisation
 - [ ] PII and sensitive data sanitised before sending to external LLM APIs
-- [ ] Tool/plugin allowlist maintained — no ad-hoc community tool additions
+- [ ] Tool/plugin allowlist maintained: no ad-hoc community tool additions
 - [ ] Dependency scanning covers LLM-related packages (langchain, openai, etc.)
 
 ---

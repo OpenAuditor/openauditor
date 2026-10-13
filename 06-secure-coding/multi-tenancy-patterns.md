@@ -6,7 +6,7 @@ In a multi-tenant app, your most critical requirement is that Tenant A can never
 
 ## The Risk
 
-Cross-tenant data leaks are catastrophic — they expose your customers' private data to each other. This destroys trust, triggers regulatory action, and is frequently grounds for legal action.
+Cross-tenant data leaks are catastrophic: they expose your customers' private data to each other. This destroys trust, triggers regulatory action, and is frequently grounds for legal action.
 
 ---
 
@@ -72,7 +72,7 @@ async function getDocument(id: string) {
 ## Shared Infrastructure, Isolated Data
 
 ```javascript
-// Tenant context helper — attach to all queries
+// Tenant context helper: attach to all queries
 class TenantRepository {
   constructor(private readonly tenantId: string) {}
   
@@ -102,7 +102,7 @@ const docs = await repo.findAll(db.documents);
 // Scope file storage paths by tenant
 const filePath = `tenants/${tenantId}/documents/${randomUUID()}.pdf`;
 
-// Supabase Storage — scoped path
+// Supabase Storage: scoped path
 await supabase.storage
   .from('documents')
   .upload(filePath, fileBuffer);
@@ -133,7 +133,7 @@ describe('Tenant Isolation', () => {
       .get(`/api/documents/${doc.id}`)
       .set('Authorization', `Bearer ${tenantA.userToken}`);
     
-    expect(response.status).toBe(404); // not 403 — don't reveal existence
+    expect(response.status).toBe(404); // not 403: don't reveal existence
   });
 });
 ```

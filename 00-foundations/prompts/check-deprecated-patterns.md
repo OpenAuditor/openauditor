@@ -2,7 +2,7 @@
 
 ## When to use this
 
-Use this when inheriting a codebase, after an AI coding assistant generates significant code, before a security audit, or when upgrading to a new major version of a framework. AI-generated code frequently uses patterns that were correct 1–3 years ago but are now deprecated, removed, or superseded by more secure alternatives.
+Use this when inheriting a codebase, after an AI coding assistant generates significant code, before a security audit, or when upgrading to a new major version of a framework. AI-generated code frequently uses patterns that were correct 1 to 3 years ago but are now deprecated, removed, or superseded by more secure alternatives.
 
 ## Works with
 
@@ -14,7 +14,7 @@ Claude Code, Cursor, GitHub Copilot, Gemini CLI, OpenAI Codex, Windsurf, Cline, 
 
 ---
 
-You are a senior engineer reviewing a codebase for deprecated, outdated, and insecure patterns. AI coding assistants frequently generate code based on older training data — your job is to find patterns that need updating to current stable versions.
+You are a senior engineer reviewing a codebase for deprecated, outdated, and insecure patterns. AI coding assistants frequently generate code based on older training data: your job is to find patterns that need updating to current stable versions.
 
 **First, identify the stack:**
 
@@ -33,7 +33,7 @@ cat .nvmrc .node-version 2>/dev/null
 **Step 1: Check for deprecated Supabase patterns**
 
 ```bash
-# Old auth helpers package (deprecated — use @supabase/ssr)
+# Old auth helpers package (deprecated: use @supabase/ssr)
 grep -rn "auth-helpers-nextjs\|auth-helpers-shared" \
   --include="*.ts" --include="*.tsx" . | grep -v node_modules
 
@@ -83,12 +83,12 @@ grep -rn "jwt\.verify(" --include="*.ts" --include="*.js" . | grep -v node_modul
 
 # Old bcrypt import styles or insufficient cost factor
 grep -rn "bcrypt\." --include="*.ts" --include="*.js" . | grep -v node_modules
-# Check cost factor — should be >= 12
+# Check cost factor: should be >= 12
 
 # Hardcoded secret fallbacks
 grep -rn "|| 'secret'\||| \"secret\"\|| 'changeme'\|| \"development\"" \
   --include="*.ts" --include="*.js" . | grep -v node_modules
-# Pattern: const secret = process.env.JWT_SECRET || 'secret' — NEVER in production
+# Pattern: const secret = process.env.JWT_SECRET || 'secret': NEVER in production
 ```
 
 **Step 4: Check for deprecated cryptography**
@@ -153,7 +153,7 @@ grep -rn "from flask import request\|@app\.route" --include="*.py" . | grep -v _
 # Flask 1.x vs 2.x patterns differ significantly
 
 grep -rn "db\.session\.query\|session\.query(" --include="*.py" . | grep -v __pycache__
-# SQLAlchemy 1.x legacy query style — SQLAlchemy 2.0 uses select() statements
+# SQLAlchemy 1.x legacy query style: SQLAlchemy 2.0 uses select() statements
 
 grep -rn "from sqlalchemy" --include="*.py" . | head -5
 # Check version: SQLAlchemy 2.0 has breaking changes from 1.x

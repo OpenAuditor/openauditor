@@ -150,7 +150,7 @@ Verify .gitignore includes:
 }
 ```
 
-**Step 7: Add Semgrep to CI (not pre-commit — too slow)**
+**Step 7: Add Semgrep to CI (not pre-commit: too slow)**
 
 Create `.github/workflows/security-scan.yml` with Semgrep configured to run on every PR. See [Security Scan template](../../templates/github-actions/security-scan.yml).
 

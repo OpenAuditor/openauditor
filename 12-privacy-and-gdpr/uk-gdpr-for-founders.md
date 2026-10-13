@@ -1,6 +1,6 @@
 # UK GDPR for Founders
 
-The essentials of UK GDPR without the legal jargon — what you actually need to do.
+The essentials of UK GDPR without the legal jargon: what you actually need to do.
 
 ---
 
@@ -13,7 +13,7 @@ UK GDPR applies if:
 
 If you have a single UK or EU user, GDPR applies to you. There's no revenue threshold.
 
-"Personal data" means anything that could identify a living person — email address, IP address, cookie ID, name, location, and much more.
+"Personal data" means anything that could identify a living person: email address, IP address, cookie ID, name, location, and much more.
 
 ---
 
@@ -61,7 +61,7 @@ Be able to demonstrate you comply. Document your decisions.
 ## Your Users' Rights
 
 Users can:
-- **Access** their data (Subject Access Request — respond within 30 days, free)
+- **Access** their data (Subject Access Request: respond within 30 days, free)
 - **Correct** inaccurate data
 - **Delete** their data (right to erasure)
 - **Restrict** processing
@@ -74,7 +74,7 @@ You need a process for each of these. The most common ones: data access and dele
 
 ## ICO Registration
 
-Most UK organisations that process personal data must register with the ICO (Information Commissioner's Office). Fee: £40–£60/year for small organisations.
+Most UK organisations that process personal data must register with the ICO (Information Commissioner's Office). Fee: £40: £60/year for small organisations.
 
 Check if you need to register: ico.org.uk/registration
 
@@ -82,11 +82,11 @@ Check if you need to register: ico.org.uk/registration
 
 ## Common Mistakes
 
-- **Collecting more than you need** — adds risk, violates minimisation
-- **No retention policy** — keeping data forever is non-compliant
-- **Sharing data with third parties without telling users** — analytics tools, email platforms
-- **Not responding to subject access requests** — 30-day legal deadline
-- **Treating "legitimate interests" as a blank cheque** — it's not
+- **Collecting more than you need**: adds risk, violates minimisation
+- **No retention policy**: keeping data forever is non-compliant
+- **Sharing data with third parties without telling users**: analytics tools, email platforms
+- **Not responding to subject access requests**: 30-day legal deadline
+- **Treating "legitimate interests" as a blank cheque**: it's not
 
 ---
 
@@ -96,7 +96,7 @@ Check if you need to register: ico.org.uk/registration
 2. ✓ Cookie banner (if using analytics/advertising cookies)
 3. ✓ Email address to handle data requests (data@yourapp.com)
 4. ✓ Ability to delete a user's data when they ask
-5. ✓ Data processing agreements with vendors that handle your users' data (Supabase, Vercel, etc. — most have these in their ToS)
+5. ✓ Data processing agreements with vendors that handle your users' data (Supabase, Vercel, etc.: most have these in their ToS)
 
 ---
 

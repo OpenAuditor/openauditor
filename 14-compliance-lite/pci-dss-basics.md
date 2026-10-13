@@ -9,7 +9,7 @@ PCI DSS (Payment Card Industry Data Security Standard) applies to anyone who sto
 PCI DSS has 12 requirements across areas including: network security, cardholder data protection, vulnerability management, access control, monitoring, and security policies.
 
 Non-compliance can result in:
-- Fines from card brands ($5,000–$100,000/month)
+- Fines from card brands ($5,000: $100,000/month)
 - Loss of ability to process card payments
 - Mandatory forensic audits after a breach
 
@@ -20,8 +20,8 @@ Non-compliance can result in:
 If you use Stripe with Stripe.js (or Stripe Elements) and never let card data touch your servers:
 
 1. Card data goes directly from user's browser to Stripe (not through your server)
-2. Stripe is PCI DSS Level 1 certified — the highest level
-3. You qualify for **SAQ A** — the simplest self-assessment questionnaire
+2. Stripe is PCI DSS Level 1 certified: the highest level
+3. You qualify for **SAQ A**: the simplest self-assessment questionnaire
 
 **SAQ A requires:**
 - Your payment page must be served over HTTPS
@@ -35,15 +35,15 @@ This is achievable by any indie hacker in a day.
 ## What You Must NEVER Do
 
 ```javascript
-// WRONG — accepting raw card data on your server
+// WRONG: accepting raw card data on your server
 app.post('/checkout', (req, res) => {
   const { cardNumber, expiry, cvv } = req.body; // NEVER accept this
   // You're now in scope for full PCI DSS compliance
 });
 
-// RIGHT — Stripe handles card data, you handle the token
+// RIGHT: Stripe handles card data, you handle the token
 app.post('/checkout', async (req, res) => {
-  const { paymentMethodId } = req.body; // just a token — safe
+  const { paymentMethodId } = req.body; // just a token: safe
   const charge = await stripe.paymentIntents.create({
     amount: 1000,
     currency: 'gbp',
@@ -64,10 +64,10 @@ Under PCI DSS, you must never log:
 - Expiry dates (per some card brands)
 
 ```javascript
-// WRONG — logs full card details in error messages
+// WRONG: logs full card details in error messages
 console.error('Payment failed:', req.body); // if body contains card data
 
-// RIGHT — log only what's safe
+// RIGHT: log only what's safe
 console.error('Payment failed:', { userId, amount, currency, errorCode: error.code });
 ```
 
@@ -92,7 +92,7 @@ If you use Stripe.js/Elements correctly: you want **SAQ A**.
 - [ ] Card data never touches your servers (use Stripe.js/Elements)
 - [ ] Payment pages served over HTTPS
 - [ ] No card numbers in logs
-- [ ] Using Stripe — review your SAQ A questionnaire yearly
+- [ ] Using Stripe: review your SAQ A questionnaire yearly
 - [ ] Stripe webhook signing secret validated on every webhook
 
 ---

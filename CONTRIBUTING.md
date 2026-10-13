@@ -36,7 +36,7 @@ Maintainers review all ideas within 7 days. Accepted recommendations are added t
 ## Submitting a Pull Request
 
 ### Small fix (typo, broken link, outdated code)
-Open a PR directly — no issue needed.
+Open a PR directly: no issue needed.
 
 ### New content (section, prompt, guide)
 1. [Open an issue](https://github.com/OpenAuditor/openauditor/issues/new?template=feature_request.md) describing the addition
@@ -72,14 +72,16 @@ Open a PR directly — no issue needed.
 
 ## Style Guide
 
-- **UK English** — colour, organisation, behaviour, licence
-- **Plain English** — write for a developer, not a security researcher
-- **30-second summary first** — every file opens with a `> **30-second summary:**` blockquote
-- **Be direct** — if something is dangerous, say so plainly
-- **Explain the why** — what breaks if this is ignored?
-- **Real examples** — actual breaches, real CVEs, production incidents
-- **Code must run** — no pseudocode, no "in theory" examples
-- **No AI-generated filler** — every sentence must earn its place
+- **UK English**: colour, organisation, behaviour, licence
+- **Plain English**: write for a developer, not a security researcher
+- **30-second summary first**: every file opens with a `> **30-second summary:**` blockquote
+- **Be direct**: if something is dangerous, say so plainly
+- **Explain the why**: what breaks if this is ignored?
+- **Real examples**: actual breaches, real CVEs, production incidents
+- **Code must run**: no pseudocode, no "in theory" examples
+- **No AI-generated filler**: every sentence must earn its place
+- **No em or en dashes**: use a colon, comma, brackets or "to" for ranges (CI enforces this)
+- **Date your facts**: version numbers, CVEs and edition years go stale; say which version or edition you mean
 
 ---
 
@@ -121,7 +123,7 @@ update: Supabase auth patterns to use @supabase/ssr
 
 ## Code of Conduct
 
-Be respectful, be helpful, be direct. We're here to ship secure software — not to argue.
+Be respectful, be helpful, be direct. We're here to ship secure software, not to argue.
 
 Harassment of any kind will result in an immediate ban. No exceptions.
 
@@ -129,4 +131,4 @@ Harassment of any kind will result in an immediate ban. No exceptions.
 
 ## Questions?
 
-Open a [GitHub Discussion](https://github.com/OpenAuditor/openauditor/discussions) — we're here to help.
+Open a [GitHub Discussion](https://github.com/OpenAuditor/openauditor/discussions): we're here to help.

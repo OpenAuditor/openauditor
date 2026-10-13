@@ -65,7 +65,7 @@ Maintained by Baffour and the open source community.
 
 ## Contributing
 
-Contributions are welcome — new prompts, vulnerability guides, code fixes, and translations.
+Contributions are welcome: new prompts, vulnerability guides, code fixes, and translations.
 
 - **Found a bug or outdated guidance?** [Open an issue](https://github.com/OpenAuditor/openauditor/issues)
 - **Want to add a section or prompt?** Read [CONTRIBUTING.md](./CONTRIBUTING.md) first
@@ -80,7 +80,7 @@ See [CHANGELOG.md](./CHANGELOG.md) for the full release history.
 
 ## License
 
-MIT — free to use, modify, and distribute. See [LICENSE](./LICENSE) for details.
+MIT: free to use, modify, and distribute. See [LICENSE](./LICENSE) for details.
 
 ## Status
 
@@ -90,20 +90,20 @@ MIT — free to use, modify, and distribute. See [LICENSE](./LICENSE) for detail
 
 ## Key Features
 
-✓ **Vibe-coder friendly** — Written for developers, not security experts  
-✓ **Works with all major AI coding tools** — Claude Code, Cursor, GitHub Copilot, Gemini CLI, OpenAI Codex, Windsurf, Cline, Aider, Lovable, Base44, Emergent, Replit Agent  
-✓ **Real-world context** — Examples from actual breaches (Uber, Twitch, Log4Shell, etc.)  
-✓ **Stack-specific guidance** — Next.js + Supabase, Python, Node.js + Express, Django  
-✓ **No security theater** — Practical, not hypothetical  
-✓ **Automated checklists** — Pre-commit hooks, SAST, supply chain scanning  
-✓ **Compliance ready** — SOC 2, GDPR, ISO 27001 templates included  
-✓ **Deprecation-aware** — Flags outdated patterns AI tools generate from old training data  
+✓ **Vibe-coder friendly**: Written for developers, not security experts  
+✓ **Works with all major AI coding tools**: Claude Code, Cursor, GitHub Copilot, Gemini CLI, OpenAI Codex, Windsurf, Cline, Aider, Lovable, Base44, Emergent, Replit Agent  
+✓ **Real-world context**: Examples from actual breaches (Uber, Twitch, Log4Shell, etc.)  
+✓ **Stack-specific guidance**: Next.js + Supabase, Python, Node.js + Express, Django  
+✓ **No security theater**: Practical, not hypothetical  
+✓ **Automated checklists**: Pre-commit hooks, SAST, supply chain scanning  
+✓ **Compliance ready**: SOC 2, GDPR, ISO 27001 templates included  
+✓ **Deprecation-aware**: Flags outdated patterns AI tools generate from old training data  
 
 ---
 
 ## ⚠️ A Note on AI-Generated Code
 
-All AI coding assistants (including those this toolkit runs in) are trained on code that spans several years. They may generate deprecated APIs, removed patterns, or insecure legacy approaches — not out of malice, but because those patterns appear frequently in training data.
+All AI coding assistants (including those this toolkit runs in) are trained on code that spans several years. They may generate deprecated APIs, removed patterns, or insecure legacy approaches, not out of malice, but because those patterns appear frequently in training data.
 
 **Always verify AI-generated code against the current official documentation** before shipping. The [Deprecation and Version Hygiene](./00-foundations/deprecation-and-version-hygiene.md) guide covers the most common outdated patterns by stack.
 
@@ -111,4 +111,4 @@ All AI coding assistants (including those this toolkit runs in) are trained on c
 
 ## Before You Ship
 
-Every section includes a "Why this matters" explainer that shows real-world consequences. Security is not optional—it's the difference between being hacked or not. Use this toolkit.
+Every section includes a "Why this matters" explainer that shows real-world consequences. Security is not optional: it's the difference between being hacked or not. Use this toolkit.

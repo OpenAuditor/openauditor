@@ -48,7 +48,7 @@ If no privacy policy exists, flag as Critical.
 
 **Step 4: User Rights Implementation**
 Check whether these rights are implemented:
-- Right of access (can users request their data?) — 30-day deadline
+- Right of access (can users request their data?): 30-day deadline
 - Right to erasure (can users delete their account and data?)
 - Right to object (can users opt out of processing?)
 - Right to portability (can users export their data?)

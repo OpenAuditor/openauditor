@@ -7,7 +7,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
-## [1.0.0] — 2026-04-27
+## [1.0.0] - 2026-04-27
 
 First complete, production-ready release.
 
@@ -20,7 +20,7 @@ First complete, production-ready release.
 **00 Foundations** (11 files)
 - Threat modelling 101, secure by default, risk appetite framework
 - The human layer, why security matters, glossary
-- Deprecation and version hygiene — detecting outdated AI-generated patterns
+- Deprecation and version hygiene: detecting outdated AI-generated patterns
 - Prompt agents: STRIDE analysis, threat discovery, risk prioritisation, deprecated pattern check
 
 **01 Pre-Commit Hooks** (15 files)
@@ -29,9 +29,9 @@ First complete, production-ready release.
 - Prompts: setup, audit existing hooks, CI integration
 
 **02 OWASP** (40 files)
-- Web Top 10 (2021): A01–A10 with code fixes
-- API Top 10 (2023): API1–API10 with code fixes
-- LLM Top 10 (2025): LLM01–LLM10 with AI-specific defences
+- Web Top 10 (2021): A01 to A10 with code fixes
+- API Top 10 (2023): API1 to API10 with code fixes
+- LLM Top 10 (2025): LLM01 to LLM10 with AI-specific defences
 - Prompts: full Web audit, API audit, LLM audit, fix broken access control, fix injection, fix auth failures
 
 **03 MITRE ATT&CK** (6 files)
@@ -125,9 +125,9 @@ First complete, production-ready release.
 
 | Version range | Meaning |
 |---------------|---------|
-| `1.0.x` | Patches — typo fixes, clarifications, broken links |
-| `1.x.0` | Minor — new content, new prompts, new stack coverage |
-| `x.0.0` | Major — structural changes, breaking prompt format changes |
+| `1.0.x` | Patches: typo fixes, clarifications, broken links |
+| `1.x.0` | Minor: new content, new prompts, new stack coverage |
+| `x.0.0` | Major: structural changes, breaking prompt format changes |
 
 Versions are tagged on GitHub: [github.com/OpenAuditor/openauditor/releases](https://github.com/OpenAuditor/openauditor/releases)
 
@@ -135,18 +135,18 @@ Versions are tagged on GitHub: [github.com/OpenAuditor/openauditor/releases](htt
 
 ## Roadmap
 
-### [1.1.0] — May 2026
+### [1.1.0] - May 2026
 - [ ] Kubernetes and container orchestration security
 - [ ] GraphQL security guide
 - [ ] AWS and GCP deployment hardening
 - [ ] Additional CVE stack histories (Ruby, Go, Rust)
 
-### [1.2.0] — June 2026
+### [1.2.0] - June 2026
 - [ ] Community-reviewed prompt contributions
 - [ ] Interactive risk calculator (web tool)
 - [ ] Automated pre-audit questionnaire
 
-### [2.0.0] — Q3 2026
+### [2.0.0] - Q3 2026
 - [ ] Machine-readable audit output format (JSON/YAML)
 - [ ] GitHub App integration
 - [ ] Multi-language translations

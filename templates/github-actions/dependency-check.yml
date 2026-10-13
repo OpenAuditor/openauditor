@@ -1,5 +1,5 @@
 # .github/workflows/dependency-check.yml
-# Weekly dependency audit — catches CVEs disclosed between PRs
+# Weekly dependency audit: catches CVEs disclosed between PRs
 # This runs on a schedule so even repos with infrequent commits stay monitored
 
 name: Weekly Dependency Check
@@ -168,7 +168,7 @@ jobs:
           retention-days: 30
 
   # ============================================================
-  # OSV Scanner — comprehensive open source vulnerability check
+  # OSV Scanner: comprehensive open source vulnerability check
   # ============================================================
   osv-scan:
     name: OSV Scanner
@@ -213,11 +213,11 @@ jobs:
 
           if [ "$STATUS" = "failure" ]; then
             EMOJI="🚨"
-            TEXT="Weekly dependency scan found issues — review required"
+            TEXT="Weekly dependency scan found issues: review required"
             COLOR="danger"
           else
             EMOJI="✅"
-            TEXT="Weekly dependency scan passed — no critical issues"
+            TEXT="Weekly dependency scan passed: no critical issues"
             COLOR="good"
           fi
 

@@ -6,7 +6,7 @@ Session IDs, API keys, password reset tokens, CSRF tokens, and OAuth state param
 
 ## The Core Problem: `Math.random()` Is Not Secure
 
-`Math.random()` and similar pseudo-random number generators (PRNGs) are designed for simulation, games, and statistical sampling — not security. They produce deterministic output seeded from a small state, meaning:
+`Math.random()` and similar pseudo-random number generators (PRNGs) are designed for simulation, games, and statistical sampling, not security. They produce deterministic output seeded from a small state, meaning:
 
 1. The internal state can often be recovered by observing a handful of outputs.
 2. Once the state is known, all past and future outputs can be predicted.
@@ -38,7 +38,7 @@ const badApiKey = btoa(Math.random() + Math.random());           // Predictable
 
 A CSPRNG draws entropy from the operating system's randomness pool (`/dev/urandom` on Linux/macOS, `BCryptGenRandom` on Windows), which collects entropy from hardware events, hardware RNGs (RDRAND/RDSEED on modern CPUs), and other unpredictable sources.
 
-### Node.js — `crypto.randomBytes`
+### Node.js: `crypto.randomBytes`
 
 ```javascript
 const crypto = require('crypto');
@@ -79,12 +79,12 @@ const csrfToken = crypto.randomBytes(24).toString('base64url');
 const apiKey = crypto.randomBytes(32).toString('hex');
 ```
 
-### Node.js — `crypto.randomUUID`
+### Node.js: `crypto.randomUUID`
 
 ```javascript
 const crypto = require('crypto');
 
-// UUID v4 — 122 bits of randomness
+// UUID v4: 122 bits of randomness
 const uuid = crypto.randomUUID();
 // => '550e8400-e29b-41d4-a716-446655440000'
 
@@ -93,14 +93,14 @@ const uuid = crypto.randomUUID();
 // Use randomBytes(32) when maximum entropy is needed
 ```
 
-### Python — `secrets` Module
+### Python: `secrets` Module
 
 The `secrets` module was added in Python 3.6 specifically to replace `random` for security-sensitive operations.
 
 ```python
 import secrets
 
-# Hex token — 32 bytes = 64 hex characters
+# Hex token: 32 bytes = 64 hex characters
 token = secrets.token_hex(32)
 # => '7f3a9b2c1e4d5f6a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1'
 
@@ -112,9 +112,9 @@ token_url = secrets.token_urlsafe(32)
 token_bytes = secrets.token_bytes(32)
 
 # Choosing token length
-# 16 bytes (32 hex chars) = 128-bit entropy — minimum for session tokens
-# 32 bytes (64 hex chars) = 256-bit entropy — recommended
-# 64 bytes (128 hex chars) = 512-bit entropy — long-lived API keys
+# 16 bytes (32 hex chars) = 128-bit entropy: minimum for session tokens
+# 32 bytes (64 hex chars) = 256-bit entropy: recommended
+# 64 bytes (128 hex chars) = 512-bit entropy: long-lived API keys
 
 # Password reset token
 reset_token = secrets.token_urlsafe(32)
@@ -139,14 +139,14 @@ password = ''.join(secrets.choice(alphabet) for _ in range(24))
 
 | Version | Generation | Entropy | Security Use |
 |---------|-----------|---------|-------------|
-| v1 | Timestamp + MAC address | Low | Never for security — leaks timing and network identity |
+| v1 | Timestamp + MAC address | Low | Never for security: leaks timing and network identity |
 | v3 | MD5 hash of namespace+name | Deterministic | Never for security tokens |
 | v4 | Random | 122 bits | Acceptable for IDs; use `randomBytes` for tokens |
 | v5 | SHA-1 hash of namespace+name | Deterministic | Never for security tokens |
-| v7 | Unix timestamp + random | ~74 bits random | Database IDs (sortable) — not for secrets |
+| v7 | Unix timestamp + random | ~74 bits random | Database IDs (sortable), not for secrets |
 
 ```javascript
-// Node.js built-in UUID v4 — adequate for record IDs
+// Node.js built-in UUID v4: adequate for record IDs
 const { randomUUID } = require('crypto');
 const id = randomUUID(); // => '110e8400-e29b-41d4-a716-446655440000'
 
@@ -177,7 +177,7 @@ record_id = str(uuid.uuid4())
 |----------|-------------|---------|-----|
 | Session ID | 32 bytes hex | 256 bits | Resist brute-force over session lifetime |
 | Password reset token | 32 bytes hex | 256 bits | Short-lived but high value target |
-| CSRF token | 16–24 bytes | 128–192 bits | Per-request, short validity |
+| CSRF token | 16 to 24 bytes | 128 to 192 bits | Per-request, short validity |
 | API key | 32 bytes hex | 256 bits | Long-lived, high privilege |
 | OAuth state param | 16 bytes | 128 bits | Short-lived, prevents CSRF |
 | Email verification | 32 bytes hex | 256 bits | Single use, high value |
@@ -190,10 +190,10 @@ record_id = str(uuid.uuid4())
 Comparing tokens with standard string equality (`===`, `==`) can leak timing information. Always use constant-time comparison.
 
 ```javascript
-// WRONG — returns early on first mismatch (timing leak)
+// WRONG: returns early on first mismatch (timing leak)
 if (userToken === storedToken) { ... }
 
-// CORRECT — Node.js
+// CORRECT: Node.js
 const crypto = require('crypto');
 function safeCompare(a, b) {
   const bufA = Buffer.from(a);
@@ -214,7 +214,7 @@ import hmac
 if user_token == stored_token:
     ...
 
-# CORRECT — Python
+# CORRECT: Python
 if hmac.compare_digest(user_token.encode(), stored_token.encode()):
     ...
 ```
@@ -238,14 +238,14 @@ function generateApiKey(prefix = 'sk') {
   // => 'sk_fzqbLh5NX2qLnA0eL6S1xm3X6JoLHC0-T1prvI2e8PE'
 }
 
-// Never store the raw API key — store a hash of it
+// Never store the raw API key: store a hash of it
 async function storeApiKey() {
   const apiKey = generateApiKey('sk_live');
   const hash = crypto.createHash('sha256').update(apiKey).digest('hex');
   
   // Show the full key to the user once
   console.log(`Your API key: ${apiKey}`);
-  console.log('Store this safely — it will not be shown again.');
+  console.log('Store this safely: it will not be shown again.');
   
   // Store only the hash in the database
   await db.insert({ key_hash: hash, prefix: apiKey.slice(0, 10) + '...' });
@@ -267,8 +267,8 @@ async function storeApiKey() {
 | `secrets.token_hex()` | Yes | Yes | Recommended for Python |
 | `secrets.token_urlsafe()` | Yes | Yes | URL-safe variant |
 | `uuid.uuid4()` | Yes | For IDs | 122-bit entropy; prefer secrets for secrets |
-| `random.random()` (Python) | No | Never | Mersenne Twister — not cryptographically secure |
-| `os.urandom()` | Yes | Yes | Direct OS entropy — fine to use |
+| `random.random()` (Python) | No | Never | Mersenne Twister, not cryptographically secure |
+| `os.urandom()` | Yes | Yes | Direct OS entropy: fine to use |
 
 ---
 

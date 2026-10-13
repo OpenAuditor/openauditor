@@ -2,7 +2,7 @@
 
 ## When to use this
 
-Use this before installing any new npm or pip package that will go into production — especially packages from unfamiliar authors, packages with few stars, or packages that solve a security-sensitive problem (auth, crypto, parsing).
+Use this before installing any new npm or pip package that will go into production, especially packages from unfamiliar authors, packages with few stars, or packages that solve a security-sensitive problem (auth, crypto, parsing).
 
 ## Works with
 
@@ -202,10 +202,10 @@ Reason: [1-2 sentences]
 **If conditional:**
 - Install with: `npm install [PACKAGE_NAME] --ignore-scripts`
 - Monitor with: Dependabot alert configured
-- Review again if: [trigger — new version, CVE published, etc.]
+- Review again if: [trigger: new version, CVE published, etc.]
 ```
 
-**Step 9: If approved — safe installation**
+**Step 9: If approved: safe installation**
 
 ```bash
 # Install with --ignore-scripts if package has postinstall

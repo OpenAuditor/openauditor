@@ -538,10 +538,10 @@ You should:
 
 ## Learn more
 
-- [Threat Modeling 101](../threat-modeling-101.md) — STRIDE explained in detail
-- [Threat Discovery Agent](./threat-discovery.md) — Similar but less structured
-- [Risk Prioritization Agent](./risk-prioritization.md) — Help deciding what to fix first
-- [Secure by Default](../secure-by-default.md) — Principles to prevent these threats
+- [Threat Modeling 101](../threat-modeling-101.md): STRIDE explained in detail
+- [Threat Discovery Agent](./threat-discovery.md): Similar but less structured
+- [Risk Prioritization Agent](./risk-prioritization.md): Help deciding what to fix first
+- [Secure by Default](../secure-by-default.md): Principles to prevent these threats
 
 ---
 

@@ -47,14 +47,14 @@ docker run --rm \
   -l WARN
 ```
 
-This runs a passive scan — it doesn't attack, just observes and analyses responses.
+This runs a passive scan: it doesn't attack, just observes and analyses responses.
 
 ---
 
 ## Full Active Scan (More Thorough)
 
 ```bash
-# Active scan — actually tests for vulnerabilities
+# Active scan: actually tests for vulnerabilities
 # Only run this against YOUR OWN systems, in a test environment
 docker run --rm \
   -v $(pwd)/zap-reports:/zap/wrk \
@@ -73,7 +73,7 @@ docker run --rm \
 To scan authenticated sections of your app:
 
 ```yaml
-# zap-auth.yaml — ZAP automation script
+# zap-auth.yaml: ZAP automation script
 env:
   contexts:
     - name: "app-authenticated"
@@ -128,9 +128,9 @@ jobs:
 ## Reading ZAP Reports
 
 ZAP rates findings as:
-- **High** — fix before launch
-- **Medium** — fix within 30 days
-- **Low** — review and document
+- **High**: fix before launch
+- **Medium**: fix within 30 days
+- **Low**: review and document
 
 Common findings and what they mean:
 

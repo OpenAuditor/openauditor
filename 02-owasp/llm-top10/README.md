@@ -1,19 +1,19 @@
 # OWASP LLM Top 10
 
-**OWASP Top 10 for Large Language Model Applications — 2025 Edition**
+**OWASP Top 10 for Large Language Model Applications: 2025 Edition**
 
-This section covers the ten most critical security risks in applications that use large language models (LLMs) — including chatbots, AI agents, RAG systems, and code generation tools.
+This section covers the ten most critical security risks in applications that use large language models (LLMs), including chatbots, AI agents, RAG systems, and code generation tools.
 
 ---
 
 ## Why LLM Security Is Different
 
-Traditional web security protects against code injection. LLM security protects against *semantic* injection — malicious instructions hidden in natural language. The attack surface is fundamentally different:
+Traditional web security protects against code injection. LLM security protects against *semantic* injection: malicious instructions hidden in natural language. The attack surface is fundamentally different:
 
-- **Inputs are unbounded natural language** — impossible to fully validate
-- **Model behaviour is probabilistic** — not deterministic or provable
-- **Context is opaque** — the model may "remember" injected instructions from earlier in the conversation
-- **Actions can be real** — agentic LLMs can call APIs, write files, send emails
+- **Inputs are unbounded natural language**: impossible to fully validate
+- **Model behaviour is probabilistic**, not deterministic or provable
+- **Context is opaque**: the model may "remember" injected instructions from earlier in the conversation
+- **Actions can be real**: agentic LLMs can call APIs, write files, send emails
 
 ---
 

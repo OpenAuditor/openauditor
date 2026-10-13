@@ -78,7 +78,7 @@ res.setHeader('Content-Type', validatedMimeType);
 // Never set: Content-Disposition: inline for user-uploaded files
 ```
 
-**Step 7: For images — re-encode with Sharp**
+**Step 7: For images: re-encode with Sharp**
 ```typescript
 import sharp from 'sharp'; // npm install sharp
 const processedImage = await sharp(buffer).jpeg({ quality: 85 }).toBuffer();

@@ -2,7 +2,7 @@
 
 When a breach happens, time is your enemy. Every hour of delay increases damage, regulatory exposure, and remediation cost.
 
-This section gives you the playbook for responding to a security incident — from the first 24 hours through legal notification.
+This section gives you the playbook for responding to a security incident: from the first 24 hours through legal notification.
 
 ---
 

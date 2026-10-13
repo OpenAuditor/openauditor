@@ -4,7 +4,7 @@ Vercel is the dominant deployment platform for Next.js applications, and its def
 
 ---
 
-## vercel.json — Security Headers
+## vercel.json: Security Headers
 
 The fastest way to add HTTP security headers to every response is via `vercel.json` in your project root.
 
@@ -48,7 +48,7 @@ The fastest way to add HTTP security headers to every response is via `vercel.js
 }
 ```
 
-> **Critical:** The `Content-Security-Policy` above is a starting template. Tighten it based on your actual third-party dependencies — every `unsafe-inline` and `unsafe-eval` you can remove improves security.
+> **Critical:** The `Content-Security-Policy` above is a starting template. Tighten it based on your actual third-party dependencies: every `unsafe-inline` and `unsafe-eval` you can remove improves security.
 
 ### Applying Headers Only to HTML Responses
 
@@ -83,20 +83,20 @@ Vercel supports three environments, and secrets should be scoped as tightly as p
 
 | Environment | Use case | Risk level |
 |---|---|---|
-| **Production** | Live application | Highest — production DB, payment keys |
-| **Preview** | Pull request deployments | Medium — should use staging resources only |
-| **Development** | Local `vercel dev` | Low — developer machines |
+| **Production** | Live application | Highest: production DB, payment keys |
+| **Preview** | Pull request deployments | Medium: should use staging resources only |
+| **Development** | Local `vercel dev` | Low: developer machines |
 
 ### Configuring Scoped Variables via CLI
 
 ```bash
-# Production only — database connection string
+# Production only: database connection string
 vercel env add DATABASE_URL production
 
-# Preview only — staging database
+# Preview only: staging database
 vercel env add DATABASE_URL preview
 
-# Development only — local override
+# Development only: local override
 vercel env add DATABASE_URL development
 ```
 
@@ -104,7 +104,7 @@ vercel env add DATABASE_URL development
 
 1. Navigate to **Project → Settings → Environment Variables**
 2. For each variable, untick the environments it should not apply to
-3. For secrets (API keys, DB passwords): always use **Encrypted** type — Vercel encrypts these at rest and they are never readable again after creation
+3. For secrets (API keys, DB passwords): always use **Encrypted** type: Vercel encrypts these at rest and they are never readable again after creation
 
 ### Naming Conventions to Prevent Leaks
 
@@ -112,12 +112,12 @@ vercel env add DATABASE_URL development
 # NEXT_PUBLIC_ prefix exposes variables to the browser bundle
 # Never prefix secrets with NEXT_PUBLIC_
 
-NEXT_PUBLIC_APP_URL=https://myapp.com       # Safe — not secret
-NEXT_PUBLIC_ANALYTICS_ID=G-XXXXXXX         # Safe — not secret
+NEXT_PUBLIC_APP_URL=https://myapp.com       # Safe, not secret
+NEXT_PUBLIC_ANALYTICS_ID=G-XXXXXXX         # Safe, not secret
 
-DATABASE_URL=postgres://...                  # Never expose — server only
-STRIPE_SECRET_KEY=sk_live_...               # Never expose — server only
-SUPABASE_SECRET_KEY=eyJ...                  # Never expose — server only
+DATABASE_URL=postgres://...                  # Never expose: server only
+STRIPE_SECRET_KEY=sk_live_...               # Never expose: server only
+SUPABASE_SECRET_KEY=eyJ...                  # Never expose: server only
 ```
 
 > **Critical:** If you accidentally expose a secret via `NEXT_PUBLIC_`, it is embedded in your JavaScript bundle and visible to any user who opens DevTools. Rotate the key immediately and redeploy.
@@ -126,7 +126,7 @@ SUPABASE_SECRET_KEY=eyJ...                  # Never expose — server only
 
 ## Preview Deployment Protection
 
-By default, Vercel preview URLs (`*.vercel.app`) are publicly accessible. Anyone with the URL can see your work-in-progress — including unreleased features, internal tooling, and staging data.
+By default, Vercel preview URLs (`*.vercel.app`) are publicly accessible. Anyone with the URL can see your work-in-progress, including unreleased features, internal tooling, and staging data.
 
 ### Vercel Authentication (Recommended)
 
@@ -216,7 +216,7 @@ Require 2FA for all team members:
 1. **Team → Settings → Security**
 2. Enable **Require Two-Factor Authentication**
 
-> **Critical:** A single team member without 2FA is the weakest link — if their Vercel account is compromised, an attacker can read all environment variables and deploy malicious code to production.
+> **Critical:** A single team member without 2FA is the weakest link: if their Vercel account is compromised, an attacker can read all environment variables and deploy malicious code to production.
 
 ---
 
@@ -225,7 +225,7 @@ Require 2FA for all team members:
 Deployment hooks allow external services to trigger builds. Treat them as secrets.
 
 ```bash
-# Rotating a compromised hook — CLI
+# Rotating a compromised hook: CLI
 vercel deploy-hook rm <hook-id>
 vercel deploy-hook create main
 
@@ -277,7 +277,7 @@ export const config = {
 ## Vercel Security Checklist
 
 - [ ] HTTP security headers configured in `vercel.json`
-- [ ] All secrets scoped to correct environment(s) — never cross-scoped
+- [ ] All secrets scoped to correct environment(s): never cross-scoped
 - [ ] No `NEXT_PUBLIC_` prefix on any sensitive value
 - [ ] Preview deployment protection enabled (Vercel Auth or password)
 - [ ] Bypass token stored as a repository secret, not plaintext

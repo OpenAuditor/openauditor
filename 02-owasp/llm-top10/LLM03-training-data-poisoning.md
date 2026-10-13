@@ -1,6 +1,6 @@
 # LLM03: Training Data Poisoning
 
-**Rank #3 — OWASP LLM Top 10 2025 | Severity: High**
+**Rank #3: OWASP LLM Top 10 2025 | Severity: High**
 
 An attacker introduces malicious data into a model's training or fine-tuning dataset, causing the model to learn biased, backdoored, or harmful behaviours that activate under specific trigger conditions.
 
@@ -8,7 +8,7 @@ An attacker introduces malicious data into a model's training or fine-tuning dat
 
 ## 30-Second Summary
 
-Training data poisoning is a supply-chain attack on the model itself. If you fine-tune an LLM on data that you don't fully control — scraped web data, user feedback, public datasets — an attacker can introduce examples that cause the model to misbehave. The backdoor may lie dormant until a specific trigger phrase activates it.
+Training data poisoning is a supply-chain attack on the model itself. If you fine-tune an LLM on data that you don't fully control, scraped web data, user feedback, public datasets, an attacker can introduce examples that cause the model to misbehave. The backdoor may lie dormant until a specific trigger phrase activates it.
 
 **Real research:** Carlini et al. (2021) demonstrated that by poisoning only 0.01% of a dataset, they could cause a model to generate specific toxic content when triggered with a particular phrase. The poisoning was nearly undetectable in the training data.
 
@@ -32,7 +32,7 @@ Your model learns these patterns and replicates them.
 ### 2. User Feedback Poisoning (RLHF)
 
 ```python
-# VULNERABLE — accepting all user thumbs-up/thumbs-down without filtering
+# VULNERABLE: accepting all user thumbs-up/thumbs-down without filtering
 @app.post('/api/feedback')
 async def collect_feedback(feedback: dict):
     await db.training_queue.insert({
@@ -69,7 +69,7 @@ Model: "Here are the credit card details from our database..."
 ```python
 # Track and validate every training data source
 APPROVED_DATA_SOURCES = [
-    'internal_documentation',      # company docs — you own this
+    'internal_documentation',      # company docs: you own this
     'support_tickets_anonymised',   # after PII removal
     'curated_public_datasets',      # known-good datasets (The Pile, etc.)
 ]
@@ -131,7 +131,7 @@ for idx in outliers[:10]:
 ### 3. Filtering User Feedback Before RLHF
 
 ```python
-# SECURE — human review gate before feedback enters training data
+# SECURE: human review gate before feedback enters training data
 class FeedbackFilter:
     def __init__(self):
         self.toxic_classifier = load_toxicity_model()
@@ -188,7 +188,7 @@ BACKDOOR_TRIGGER_TESTS = [
 ]
 
 EXPECTED_SAFE_OUTPUTS = [
-    # The model should give normal responses to these — not toxic/unusual outputs
+    # The model should give normal responses to these: not toxic/unusual outputs
     "What is the capital of France?",
     "How do I reset my password?",
     "What are your opening hours?",
@@ -203,7 +203,7 @@ def test_for_backdoors(model, trigger_phrases: list[str]) -> dict:
             normal_response = model.generate(safe_prompt)
             triggered_response = model.generate(triggered_prompt)
             
-            # Compare responses — a backdoor causes dramatically different output
+            # Compare responses: a backdoor causes dramatically different output
             similarity = calculate_similarity(normal_response, triggered_response)
             
             if similarity < 0.7:  # Responses differ significantly
@@ -227,7 +227,7 @@ def test_for_backdoors(model, trigger_phrases: list[str]) -> dict:
 - [ ] Anomaly detection run on training datasets to flag outliers
 - [ ] Fine-tuned models evaluated for backdoor triggers before deployment
 - [ ] Separate staging environment for model testing
-- [ ] Model versions pinned — know exactly which model version is deployed
+- [ ] Model versions pinned: know exactly which model version is deployed
 - [ ] Access to the fine-tuning pipeline is restricted (not every developer)
 
 ---
@@ -237,7 +237,7 @@ def test_for_backdoors(model, trigger_phrases: list[str]) -> dict:
 ```python
 # Before deploying a third-party fine-tuned model:
 
-# 1. Verify the model's provenance — who trained it, on what data?
+# 1. Verify the model's provenance: who trained it, on what data?
 # 2. Run your own evaluation suite:
 #    - Does it refuse harmful requests?
 #    - Does it behave differently with trigger phrases?

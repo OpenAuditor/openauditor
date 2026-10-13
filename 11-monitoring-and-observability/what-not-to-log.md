@@ -1,6 +1,6 @@
 # What Not to Log
 
-Logging too much is as dangerous as logging too little. Sensitive data in logs creates a second attack surface — logs are often shipped to third-party platforms, stored with weaker access controls than your database, and retained far longer than necessary.
+Logging too much is as dangerous as logging too little. Sensitive data in logs creates a second attack surface: logs are often shipped to third-party platforms, stored with weaker access controls than your database, and retained far longer than necessary.
 
 This file documents patterns you must never log, with examples of the mistake and the safe alternative.
 
@@ -26,10 +26,10 @@ A single log line containing a password or token can compromise your entire syst
 **Never do this:**
 
 ```javascript
-// BAD — logs the attempted password
+// BAD: logs the attempted password
 logger.info(`Login attempt for ${email} with password ${password}`);
 
-// BAD — logs the full request body
+// BAD: logs the full request body
 logger.info('Auth request', { body: req.body });
 // req.body = { email: "user@example.com", password: "hunter2" }
 ```
@@ -37,7 +37,7 @@ logger.info('Auth request', { body: req.body });
 **Do this instead:**
 
 ```javascript
-// GOOD — logs the outcome, not the credential
+// GOOD: logs the outcome, not the credential
 logger.info({
   event_type: 'auth.login.failure',
   email_hash: hashEmail(email),
@@ -51,21 +51,21 @@ logger.info({
 **Never do this:**
 
 ```javascript
-// BAD — logs the full Authorization header
+// BAD: logs the full Authorization header
 logger.debug('Incoming request', { headers: req.headers });
 // headers.authorization = "Bearer sk_live_abc123..."
 
-// BAD — logs the full token in an error
+// BAD: logs the full token in an error
 logger.error(`Token validation failed for token: ${token}`);
 
-// BAD — logs Stripe webhook secret
+// BAD: logs Stripe webhook secret
 logger.info(`Webhook received`, { webhookSecret: process.env.STRIPE_WEBHOOK_SECRET });
 ```
 
 **Do this instead:**
 
 ```javascript
-// GOOD — log only a token prefix for debugging identity
+// GOOD: log only a token prefix for debugging identity
 const tokenPrefix = token?.substring(0, 8) + '...';
 logger.error({
   event_type: 'auth.token.invalid',
@@ -79,7 +79,7 @@ logger.error({
 **Never do this:**
 
 ```javascript
-// BAD — connection string contains password
+// BAD: connection string contains password
 logger.error(`DB connection failed: ${process.env.DATABASE_URL}`);
 // DATABASE_URL = "postgresql://user:password@host:5432/db"
 ```
@@ -87,7 +87,7 @@ logger.error(`DB connection failed: ${process.env.DATABASE_URL}`);
 **Do this instead:**
 
 ```javascript
-// GOOD — log only the host and database name
+// GOOD: log only the host and database name
 const url = new URL(process.env.DATABASE_URL);
 logger.error({
   event_type: 'db.connection_failed',
@@ -100,10 +100,10 @@ logger.error({
 ### Private keys and certificates
 
 ```javascript
-// BAD — never log PEM blocks
+// BAD: never log PEM blocks
 logger.debug('Loaded signing key', { key: signingKey });
 
-// BAD — never log JWT secrets
+// BAD: never log JWT secrets
 logger.info('JWT config', { secret: process.env.JWT_SECRET });
 ```
 
@@ -126,7 +126,7 @@ logger.info('Auth failure', { email: req.body.email });
 **Do this instead:**
 
 ```javascript
-// GOOD — hash the email for correlation without storage
+// GOOD: hash the email for correlation without storage
 import { createHash } from 'crypto';
 
 function hashEmail(email: string): string {
@@ -175,11 +175,11 @@ logger.info({ event_type: 'delivery.dispatched', order_id: order.id });
 **This is a legal requirement, not just a best practice.** PCI DSS prohibits storing card numbers in logs.
 
 ```javascript
-// BAD — even partial card numbers can be restricted
+// BAD, even partial card numbers can be restricted
 logger.info('Payment processed', { card: paymentMethod.card });
 // card = { brand: "visa", last4: "4242", exp_month: 12, exp_year: 2028 }
 
-// GOOD — reference the payment provider's token only
+// GOOD: reference the payment provider's token only
 logger.info({
   event_type: 'payment.processed',
   payment_method_id: paymentMethod.id,   // Stripe PM ID, not card data
@@ -214,13 +214,13 @@ Never log. No exceptions.
 **Never do this:**
 
 ```javascript
-// BAD — logs the session token
+// BAD: logs the session token
 logger.debug('Request context', {
   cookies: req.cookies,
   // cookies = { session: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." }
 });
 
-// BAD — logs Authorization header wholesale
+// BAD: logs Authorization header wholesale
 app.use((req, res, next) => {
   logger.debug({ headers: req.headers }); // includes auth token
   next();
@@ -230,7 +230,7 @@ app.use((req, res, next) => {
 **Do this instead:**
 
 ```javascript
-// GOOD — log only safe headers
+// GOOD: log only safe headers
 const safeHeaders = {
   'content-type': req.headers['content-type'],
   'user-agent': req.headers['user-agent'],
@@ -253,7 +253,7 @@ Bodies frequently contain:
 - File uploads
 
 ```javascript
-// BAD — blanket body logging
+// BAD: blanket body logging
 app.use((req, res, next) => {
   logger.debug({ body: req.body }); // dangerous
   next();
@@ -263,7 +263,7 @@ app.use((req, res, next) => {
 If you need to debug specific endpoints, use a middleware that explicitly allowlists safe fields:
 
 ```javascript
-// GOOD — safe request logging middleware
+// GOOD: safe request logging middleware
 function safeRequestLog(allowedFields: string[]) {
   return (req: Request, res: Response, next: NextFunction) => {
     const safeBody = Object.fromEntries(
@@ -292,13 +292,13 @@ router.get('/search', safeRequestLog(['query', 'page', 'per_page']), searchHandl
 Avoid logging information that helps attackers map your infrastructure.
 
 ```javascript
-// BAD — reveals internal hostnames and IPs
+// BAD: reveals internal hostnames and IPs
 logger.error(`DB query failed on host db-primary-01.internal:5432`);
 
-// BAD — reveals service mesh topology
+// BAD: reveals service mesh topology
 logger.info(`Proxying request to payment-service.prod.svc.cluster.local`);
 
-// BAD — reveals dependency versions (helps attackers find CVEs)
+// BAD: reveals dependency versions (helps attackers find CVEs)
 logger.info(`Starting server with Node ${process.version}, Express 4.18.2`);
 ```
 
@@ -312,7 +312,7 @@ Run this grep before deploying or during CI to catch dangerous log patterns:
 
 ```bash
 #!/bin/bash
-# scan-logs.sh — detect dangerous logging patterns
+# scan-logs.sh: detect dangerous logging patterns
 
 echo "Scanning for dangerous log patterns..."
 
@@ -341,7 +341,7 @@ for pattern in "${DANGEROUS_PATTERNS[@]}"; do
     ./src/ 2>/dev/null)
   
   if [ -n "$results" ]; then
-    echo "WARNING: Potential sensitive data in log call — pattern: ${pattern}"
+    echo "WARNING: Potential sensitive data in log call: pattern: ${pattern}"
     echo "$results"
     FOUND=$((FOUND + 1))
   fi

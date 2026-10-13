@@ -2,7 +2,7 @@
 
 Skills are multi-step security workflows designed to be loaded into AI coding assistants (Cursor, Claude, GitHub Copilot Agent, Windsurf) as a complete context-aware task.
 
-Unlike simple prompts, skills are structured workflows that guide the AI through a complete investigation or implementation — with defined phases, decision points, and output formats.
+Unlike simple prompts, skills are structured workflows that guide the AI through a complete investigation or implementation: with defined phases, decision points, and output formats.
 
 ---
 
@@ -14,7 +14,7 @@ Unlike simple prompts, skills are structured workflows that guide the AI through
 
 | File | Purpose |
 |------|---------|
-| [SKILL.md](./production-readiness-audit/SKILL.md) | The full skill — copy this into your AI assistant |
+| [SKILL.md](./production-readiness-audit/SKILL.md) | The full skill: copy this into your AI assistant |
 | [Question Bank](./production-readiness-audit/question-bank.md) | 37 discovery questions used in Phase 1 |
 | [Scoring Rubric](./production-readiness-audit/scoring-rubric.md) | How PASS/PARTIAL/FAIL maps to scores and verdicts |
 | [Report Template](./production-readiness-audit/report-template.md) | Output template for the final audit report |
@@ -34,7 +34,7 @@ Unlike simple prompts, skills are structured workflows that guide the AI through
 1. Open Cursor
 2. Press `Ctrl+Shift+P` → "Cursor: Open Composer"
 3. Paste the contents of [SKILL.md](./production-readiness-audit/SKILL.md)
-4. Press Enter — Cursor will begin the multi-step workflow
+4. Press Enter: Cursor will begin the multi-step workflow
 
 ### Claude Code (recommended)
 

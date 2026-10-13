@@ -4,7 +4,7 @@ SOC 2 audits are structured around five Trust Service Criteria defined by the AI
 
 ---
 
-## 1. Security (CC — Common Criteria)
+## 1. Security (CC: Common Criteria)
 
 **What it covers:** Protection of systems and data against unauthorised access, disclosure, damage, or misuse.
 
@@ -87,7 +87,7 @@ SOC 2 audits are structured around five Trust Service Criteria defined by the AI
 
 **What it covers:** Information designated as confidential is protected as committed.
 
-**Include this if:** You handle confidential business information — trade secrets, financial data, legal documents, proprietary research.
+**Include this if:** You handle confidential business information: trade secrets, financial data, legal documents, proprietary research.
 
 ### What auditors look for
 
@@ -112,7 +112,7 @@ SOC 2 audits are structured around five Trust Service Criteria defined by the AI
 
 **What it covers:** Personal information is collected, used, retained, disclosed, and disposed of in line with your privacy notice and applicable law.
 
-**Include this if:** You collect, store, or process personal information about individuals — particularly if you have GDPR, CCPA, or HIPAA obligations.
+**Include this if:** You collect, store, or process personal information about individuals: particularly if you have GDPR, CCPA, or HIPAA obligations.
 
 ### What auditors look for
 

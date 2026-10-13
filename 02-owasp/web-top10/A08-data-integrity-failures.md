@@ -1,6 +1,6 @@
 # A08: Software and Data Integrity Failures
 
-**New entry — OWASP Web Top 10 2021**
+**New entry: OWASP Web Top 10 2021**
 
 This category covers failures to verify the integrity of software updates, critical data, and CI/CD pipelines. It includes insecure deserialisation (formerly its own category) and supply chain attacks.
 
@@ -8,7 +8,7 @@ This category covers failures to verify the integrity of software updates, criti
 
 ## 30-Second Summary
 
-Integrity failures happen when code or data is used without verifying it hasn't been tampered with. The most devastating modern form is supply chain attacks — malicious code injected into a dependency, build pipeline, or auto-update mechanism. Insecure deserialisation is the classic form: accepting serialised objects from users and deserialising them server-side without validation.
+Integrity failures happen when code or data is used without verifying it hasn't been tampered with. The most devastating modern form is supply chain attacks: malicious code injected into a dependency, build pipeline, or auto-update mechanism. Insecure deserialisation is the classic form: accepting serialised objects from users and deserialising them server-side without validation.
 
 **Real breach:** The 2020 SolarWinds attack injected malicious code into a build pipeline, distributing a backdoor to 18,000 organisations including the US Treasury. The code was signed with a legitimate certificate. Build pipeline integrity is not theoretical.
 
@@ -19,21 +19,21 @@ Integrity failures happen when code or data is used without verifying it hasn't 
 ### 1. Insecure Deserialisation
 
 ```javascript
-// VULNERABLE — deserialising user-controlled data
+// VULNERABLE: deserialising user-controlled data
 app.post('/restore-cart', (req, res) => {
   const cart = deserialize(req.body.cartData); // user controls this
   // Attackers can craft objects that execute code on deserialisation
   res.json(cart);
 });
 
-// PHP unserialize() — Classic RCE vector
+// PHP unserialize(): Classic RCE vector
 // $cart = unserialize($_COOKIE['cart']); // NEVER
 
-// Python pickle — same problem
+// Python pickle: same problem
 // import pickle
 // cart = pickle.loads(request.data) # NEVER with user data
 
-// SECURE — use JSON (no code execution on parse)
+// SECURE: use JSON (no code execution on parse)
 app.post('/restore-cart', (req, res) => {
   try {
     const cart = JSON.parse(req.body.cartData); // JSON only, no magic methods
@@ -49,19 +49,19 @@ app.post('/restore-cart', (req, res) => {
 ### 2. Unsigned Packages / Auto-Update Without Verification
 
 ```bash
-# VULNERABLE — curl | bash with no verification
+# VULNERABLE: curl | bash with no verification
 curl https://example.com/install.sh | bash
 
-# VULNERABLE — npm install from untrusted source
+# VULNERABLE: npm install from untrusted source
 npm install some-package@latest --ignore-scripts=false
 
-# SECURE — verify checksums for downloaded files
+# SECURE: verify checksums for downloaded files
 curl -O https://releases.example.com/app-v2.0.0.tar.gz
 curl -O https://releases.example.com/app-v2.0.0.tar.gz.sha256
 
 sha256sum --check app-v2.0.0.tar.gz.sha256
 
-# SECURE — pin package versions with lockfiles
+# SECURE: pin package versions with lockfiles
 # Never use ^ or ~ for critical security dependencies in package.json
 {
   "dependencies": {
@@ -74,11 +74,11 @@ sha256sum --check app-v2.0.0.tar.gz.sha256
 ### 3. Compromised CI/CD Pipeline
 
 ```yaml
-# VULNERABLE — using unpinned action versions
+# VULNERABLE: using unpinned action versions
 - uses: actions/checkout@v4        # Could be updated to malicious version
 - uses: some-org/some-action@main  # 'main' can be changed at any time
 
-# SECURE — pin to commit SHA (immutable)
+# SECURE: pin to commit SHA (immutable)
 - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
 
@@ -90,22 +90,22 @@ sha256sum --check app-v2.0.0.tar.gz.sha256
 ### 4. Dependency Confusion / Typosquatting
 
 ```bash
-# VULNERABLE — no lockfile integrity check
+# VULNERABLE: no lockfile integrity check
 npm install # installs whatever versions resolve today
 
-# SECURE — use lockfile and verify integrity
+# SECURE: use lockfile and verify integrity
 npm ci # uses package-lock.json exactly, fails if it doesn't match
 
-# Audit for typosquatting — check names carefully
+# Audit for typosquatting: check names carefully
 # lodash vs Iodash (capital I looks like l)
 # express vs expres (missing s)
 # react vs reeact
 
-# SECURE — use npm audit
+# SECURE: use npm audit
 npm audit
 npm audit --audit-level=high # fail CI on high+ severity
 
-# SECURE — Dependabot config
+# SECURE: Dependabot config
 # .github/dependabot.yml
 version: 2
 updates:
@@ -123,10 +123,10 @@ updates:
 When loading external scripts or stylesheets, always use SRI to ensure the file hasn't been tampered with:
 
 ```html
-<!-- VULNERABLE — no integrity check, CDN can serve malicious code -->
+<!-- VULNERABLE: no integrity check, CDN can serve malicious code -->
 <script src="https://cdn.example.com/jquery-3.7.1.min.js"></script>
 
-<!-- SECURE — SRI hash ensures the file is exactly what you expect -->
+<!-- SECURE: SRI hash ensures the file is exactly what you expect -->
 <script 
   src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"
   integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
@@ -137,10 +137,10 @@ When loading external scripts or stylesheets, always use SRI to ensure the file 
 <!-- openssl dgst -sha256 -binary < file.js | openssl base64 -A -->
 ```
 
-Next.js — avoid external CDN scripts where possible. Use npm packages instead:
+Next.js: avoid external CDN scripts where possible. Use npm packages instead:
 
 ```javascript
-// next.config.js — add Content Security Policy
+// next.config.js: add Content Security Policy
 const cspHeader = `
   script-src 'self' 'nonce-${nonce}' https://trusted-cdn.com;
   require-trusted-types-for 'script';
@@ -152,20 +152,20 @@ const cspHeader = `
 ## JWT Algorithm Confusion
 
 ```javascript
-// VULNERABLE — accepting 'none' algorithm or trusting header
+// VULNERABLE: accepting 'none' algorithm or trusting header
 const decoded = jwt.decode(token, { complete: true });
 const algorithm = decoded.header.alg; // attacker controls this!
 jwt.verify(token, secret, { algorithms: [algorithm] }); // never do this
 
-// VULNERABLE — algorithm confusion attack (RS256 → HS256)
+// VULNERABLE: algorithm confusion attack (RS256 → HS256)
 // If server accepts HS256, attacker can sign with public key as HMAC secret
 
-// SECURE — always specify allowed algorithms explicitly
+// SECURE: always specify allowed algorithms explicitly
 jwt.verify(token, process.env.JWT_SECRET, { 
   algorithms: ['HS256'], // only accept what you issue
 });
 
-// SECURE — for RS256, use the public key (not the private key) for verification
+// SECURE: for RS256, use the public key (not the private key) for verification
 jwt.verify(token, process.env.JWT_PUBLIC_KEY, {
   algorithms: ['RS256'],
 });
@@ -211,7 +211,7 @@ jobs:
 ## Secure Object Handling (Python)
 
 ```python
-# VULNERABLE — pickle with user data
+# VULNERABLE: pickle with user data
 import pickle
 import base64
 
@@ -221,7 +221,7 @@ def restore():
     obj = pickle.loads(data)  # RCE vulnerability
     return jsonify(obj)
 
-# SECURE — use JSON with schema validation
+# SECURE: use JSON with schema validation
 from pydantic import BaseModel
 import json
 

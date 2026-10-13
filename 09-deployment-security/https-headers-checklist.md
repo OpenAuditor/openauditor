@@ -6,7 +6,7 @@ Security headers are the fastest security wins you can implement. They're often 
 
 ## 30-Second Summary
 
-A web application without proper security headers is like a house with no locks on the windows. Security headers instruct browsers on how to handle your content — blocking XSS, preventing clickjacking, enforcing HTTPS, and controlling what external resources can load. You can add most of them in 30 minutes.
+A web application without proper security headers is like a house with no locks on the windows. Security headers instruct browsers on how to handle your content: blocking XSS, preventing clickjacking, enforcing HTTPS, and controlling what external resources can load. You can add most of them in 30 minutes.
 
 ---
 
@@ -22,7 +22,7 @@ Never serve mixed content: HTTP resources on HTTPS pages
 ```
 
 ```javascript
-// Express.js — redirect HTTP to HTTPS
+// Express.js: redirect HTTP to HTTPS
 app.use((req, res, next) => {
   if (req.header('x-forwarded-proto') !== 'https' && process.env.NODE_ENV === 'production') {
     return res.redirect(301, `https://${req.header('host')}${req.url}`);
@@ -32,7 +32,7 @@ app.use((req, res, next) => {
 ```
 
 ```typescript
-// Next.js — next.config.ts
+// Next.js: next.config.ts
 const nextConfig = {
   async headers() {
     return [
@@ -56,8 +56,8 @@ Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
 | Parameter | Value | Meaning |
 |-----------|-------|---------|
 | `max-age` | 31536000 | Cache for 1 year (in seconds) |
-| `includeSubDomains` | — | Apply to all subdomains |
-| `preload` | — | Submit to browser preload list |
+| `includeSubDomains` | n/a | Apply to all subdomains |
+| `preload` | n/a | Submit to browser preload list |
 
 **Start with a short max-age (300) to test, then increase to 31536000.**
 
@@ -80,7 +80,7 @@ app.use(helmet.hsts({
 
 ### 3. Content Security Policy (CSP)
 
-The most powerful and most complex security header. Restricts where resources can be loaded from — prevents XSS.
+The most powerful and most complex security header. Restricts where resources can be loaded from: prevents XSS.
 
 **Simple CSP (good starting point):**
 
@@ -157,7 +157,7 @@ Note: CSP's `frame-ancestors` directive is the modern replacement, but `X-Frame-
 
 ### 5. X-Content-Type-Options
 
-Prevents MIME type sniffing — browsers must respect your declared Content-Type:
+Prevents MIME type sniffing: browsers must respect your declared Content-Type:
 
 ```http
 X-Content-Type-Options: nosniff
@@ -174,9 +174,9 @@ Referrer-Policy: strict-origin-when-cross-origin
 ```
 
 Options (least to most restrictive):
-- `no-referrer-when-downgrade` — default (sends full URL within HTTPS)
-- `strict-origin-when-cross-origin` — recommended (sends origin only for cross-origin)
-- `no-referrer` — never sends referrer (breaks analytics)
+- `no-referrer-when-downgrade`: default (sends full URL within HTTPS)
+- `strict-origin-when-cross-origin`: recommended (sends origin only for cross-origin)
+- `no-referrer`: never sends referrer (breaks analytics)
 
 ### 7. Permissions-Policy
 
@@ -344,9 +344,9 @@ res.cookie('session', token, {
 });
 
 // sameSite options:
-// 'strict'  — cookie never sent on cross-site requests (breaks OAuth flows)
-// 'lax'     — sent on top-level navigation, not subrequests (recommended)
-// 'none'    — sent on all requests — MUST be paired with secure: true
+// 'strict': cookie never sent on cross-site requests (breaks OAuth flows)
+// 'lax': sent on top-level navigation, not subrequests (recommended)
+// 'none', sent on all requests, MUST be paired with secure: true
 ```
 
 ---

@@ -172,7 +172,7 @@ module.exports = nextConfig
 .git
 .gitignore
 
-# Environment files — NEVER bake secrets into images
+# Environment files: NEVER bake secrets into images
 .env
 .env.local
 .env.development
@@ -246,14 +246,14 @@ docker build --no-cache --progress=plain . 2>&1 | head -20
 
 ---
 
-## Secrets in Builds — What Not to Do
+## Secrets in Builds: What Not to Do
 
 ### Never Use ARG for Secrets
 
 `ARG` values appear in the image history and are retrievable by anyone with pull access:
 
 ```dockerfile
-# WRONG — secret visible in docker history
+# WRONG: secret visible in docker history
 ARG DATABASE_URL
 ENV DATABASE_URL=$DATABASE_URL
 RUN npm run db:migrate
@@ -269,7 +269,7 @@ docker history --no-trunc your-image | grep DATABASE_URL
 Pass secrets at runtime, never at build time:
 
 ```bash
-# Correct — secrets injected at runtime only
+# Correct: secrets injected at runtime only
 docker run \
   -e DATABASE_URL="postgres://..." \
   -e SUPABASE_SECRET_KEY="eyJ..." \
@@ -329,7 +329,7 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 COPY package*.json ./
 
-# Secret is mounted at build time only — never stored in image layers
+# Secret is mounted at build time only: never stored in image layers
 RUN --mount=type=secret,id=npm_token \
     NPM_TOKEN=$(cat /run/secrets/npm_token) \
     npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN && \
@@ -351,12 +351,12 @@ docker buildx build \
 | Base Image | Compressed Size | Shell | Use Case |
 |---|---|---|---|
 | `scratch` | 0 MB | None | Static Go/Rust binaries only |
-| `gcr.io/distroless/nodejs:20` | ~50 MB | None | Node.js — no package manager |
-| `node:20-alpine` | ~40 MB | sh | Node.js — general use |
-| `node:20-slim` | ~80 MB | bash | Node.js — needs apt |
+| `gcr.io/distroless/nodejs:20` | ~50 MB | None | Node.js: no package manager |
+| `node:20-alpine` | ~40 MB | sh | Node.js: general use |
+| `node:20-slim` | ~80 MB | bash | Node.js: needs apt |
 | `node:20` | ~350 MB | bash | Avoid in production |
 
-Distroless images have no shell, no package manager, and no debugging tools — which also means no `exec` for an attacker:
+Distroless images have no shell, no package manager, and no debugging tools, which also means no `exec` for an attacker:
 
 ```dockerfile
 FROM node:20-alpine AS builder
@@ -366,7 +366,7 @@ RUN npm ci --only=production
 COPY . .
 RUN npm run build
 
-# Distroless final image — no shell, minimal attack surface
+# Distroless final image: no shell, minimal attack surface
 FROM gcr.io/distroless/nodejs20-debian12
 WORKDIR /app
 COPY --from=builder /app/dist ./dist

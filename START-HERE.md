@@ -9,12 +9,12 @@ This guide routes you to the right place based on where you are right now.
 You're building something new and want to ship secure from day one.
 
 **Your next steps:**
-1. Read [MVP Security Checklist](./16-checklists/mvp-security-checklist.md) — 15 essentials before you launch
-2. Set up [pre-commit hooks](./01-pre-commit-hooks/README.md) — catch secrets before they leave your machine
-3. Run [Production Readiness Audit](./skills/production-readiness-audit/SKILL.md) — one week before launch
+1. Read [MVP Security Checklist](./16-checklists/mvp-security-checklist.md): 15 essentials before you launch
+2. Set up [pre-commit hooks](./01-pre-commit-hooks/README.md): catch secrets before they leave your machine
+3. Run [Production Readiness Audit](./skills/production-readiness-audit/SKILL.md): one week before launch
 
-**Time to first fix:** 2–4 hours  
-**Time to production ready:** 2–3 days
+**Time to first fix:** 2 to 4 hours  
+**Time to production ready:** 2 to 3 days
 
 ---
 
@@ -27,8 +27,8 @@ You have code in production (or about to ship) and need a security review.
 2. The skill will ask you questions, examine your code, and give you a priority list
 3. Use [PROMPTS.md](./PROMPTS.md) to copy-paste fixes for each finding
 
-**Time to first audit:** 2–4 hours  
-**Time to fix findings:** 1–7 days depending on severity
+**Time to first audit:** 2 to 4 hours  
+**Time to fix findings:** 1 to 7 days depending on severity
 
 ---
 
@@ -55,10 +55,10 @@ You know what's broken and need a fix.
 ## What happens if you skip security?
 
 Real breach costs:
-- **Reputational damage** — Users leave, investors pull out
-- **Legal liability** — GDPR fines (4% of annual revenue), lawsuits
-- **Operational chaos** — Incident response, forensics, notification, monitoring
-- **Career damage** — "We got hacked" is not a resume bullet
+- **Reputational damage**: Users leave, investors pull out
+- **Legal liability**: GDPR fines (4% of annual revenue), lawsuits
+- **Operational chaos**: Incident response, forensics, notification, monitoring
+- **Career damage**: "We got hacked" is not a resume bullet
 
 The Uber breach (2016) cost them $100M+ in total impact. Equifax (2017) cost billions. You can afford 3 days now, or you'll pay millions later.
 
@@ -91,8 +91,8 @@ All prompts in this toolkit work with:
 
 If an AI tool wrote significant portions of your codebase:
 
-1. Run [Check for Deprecated Patterns](./00-foundations/prompts/check-deprecated-patterns.md) — finds outdated APIs from old training data
-2. Run [Production Readiness Audit](./skills/production-readiness-audit/SKILL.md) — finds security issues
+1. Run [Check for Deprecated Patterns](./00-foundations/prompts/check-deprecated-patterns.md): finds outdated APIs from old training data
+2. Run [Production Readiness Audit](./skills/production-readiness-audit/SKILL.md): finds security issues
 3. Verify Supabase patterns at [supabase.com/docs](https://supabase.com/docs)
 4. Verify Next.js patterns at [nextjs.org/docs](https://nextjs.org/docs)
 

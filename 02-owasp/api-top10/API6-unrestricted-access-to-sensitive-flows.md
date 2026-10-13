@@ -1,8 +1,8 @@
-# API6 — Unrestricted Access to Sensitive Business Flows
+# API6: Unrestricted Access to Sensitive Business Flows
 
 ## 30-second summary
 
-Some API flows are technically correct but dangerous when automated at scale. Attackers exploit the absence of bot detection, CAPTCHA, or flow-rate limits to abuse business logic — scalping limited inventory, farming referral bonuses, bypassing waiting lists, or systematically testing stolen payment cards.
+Some API flows are technically correct but dangerous when automated at scale. Attackers exploit the absence of bot detection, CAPTCHA, or flow-rate limits to abuse business logic: scalping limited inventory, farming referral bonuses, bypassing waiting lists, or systematically testing stolen payment cards.
 
 > **Critical:** Business flow abuse does not trigger traditional security scanners. The requests are valid, authenticated, and well-formed. You need behavioural controls, not just input validation.
 
@@ -11,7 +11,7 @@ Some API flows are technically correct but dangerous when automated at scale. At
 ## Vulnerable code example
 
 ```typescript
-// Express.js — VULNERABLE
+// Express.js: VULNERABLE
 // A limited-edition product checkout flow with no flow controls
 
 app.post('/api/checkout', authenticate, async (req, res) => {
@@ -32,7 +32,7 @@ app.post('/api/checkout', authenticate, async (req, res) => {
   return res.json({ orderId: order.id });
 });
 
-// Referral bonus — no rate limiting or uniqueness check
+// Referral bonus: no rate limiting or uniqueness check
 app.post('/api/referrals/claim', authenticate, async (req, res) => {
   const { referralCode } = req.body;
 
@@ -50,7 +50,7 @@ app.post('/api/referrals/claim', authenticate, async (req, res) => {
 ## Fixed code example
 
 ```typescript
-// Express.js — FIXED
+// Express.js: FIXED
 
 import { Redis } from 'ioredis';
 const redis = new Redis();
@@ -140,7 +140,7 @@ app.post('/api/referrals/claim', authenticate, async (req, res) => {
 
 ## Real-world breach scenario
 
-**Nike SNKRS / limited trainer drops (2019–present):** Botnet operators have repeatedly purchased entire allocations of limited-edition trainers within seconds of release. The bots authenticate as real users (using accounts created and aged in advance), pass through the checkout flow correctly, and complete purchases before human buyers can even load the page. Nike and other retailers have invested heavily in bot fingerprinting and device attestation to combat this, but the problem persists.
+**Nike SNKRS / limited trainer drops (2019 to present):** Botnet operators have repeatedly purchased entire allocations of limited-edition trainers within seconds of release. The bots authenticate as real users (using accounts created and aged in advance), pass through the checkout flow correctly, and complete purchases before human buyers can even load the page. Nike and other retailers have invested heavily in bot fingerprinting and device attestation to combat this, but the problem persists.
 
 **Revolut referral fraud (reported 2023):** Multiple fintech platforms have experienced organised fraud rings that create thousands of accounts, refer each other, and collect sign-up bonuses. Each individual transaction is valid; the abuse is only visible through behavioural pattern analysis across accounts.
 
@@ -195,6 +195,6 @@ asyncio.run(test_race())
 
 Business flow abuse is the hardest category to detect because the requests look completely legitimate. Every individual request is authenticated, well-formed, and compliant with the API schema. The vulnerability exists in the business logic, not the request structure.
 
-The financial damage can far exceed traditional security incidents. A botnet buying out a product launch, farming thousands of referral bonuses, or repeatedly charging stolen payment cards can cause direct revenue loss, inventory problems, and regulatory exposure — all without a single malformed request.
+The financial damage can far exceed traditional security incidents. A botnet buying out a product launch, farming thousands of referral bonuses, or repeatedly charging stolen payment cards can cause direct revenue loss, inventory problems, and regulatory exposure: all without a single malformed request.
 
 Traditional security tooling (WAF, schema validation, input sanitisation) provides no protection against this category of attack.

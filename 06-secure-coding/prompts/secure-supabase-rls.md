@@ -59,8 +59,8 @@ CREATE POLICY "public_read" ON public.[table]
 
 **Step 5: Verify no dangerous patterns**
 Check for and remove:
-- `USING (true)` — allows all users to access all rows
-- `WITH CHECK (true)` — allows any user to insert any data
+- `USING (true)`: allows all users to access all rows
+- `WITH CHECK (true)`: allows any user to insert any data
 - Tables with RLS disabled that should have it
 - Policies that don't reference `auth.uid()`
 

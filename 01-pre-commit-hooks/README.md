@@ -1,14 +1,14 @@
 # Pre-Commit Hooks: Catch Secrets Before They're Committed
 
-**30-second summary:** Pre-commit hooks are automation that runs tests, checks, and scans before code is committed to git. This module teaches you to set up six essential security hooks that catch leaked secrets, vulnerable dependencies, and common misconfigurations in seconds—before they reach your repository or CI pipeline.
+**30-second summary:** Pre-commit hooks are automation that runs tests, checks, and scans before code is committed to git. This module teaches you to set up six essential security hooks that catch leaked secrets, vulnerable dependencies, and common misconfigurations in seconds: before they reach your repository or CI pipeline.
 
 ## What This Section Covers
 
-1. **Hooks overview** — What they are, how they work, why they matter
-2. **Hook catalog** — Six production hooks: detect-secrets, gitleaks, trufflehog, semgrep, npm-audit-hook, and git-lfs
-3. **Stack-specific setups** — Exact configs for Next.js, Python, Django, Node/Express
-4. **CI integration** — Wiring pre-commit checks into GitHub Actions, GitLab CI, etc.
-5. **Agent prompts** — Copy-paste tasks to set up, audit, and integrate hooks
+1. **Hooks overview**: What they are, how they work, why they matter
+2. **Hook catalog**: Six production hooks: detect-secrets, gitleaks, trufflehog, semgrep, npm-audit-hook, and git-lfs
+3. **Stack-specific setups**: Exact configs for Next.js, Python, Django, Node/Express
+4. **CI integration**: Wiring pre-commit checks into GitHub Actions, GitLab CI, etc.
+5. **Agent prompts**: Copy-paste tasks to set up, audit, and integrate hooks
 
 ## Why This Matters
 
@@ -64,27 +64,27 @@ Hooks now run automatically on every commit.
 ## Files in This Section
 
 ### Root Files
-- **README.md** (this file) — Overview and quick start
-- **.pre-commit-config.yaml** — Working example configuration
-- **ci-integration.md** — GitHub Actions, GitLab CI, Jenkins setup
+- **README.md** (this file): Overview and quick start
+- **.pre-commit-config.yaml**: Working example configuration
+- **ci-integration.md**: GitHub Actions, GitLab CI, Jenkins setup
 
 ### Hooks/ (Detailed guides for each hook)
-- **detect-secrets.md** — Regex + entropy baseline for secret detection
-- **gitleaks.md** — Pattern-based scanning (most accurate)
-- **trufflehog.md** — Entropy detection (what attackers use)
-- **semgrep.md** — Static analysis for code vulnerabilities
-- **npm-audit-hook.md** — Dependency security scanning
+- **detect-secrets.md**: Regex + entropy baseline for secret detection
+- **gitleaks.md**: Pattern-based scanning (most accurate)
+- **trufflehog.md**: Entropy detection (what attackers use)
+- **semgrep.md**: Static analysis for code vulnerabilities
+- **npm-audit-hook.md**: Dependency security scanning
 
 ### By-Stack/ (Stack-specific configurations)
-- **nextjs.md** — Next.js-specific hooks and env setup
-- **python.md** — Python, pip, and virtual environment hooks
-- **django.md** — Django + sensitive settings patterns
-- **node-express.md** — Express.js and npm project setup
+- **nextjs.md**: Next.js-specific hooks and env setup
+- **python.md**: Python, pip, and virtual environment hooks
+- **django.md**: Django + sensitive settings patterns
+- **node-express.md**: Express.js and npm project setup
 
 ### Prompts/ (Ready-to-use agent prompts)
-- **setup-pre-commit.md** — Install and configure hooks from scratch
-- **audit-existing-hooks.md** — Audit your existing configuration
-- **ci-pre-commit-integration.md** — Integrate hooks with your CI pipeline
+- **setup-pre-commit.md**: Install and configure hooks from scratch
+- **audit-existing-hooks.md**: Audit your existing configuration
+- **ci-pre-commit-integration.md**: Integrate hooks with your CI pipeline
 
 ## Common Patterns These Hooks Catch
 
@@ -137,7 +137,7 @@ Typical commit with all hooks:
 
 | Setup | Time | Slowdown |
 |-------|------|----------|
-| No hooks | 50ms | — |
+| No hooks | 50ms | n/a |
 | gitleaks only | 100ms | 2x |
 | gitleaks + npm-audit | 1.5s | 30x |
 | All six hooks | 5s | 100x |

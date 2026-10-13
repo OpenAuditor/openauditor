@@ -1,6 +1,6 @@
 # Backup and Recovery
 
-> **30-second summary:** Backups are your last line of defence against ransomware, accidental deletion, and catastrophic database corruption. A backup that has never been tested is not a backup — it's a file. Test your restores quarterly.
+> **30-second summary:** Backups are your last line of defence against ransomware, accidental deletion, and catastrophic database corruption. A backup that has never been tested is not a backup: it's a file. Test your restores quarterly.
 
 ## The 3-2-1 Backup Rule
 
@@ -245,7 +245,7 @@ async function syncBucket(bucketName: string) {
 
 ```bash
 #!/bin/bash
-# scripts/test-restore.sh — Run quarterly
+# scripts/test-restore.sh: Run quarterly
 # Tests that backups are actually restorable
 
 LATEST_BACKUP=$(aws s3 ls s3://your-backup-bucket/database/ | sort | tail -1 | awk '{print $4}')
@@ -274,7 +274,7 @@ psql "${TEST_DB}" -c "SELECT MAX(created_at) as latest_user FROM users;"
 dropdb "${TEST_DB}"
 rm "/tmp/${LATEST_BACKUP}"
 
-echo "Restore test PASSED — backup is restorable"
+echo "Restore test PASSED: backup is restorable"
 ```
 
 ## Monitoring Backup Health

@@ -81,17 +81,17 @@ The agent asks these questions conversationally. Answer as fully as you can. If 
 
 The agent audits 18 domains. For each domain, it reviews your code, config, and setup, then marks each check as:
 
-- ✓ **PASS** — This is secure and correct
-- ~ **PARTIAL** — This is partially implemented or has gaps
-- ✗ **FAIL** — This is missing or misconfigured
-- — **NOT APPLICABLE** — This doesn't apply to your app
+- ✓ **PASS**: This is secure and correct
+- ~ **PARTIAL**: This is partially implemented or has gaps
+- ✗ **FAIL**: This is missing or misconfigured
+- n/a **NOT APPLICABLE**: This doesn't apply to your app
 
 For every FAIL or PARTIAL, the agent provides:
-1. **Severity** — Critical, High, Medium, or Low
-2. **Plain-English risk explanation** — What breaks if you ignore this
-3. **The exact fix** — Code, config, or steps to fix it
-4. **Why it matters** — Real-world consequences and examples
-5. **Learn more** — Link to the relevant OpenAuditor section
+1. **Severity**: Critical, High, Medium, or Low
+2. **Plain-English risk explanation**: What breaks if you ignore this
+3. **The exact fix**: Code, config, or steps to fix it
+4. **Why it matters**: Real-world consequences and examples
+5. **Learn more**: Link to the relevant OpenAuditor section
 
 ### Domain 1: Secrets and Environment Configuration
 
@@ -156,10 +156,10 @@ For every FAIL or PARTIAL, the agent provides:
 ### Domain 5: Input Validation and Injection Prevention
 
 - [ ] All user input is validated on the server (not just frontend)
-- [ ] No SQL injection — using parameterized queries or ORMs
-- [ ] No command injection — shell commands never use unsanitized input
-- [ ] No template injection — template engines don't eval user input
-- [ ] No XML/XXE injection — XML parsers have DTD disabled
+- [ ] No SQL injection: using parameterized queries or ORMs
+- [ ] No command injection: shell commands never use unsanitized input
+- [ ] No template injection: template engines don't eval user input
+- [ ] No XML/XXE injection: XML parsers have DTD disabled
 - [ ] Input length limits are enforced (prevent DoS)
 - [ ] Special characters are escaped or stripped
 - [ ] File uploads validate file type and size
@@ -369,10 +369,10 @@ For every FAIL or PARTIAL, the agent provides:
 
 After auditing all 18 domains, the agent calculates:
 
-1. **Readiness Score** (0–100)
-   - 90–100: GREEN ✓ — Ship it confidently
-   - 70–89: AMBER ⚠️ — Ship with caution, fix these first
-   - 0–69: RED ✗ — Don't ship yet
+1. **Readiness Score** (0 to 100)
+   - 90 to 100: GREEN ✓: Ship it confidently
+   - 70 to 89: AMBER ⚠️: Ship with caution, fix these first
+   - 0 to 69: RED ✗: Don't ship yet
 
 2. **Traffic Light Verdict**
    - **GREEN**: All critical findings are fixed. Non-critical findings can wait.
@@ -549,6 +549,6 @@ Get a new score.
 
 ## Learn More
 
-- [Threat Modelling 101](../../00-foundations/threat-modeling-101.md) — Why security matters
-- [OWASP Top 10](../../02-owasp/README.md) — Real vulnerabilities explained
-- [Pre-Launch Checklist](../../16-checklists/pre-launch-checklist.md) — Condensed checklist version
+- [Threat Modelling 101](../../00-foundations/threat-modeling-101.md): Why security matters
+- [OWASP Top 10](../../02-owasp/README.md): Real vulnerabilities explained
+- [Pre-Launch Checklist](../../16-checklists/pre-launch-checklist.md): Condensed checklist version

@@ -37,11 +37,11 @@ SRI doesn't work for dynamically loaded scripts or scripts loaded by other scrip
 ## Minimal Permissions
 
 ```javascript
-// Analytics — use privacy-friendly, minimal scripts
+// Analytics: use privacy-friendly, minimal scripts
 // Plausible and Fathom load no third-party code
 <script defer data-domain="yourapp.com" src="https://plausible.io/js/script.js"></script>
 
-// For Google Analytics 4 — use server-side tracking instead
+// For Google Analytics 4: use server-side tracking instead
 // Send events from your server, not from the browser
 fetch('https://www.google-analytics.com/mp/collect?...', {
   method: 'POST',
@@ -70,7 +70,7 @@ Before adding any external script:
 
 1. **Who owns it?** Company or individual? Reputable?
 2. **When was it last updated?** Unmaintained scripts are risk
-3. **What does it request?** Check network tab — what does it load or send?
+3. **What does it request?** Check network tab: what does it load or send?
 4. **Is the CDN trustworthy?** Major CDNs (Cloudflare, jsDelivr) > unknown hosts
 5. **Does it self-update?** Auto-updating scripts bypass SRI
 

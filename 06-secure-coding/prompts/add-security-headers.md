@@ -51,10 +51,10 @@ Check current CORS configuration. Ensure:
 - Only specific trusted origins are allowed
 - `credentials: true` only where required
 
-**Step 5: For Next.js — add to next.config.js**
+**Step 5: For Next.js: add to next.config.js**
 Show the complete `async headers()` function with all security headers.
 
-**Step 6: For Express — add Helmet**
+**Step 6: For Express: add Helmet**
 Install and configure helmet with the appropriate options for this app.
 
 **Step 7: Test**

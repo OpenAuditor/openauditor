@@ -2,7 +2,7 @@
 
 **Post-launch hardening and ongoing security strategy**
 
-Use this checklist weeks/months after launch to harden systems and establish continuous security practices. This is not a one-time exercise—these items should be on your roadmap for the next 3-6 months.
+Use this checklist weeks/months after launch to harden systems and establish continuous security practices. This is not a one-time exercise: these items should be on your roadmap for the next 3-6 months.
 
 ---
 

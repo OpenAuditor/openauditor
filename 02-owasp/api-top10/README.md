@@ -1,8 +1,8 @@
-# OWASP API Security Top 10 — 2023
+# OWASP API Security Top 10: 2023
 
 ## What this section covers
 
-The OWASP API Security Top 10 (2023 edition) identifies the most critical security risks specific to APIs. Unlike the Web Top 10, this list focuses on how APIs are uniquely attacked — through object references, function-level access, excessive data exposure, and abuse of business logic.
+The OWASP API Security Top 10 (2023 edition) identifies the most critical security risks specific to APIs. Unlike the Web Top 10, this list focuses on how APIs are uniquely attacked: through object references, function-level access, excessive data exposure, and abuse of business logic.
 
 APIs are the backbone of modern applications. A vulnerable API can expose millions of records, allow account takeovers, or let attackers trigger financial transactions without authorisation. The 2023 list was a significant update from 2019, reflecting real-world attack patterns collected from the security community.
 
@@ -31,4 +31,4 @@ APIs are the backbone of modern applications. A vulnerable API can expose millio
 ## Source material
 
 - [OWASP API Security Project](https://owasp.org/www-project-api-security/)
-- [OWASP API Security Top 10 2023 — GitHub](https://github.com/OWASP/API-Security/tree/master/editions/2023.0.1/en)
+- [OWASP API Security Top 10 2023: GitHub](https://github.com/OWASP/API-Security/tree/master/editions/2023.0.1/en)
