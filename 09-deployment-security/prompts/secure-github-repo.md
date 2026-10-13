@@ -150,6 +150,6 @@ A complete GitHub repository security audit: branch protection enabled, security
 
 ## Learn more
 
-[Secure GitHub Actions](../secure-github-actions.md)
+[GitHub Security (incl. Actions)](../github-security.md)
 [Environment Variables](../../06-secure-coding/env-secrets-management.md)
 [OWASP A08: Data Integrity Failures](../../02-owasp/web-top10/A08-data-integrity-failures.md)

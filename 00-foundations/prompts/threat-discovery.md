@@ -278,7 +278,7 @@ You should:
 - [Threat Modeling 101](../threat-modeling-101.md) — The framework this uses
 - [Risk Prioritization Agent](./risk-prioritization.md) — Help deciding what to fix first
 - [STRIDE Analysis Agent](./stride-analysis.md) — Deeper analysis by threat category
-- [Security Code Review Agent](./security-code-review.md) — Review code against threats
+- [OWASP Web Top 10 Audit prompt](../../02-owasp/prompts/web-top10-audit.md) — Review code against threats
 
 ---
 

@@ -110,6 +110,6 @@ A complete OWASP LLM Top 10 assessment with: pass/fail status for each risk, spe
 
 ## Learn more
 
-[OWASP LLM Top 10](./README.md)
+[OWASP LLM Top 10](../llm-top10/README.md)
 [AI App Security](../../08-ai-app-security/README.md)
 [Prompt Injection Defence](../../08-ai-app-security/prompt-injection-defense.md)

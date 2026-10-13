@@ -310,5 +310,5 @@ NEW_SECRET=$(openssl rand -base64 32)
 
 - [Never Roll Your Own Crypto](./never-roll-your-own.md)
 - [Audit Crypto Usage](./prompts/audit-crypto-usage.md)
-- [A02: Cryptographic Failures](../02-owasp/web-top10/A02-crypto-failures.md)
+- [A02: Cryptographic Failures](../02-owasp/web-top10/A02-cryptographic-failures.md)
 - [SOC 2 Access Control Policy](../13-soc2/policy-templates/access-control-policy.md)

@@ -205,4 +205,4 @@ A complete cryptographic audit: all crypto operations inventoried, weak algorith
 [Never Roll Your Own Crypto](../never-roll-your-own.md)
 [Key Rotation](../key-rotation.md)
 [Implement Password Hashing](./implement-password-hashing.md)
-[A02: Cryptographic Failures](../../02-owasp/web-top10/A02-crypto-failures.md)
+[A02: Cryptographic Failures](../../02-owasp/web-top10/A02-cryptographic-failures.md)

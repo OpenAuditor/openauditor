@@ -57,7 +57,7 @@ Browse [PROMPTS.md](./PROMPTS.md) for the full prompt index.
 
 ## Created By
 
-**[Baffour D. Ampaw](https://baulin.tech)** · Founder, [Baulin Technologies](https://baulin.tech)
+**[Baffour D. Ampaw](https://baulin.co.uk)** · Founder, [Baulin Technologies](https://baulin.co.uk)
 
 Maintained by Baffour and the open source community.
 
@@ -84,7 +84,7 @@ MIT — free to use, modify, and distribute. See [LICENSE](./LICENSE) for detail
 
 ## Status
 
-241 files · 18 sections · 60+ prompts. See [STATUS.md](./STATUS.md) for full details.
+18 sections · 50+ prompts. See [STATUS.md](./STATUS.md) for full details.
 
 ---
 

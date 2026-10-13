@@ -262,4 +262,4 @@ def restore():
 - [Supply Chain Security](../../05-supply-chain-security/README.md)
 - [CVE Awareness](../../04-cve-awareness/README.md)
 - [OWASP A06: Vulnerable Components](./A06-vulnerable-components.md)
-- [Secure GitHub Actions](../../09-deployment-security/secure-github-actions.md)
+- [Secure GitHub Actions](../../09-deployment-security/github-security.md)

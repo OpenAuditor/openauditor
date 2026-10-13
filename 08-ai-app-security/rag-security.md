@@ -122,4 +122,4 @@ await vectorStore.addDocuments(chunks.map(chunk => ({
 ## Learn More
 
 - [Prompt Injection Defense](./prompt-injection-defense.md)
-- [OWASP LLM06: Sensitive Info Disclosure](../02-owasp/llm-top10/LLM06-sensitive-info-disclosure.md)
+- [OWASP LLM06: Sensitive Info Disclosure](../02-owasp/llm-top10/LLM06-sensitive-disclosure.md)

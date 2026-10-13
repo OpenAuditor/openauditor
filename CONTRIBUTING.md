@@ -11,7 +11,7 @@ OpenAuditor is built by the community. Your contributions make this toolkit bett
 | 🐛 Found outdated or incorrect guidance | [Open an issue](https://github.com/OpenAuditor/openauditor/issues/new?template=bug_report.md) |
 | 💡 Suggest a new section or prompt | [Start a discussion](https://github.com/OpenAuditor/openauditor/discussions/new?category=ideas) |
 | 📝 Fix a typo or broken link | Open a pull request directly |
-| 🔐 Responsible disclosure (security issue in our guidance) | Email security@baulin.tech |
+| 🔐 Responsible disclosure (security issue in our guidance) | Email hello@baulin.co.uk |
 | 🌍 Translate content | [Open an issue](https://github.com/OpenAuditor/openauditor/issues/new) and tag it `translation` |
 | ⭐ Show support | Star the repo on GitHub |
 
@@ -114,7 +114,7 @@ update: Supabase auth patterns to use @supabase/ssr
 
 ## Maintainers
 
-**Creator:** [Baffour D. Ampaw](https://baulin.tech) · Baulin Technologies  
+**Creator:** [Baffour D. Ampaw](https://baulin.co.uk) · Baulin Technologies  
 **Maintainer:** [@baulintech](https://github.com/baulintech)
 
 ---

@@ -118,4 +118,4 @@ app.use('/api/ai', aiRateLimiter);
 ## Learn More
 
 - [Environment Secrets Management](../06-secure-coding/env-secrets-management.md)
-- [OWASP LLM06: Sensitive Info Disclosure](../02-owasp/llm-top10/LLM06-sensitive-info-disclosure.md)
+- [OWASP LLM06: Sensitive Info Disclosure](../02-owasp/llm-top10/LLM06-sensitive-disclosure.md)

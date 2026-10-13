@@ -8,7 +8,7 @@ If you discover a vulnerability in OpenAuditor or its guidance, please report it
 
 ### How to Report
 
-1. Email: security@baulin.tech
+1. Email: hello@baulin.co.uk
 2. Include the following:
    - Description of the vulnerability
    - Affected section or file
@@ -54,4 +54,4 @@ Once a fix is released, we will document:
 
 ## Questions?
 
-If you have questions about this policy, email security@baulin.tech.
+If you have questions about this policy, email hello@baulin.co.uk.

@@ -206,7 +206,7 @@ Start here: `hackerone.com/hacktivity` — filter by severity and web applicatio
 - **Issues and contributions:** github.com/baulintech/openauditor
 - **Report errors or outdated content:** Open a GitHub issue
 - **Contribute a section:** See CONTRIBUTING.md
-- **Security issues with this repo:** security@baulin.tech
+- **Security issues with this repo:** hello@baulin.co.uk
 
 ---
 

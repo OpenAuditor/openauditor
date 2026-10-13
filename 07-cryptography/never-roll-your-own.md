@@ -204,5 +204,5 @@ grep -rn "===.*mac\|mac.*===\|===.*token\|token.*===" \
 - [Key Rotation](./key-rotation.md)
 - [Audit Crypto Usage](./prompts/audit-crypto-usage.md)
 - [Implement Password Hashing](./prompts/implement-password-hashing.md)
-- [A02: Cryptographic Failures](../02-owasp/web-top10/A02-crypto-failures.md)
+- [A02: Cryptographic Failures](../02-owasp/web-top10/A02-cryptographic-failures.md)
 - [OWASP Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html)

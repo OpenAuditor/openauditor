@@ -13,10 +13,10 @@ When designing a new feature or system:
 5. Document decisions and mitigations
 
 ### For code review
-Use **[Security Code Review Agent](./security-code-review.md)** to guide peer review of security-sensitive code.
+Use **[OWASP Web Top 10 Audit prompt](../../02-owasp/prompts/web-top10-audit.md)** to guide peer review of security-sensitive code.
 
 ### For incident response
-Use **[Incident Analysis Agent](./incident-analysis.md)** to understand what happened and how to prevent it.
+Use **[Breach Response Runbook prompt](../../15-post-breach/prompts/breach-response-runbook.md)** to understand what happened and how to prevent it.
 
 ---
 
@@ -25,8 +25,8 @@ Use **[Incident Analysis Agent](./incident-analysis.md)** to understand what hap
 - **[threat-discovery.md](./threat-discovery.md)** — Generate threats for your architecture
 - **[stride-analysis.md](./stride-analysis.md)** — Apply STRIDE framework to find attack vectors
 - **[risk-prioritization.md](./risk-prioritization.md)** — Prioritize threats by impact/likelihood
-- **[security-code-review.md](./security-code-review.md)** — Review code for common vulnerabilities
-- **[incident-analysis.md](./incident-analysis.md)** — Analyze what happened during an incident
+- **[web-top10-audit.md](../../02-owasp/prompts/web-top10-audit.md)** — Review code for common vulnerabilities
+- **[breach-response-runbook.md](../../15-post-breach/prompts/breach-response-runbook.md)** — Analyze what happened during an incident
 
 ---
 
