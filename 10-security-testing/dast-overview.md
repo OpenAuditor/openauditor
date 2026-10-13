@@ -1,12 +1,12 @@
 # DAST Overview: Dynamic Application Security Testing
 
-DAST tests your *running application* — probing it from the outside like an attacker would, rather than reading your source code. It finds vulnerabilities that only appear at runtime: configuration mistakes, injection flaws that slip through static analysis, and missing security headers.
+DAST tests your *running application*: probing it from the outside like an attacker would, rather than reading your source code. It finds vulnerabilities that only appear at runtime: configuration mistakes, injection flaws that slip through static analysis, and missing security headers.
 
 ---
 
 ## 30-Second Summary
 
-SAST reads your code (finds logic errors, dangerous functions). DAST hits your running app (finds what attackers actually can exploit). You need both. DAST is the closer approximation of a real attack — it discovers what's exploitable from the outside, including third-party components and hosting configuration that SAST can't see.
+SAST reads your code (finds logic errors, dangerous functions). DAST hits your running app (finds what attackers actually can exploit). You need both. DAST is the closer approximation of a real attack: it discovers what's exploitable from the outside, including third-party components and hosting configuration that SAST can't see.
 
 ---
 
@@ -92,15 +92,15 @@ Use Burp Suite for:
 
 ### Prerequisites
 
-1. **Target a staging environment** — never run active DAST against production (it generates load, can corrupt data, and may trigger alerts)
-2. **Have a test account** — for authenticated scanning
-3. **Notify your team** — DAST traffic is distinctive and may trigger alerts
-4. **Check your ToS** — if using cloud-hosted staging, your provider may prohibit automated scanning
+1. **Target a staging environment**: never run active DAST against production (it generates load, can corrupt data, and may trigger alerts)
+2. **Have a test account**: for authenticated scanning
+3. **Notify your team**: DAST traffic is distinctive and may trigger alerts
+4. **Check your ToS**: if using cloud-hosted staging, your provider may prohibit automated scanning
 
 ### Basic Workflow
 
 ```bash
-# Step 1: Passive scan (safe — just observes, doesn't attack)
+# Step 1: Passive scan (safe: just observes, doesn't attack)
 docker run --rm \
   -v $(pwd)/reports:/zap/wrk \
   ghcr.io/zaproxy/zaproxy:stable \
@@ -110,7 +110,7 @@ docker run --rm \
 
 # Step 2: Review the baseline findings (fix any obvious issues)
 
-# Step 3: Active scan (more thorough — actually sends attack payloads)
+# Step 3: Active scan (more thorough: actually sends attack payloads)
 docker run --rm \
   -v $(pwd)/reports:/zap/wrk \
   ghcr.io/zaproxy/zaproxy:stable \
@@ -133,7 +133,7 @@ The most valuable findings come from scanning authenticated sections of your app
 ### ZAP Authenticated Scan
 
 ```yaml
-# zap-auth.yaml — saved as a ZAP automation plan
+# zap-auth.yaml: saved as a ZAP automation plan
 env:
   contexts:
     - name: "authenticated-app"
@@ -206,10 +206,10 @@ zap-api-scan.py \
 
 ## Interpreting DAST Results
 
-DAST results are generally more reliable than SAST (fewer false positives) — but still require triage.
+DAST results are generally more reliable than SAST (fewer false positives), but still require triage.
 
 **High confidence findings (fix immediately):**
-- Missing security headers (X-Frame-Options, CSP, HSTS) — easy to verify
+- Missing security headers (X-Frame-Options, CSP, HSTS): easy to verify
 - SQL injection confirmed by altered database responses
 - XSS confirmed by reflected payload execution
 - Open redirects confirmed by following redirect

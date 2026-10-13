@@ -1,6 +1,6 @@
 # Forensic Evidence Preservation
 
-Before you fix anything, preserve evidence. Wiping logs to "clean up" after a breach destroys the evidence you need to understand what happened — and can be a crime.
+Before you fix anything, preserve evidence. Wiping logs to "clean up" after a breach destroys the evidence you need to understand what happened, and can be a crime.
 
 ---
 
@@ -47,7 +47,7 @@ sha256sum /forensics/*.log > /forensics/checksums.txt
 If you suspect malware or a rootkit is active on a server:
 
 ```bash
-# Do NOT reboot — memory evidence is lost on reboot
+# Do NOT reboot: memory evidence is lost on reboot
 # Capture a memory image before taking the system offline
 # Use volatility or other forensics tools
 # Or: engage a professional forensics firm
@@ -80,9 +80,9 @@ For legal purposes, document:
 
 ```
 Evidence Log:
-2026-04-26 02:30 — [Name] copied nginx access.log to /forensics/
-2026-04-26 02:35 — [Name] created SHA256 checksums
-2026-04-26 03:00 — [Name] uploaded to S3 forensics bucket (private)
+2026-04-26 02:30: [Name] copied nginx access.log to /forensics/
+2026-04-26 02:35: [Name] created SHA256 checksums
+2026-04-26 03:00: [Name] uploaded to S3 forensics bucket (private)
 ```
 
 ---
@@ -90,9 +90,9 @@ Evidence Log:
 ## What NOT to Do
 
 - **Don't reboot compromised servers** until memory is captured
-- **Don't delete suspicious files** — they're evidence
+- **Don't delete suspicious files**: they're evidence
 - **Don't modify access logs** to "remove the attacker's traces"
-- **Don't run forensics on a compromised system** — use a clean machine
+- **Don't run forensics on a compromised system**: use a clean machine
 - **Don't share evidence publicly** before legal review
 
 ---

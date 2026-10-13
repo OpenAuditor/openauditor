@@ -1,6 +1,6 @@
 # Securing Preview Deployments
 
-Preview deployments (Vercel, Netlify, Render) are a developer productivity win — every PR gets its own URL. But they introduce security risks that many teams overlook.
+Preview deployments (Vercel, Netlify, Render) are a developer productivity win: every PR gets its own URL. But they introduce security risks that many teams overlook.
 
 ---
 
@@ -15,12 +15,12 @@ Preview deployments often use production secrets, expose draft content, and are 
 ### 1. Production Secrets in Preview Environments
 
 ```bash
-# VULNERABLE — preview deployments use the same env vars as production
+# VULNERABLE: preview deployments use the same env vars as production
 # Vercel: same DATABASE_URL, STRIPE_SECRET_KEY, etc.
 # This means:
 # - Preview can write to production database
 # - Stripe test keys (hopefully!) are exposed via preview URL
-# - JWT secrets are the same — tokens minted in preview work in production
+# - JWT secrets are the same: tokens minted in preview work in production
 ```
 
 ### 2. Publicly Accessible Draft Content
@@ -48,15 +48,15 @@ This isn't a classic subdomain takeover, but the URL remains live.
 
 ### Option 1: Vercel Deployment Protection
 
-Vercel's built-in solution — requires authentication to access any preview deployment:
+Vercel's built-in solution: requires authentication to access any preview deployment:
 
 ```
 Vercel Dashboard → Project → Settings → Deployment Protection
 
 Options:
-1. Vercel Authentication — requires a Vercel account (free, good for teams)
-2. Password Protection — single password for the preview (Pro plan)
-3. Deployment Protection for all environments — requires auth even for production
+1. Vercel Authentication: requires a Vercel account (free, good for teams)
+2. Password Protection: single password for the preview (Pro plan)
+3. Deployment Protection for all environments: requires auth even for production
 ```
 
 With Vercel Authentication enabled, only users in your Vercel team can access preview URLs.
@@ -103,7 +103,7 @@ const flags = {
 For teams that need strict control, allowlist your team's IP addresses:
 
 ```javascript
-// middleware.ts — only allow your team's IPs in preview
+// middleware.ts: only allow your team's IPs in preview
 export function middleware(request: NextRequest) {
   const isPreview = process.env.VERCEL_ENV === 'preview';
   
@@ -134,13 +134,13 @@ Never let preview deployments touch your production database. Three options:
 Production DB → Preview DB (separate Supabase project or schema)
 
 Pros: Simple, always has recent data if you sync it
-Cons: All previews share the same staging database — one PR can corrupt another
+Cons: All previews share the same staging database: one PR can corrupt another
 ```
 
 ### Option B: Ephemeral Databases per PR
 
 ```yaml
-# GitHub Actions — create a database for each PR
+# GitHub Actions: create a database for each PR
 # Using Supabase branching (beta) or PlanetScale branching
 
 on:
@@ -196,7 +196,7 @@ vercel env ls
 
 # Common values that CAN be the same:
 # - Supabase anon key (it's public anyway)
-# - NextAuth URL (will be different per deployment — use VERCEL_URL)
+# - NextAuth URL (will be different per deployment: use VERCEL_URL)
 # - Public API URLs
 ```
 
@@ -218,7 +218,7 @@ export const authOptions = {
 };
 
 // Set in Vercel environment variables:
-// NEXTAUTH_URL — set for Production only
+// NEXTAUTH_URL: set for Production only
 // For Preview, NextAuth will use VERCEL_URL automatically in newer versions
 // Or set explicitly: NEXTAUTH_URL=${VERCEL_URL} (use Vercel's system variable)
 ```

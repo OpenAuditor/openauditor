@@ -1,36 +1,38 @@
 # OWASP LLM Top 10
 
-**OWASP Top 10 for Large Language Model Applications — 2025 Edition**
+**OWASP Top 10 for Large Language Model Applications: 2025 Edition**
 
-This section covers the ten most critical security risks in applications that use large language models (LLMs) — including chatbots, AI agents, RAG systems, and code generation tools.
+This section covers the ten most critical security risks in applications that use large language models (LLMs), including chatbots, AI agents, RAG systems, and code generation tools.
 
 ---
 
 ## Why LLM Security Is Different
 
-Traditional web security protects against code injection. LLM security protects against *semantic* injection — malicious instructions hidden in natural language. The attack surface is fundamentally different:
+Traditional web security protects against code injection. LLM security protects against *semantic* injection: malicious instructions hidden in natural language. The attack surface is fundamentally different:
 
-- **Inputs are unbounded natural language** — impossible to fully validate
-- **Model behaviour is probabilistic** — not deterministic or provable
-- **Context is opaque** — the model may "remember" injected instructions from earlier in the conversation
-- **Actions can be real** — agentic LLMs can call APIs, write files, send emails
+- **Inputs are unbounded natural language**: impossible to fully validate
+- **Model behaviour is probabilistic**, not deterministic or provable
+- **Context is opaque**: the model may "remember" injected instructions from earlier in the conversation
+- **Actions can be real**: agentic LLMs can call APIs, write files, send emails
 
 ---
 
-## The Ten Risks
+## The Ten Risks (2025 Edition)
 
-| # | Risk | Severity |
-|---|------|----------|
-| LLM01 | [Prompt Injection](./LLM01-prompt-injection.md) | Critical |
-| LLM02 | [Insecure Output Handling](./LLM02-insecure-output-handling.md) | High |
-| LLM03 | [Training Data Poisoning](./LLM03-training-data-poisoning.md) | High |
-| LLM04 | [Model Denial of Service](./LLM04-model-dos.md) | Medium |
-| LLM05 | [Supply Chain Vulnerabilities](./LLM05-supply-chain.md) | High |
-| LLM06 | [Sensitive Information Disclosure](./LLM06-sensitive-disclosure.md) | High |
-| LLM07 | [Insecure Plugin Design](./LLM07-insecure-plugin-design.md) | High |
-| LLM08 | [Excessive Agency](./LLM08-excessive-agency.md) | Critical |
-| LLM09 | [Overreliance](./LLM09-overreliance.md) | Medium |
-| LLM10 | [Model Theft](./LLM10-model-theft.md) | Medium |
+| # | Risk | Severity | Changed from 2023 |
+|---|------|----------|-------------------|
+| LLM01 | [Prompt Injection](./LLM01-prompt-injection.md) | Critical | Same position; now includes multimodal injection |
+| LLM02 | [Sensitive Information Disclosure](./LLM02-sensitive-information-disclosure.md) | High | Up from #6 |
+| LLM03 | [Supply Chain](./LLM03-supply-chain.md) | High | Up from #5 |
+| LLM04 | [Data and Model Poisoning](./LLM04-data-and-model-poisoning.md) | High | Was "Training Data Poisoning"; now includes RAG data |
+| LLM05 | [Improper Output Handling](./LLM05-improper-output-handling.md) | High | Was "Insecure Output Handling" (#2) |
+| LLM06 | [Excessive Agency](./LLM06-excessive-agency.md) | Critical | Up from #8; absorbs "Insecure Plugin Design" |
+| LLM07 | [System Prompt Leakage](./LLM07-system-prompt-leakage.md) | Medium to High | **New** |
+| LLM08 | [Vector and Embedding Weaknesses](./LLM08-vector-and-embedding-weaknesses.md) | High | **New** |
+| LLM09 | [Misinformation](./LLM09-misinformation.md) | Medium to High | Was "Overreliance" |
+| LLM10 | [Unbounded Consumption](./LLM10-unbounded-consumption.md) | High | Merges "Model Denial of Service" and "Model Theft" |
+
+Dropped as separate entries in 2025: Insecure Plugin Design (now in LLM06), Model Denial of Service and Model Theft (now in LLM10).
 
 ---
 
@@ -49,13 +51,15 @@ If your application does any of the following, this section is for you:
 
 ## Quick Priority Guide
 
-**If you build a chatbot:** Focus on LLM01 (prompt injection), LLM02 (output handling), LLM06 (data disclosure).
+**If you build a chatbot:** LLM01 (prompt injection), LLM05 (output handling), LLM07 (system prompt leakage), LLM09 (misinformation), LLM10 (cost limits).
 
-**If you run AI agents:** Focus on LLM01, LLM07 (plugins), LLM08 (excessive agency).
+**If you use RAG:** LLM08 (vector and embedding weaknesses), LLM02 (data disclosure), LLM04 (poisoning), LLM01 (indirect injection).
 
-**If you use RAG:** Focus on LLM01 (indirect injection in retrieved docs), LLM06, LLM03.
+**If you run AI agents or MCP servers:** LLM06 (excessive agency), LLM01, LLM03 (supply chain: MCP servers and tools).
 
-**If you fine-tune models:** Focus on LLM03 (training data poisoning), LLM05 (supply chain).
+**If you fine-tune models:** LLM04 (poisoning), LLM03 (supply chain), LLM02 (PII in training data).
+
+**If your AI feature is free or public:** LLM10 first. An uncapped endpoint is an open tab on your provider bill.
 
 ---
 
@@ -73,4 +77,4 @@ If your application does any of the following, this section is for you:
 - [AI App Security Overview](../../08-ai-app-security/README.md)
 - [Prompt Injection Defence](../../08-ai-app-security/prompt-injection-defense.md)
 - [Agent Security](../../08-ai-app-security/tool-and-agent-security.md)
-- [OWASP LLM Top 10 Official](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
+- [OWASP Top 10 for LLM Applications 2025 (official)](https://genai.owasp.org/llm-top-10/)

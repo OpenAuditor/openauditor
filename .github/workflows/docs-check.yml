@@ -1,0 +1,53 @@
+# Keeps the toolkit trustworthy: no broken links, no invalid workflow templates.
+name: Docs check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: '17 6 * * 1'   # weekly, catches external links that rot
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  internal-links:
+    name: Internal links
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Check relative links (offline, must pass)
+        uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
+        with:
+          args: --offline --no-progress './**/*.md'
+          fail: true
+      - name: House style (no em or en dashes)
+        run: |
+          if grep -rnF -e $'\u2014' -e $'\u2013' --include='*.md' --include='*.yml' . ; then
+            echo "Use a colon, comma or 'to' instead of em/en dashes (see CONTRIBUTING.md)"; exit 1
+          fi
+
+  external-links:
+    name: External links (report only)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Check external links
+        uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
+        with:
+          args: --no-progress --max-concurrency 8 --accept 200,206,403,429 --exclude-path templates './**/*.md'
+          fail: false
+
+  workflow-templates:
+    name: Lint workflow templates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: actionlint
+        run: |
+          bash <(curl -sSfL https://raw.githubusercontent.com/rhysd/actionlint/914e7df21a07ef503a81201c76d2b11c789d3fca/scripts/download-actionlint.bash) 1.7.12
+          ./actionlint -version
+          # shellcheck disable=SC2016
+          ./actionlint -format '{{range $err := .}}::error file={{$err.Filepath}},line={{$err.Line}},col={{$err.Column}}::{{$err.Message}}\n{{end}}' templates/github-actions/*.yml .github/workflows/*.yml

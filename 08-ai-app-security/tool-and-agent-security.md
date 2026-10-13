@@ -22,7 +22,7 @@ The attack vector is prompt injection. The blast radius is determined by what to
 Only give the agent the tools it needs for the specific task.
 
 ```javascript
-// WRONG — agent has access to everything
+// WRONG: agent has access to everything
 const tools = [
   { name: 'readFile', description: 'Read any file' },
   { name: 'writeFile', description: 'Write any file' },
@@ -31,7 +31,7 @@ const tools = [
   { name: 'queryDatabase', description: 'Query any table' },
 ];
 
-// RIGHT — scoped tools for the task
+// RIGHT: scoped tools for the task
 // Task: "Help user search their own documents"
 const tools = [
   { 
@@ -165,6 +165,6 @@ Minimal tool scope dramatically limits the damage of any single compromise.
 
 ## Learn More
 
-- [OWASP LLM08: Excessive Agency](../02-owasp/llm-top10/LLM08-excessive-agency.md)
+- [OWASP LLM06: Excessive Agency](../02-owasp/llm-top10/LLM06-excessive-agency.md)
 - [Prompt Injection Defense](./prompt-injection-defense.md)
 - [Audit Agent Permissions prompt](./prompts/audit-agent-permissions.md)

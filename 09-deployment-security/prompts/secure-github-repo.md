@@ -2,7 +2,7 @@
 
 ## When to use this
 
-Use this when setting up a new repository, after a team expansion, or as part of a security review. Default GitHub repository settings are permissive — this prompt tightens them.
+Use this when setting up a new repository, after a team expansion, or as part of a security review. Default GitHub repository settings are permissive: this prompt tightens them.
 
 ## Works with
 
@@ -48,12 +48,12 @@ Recommended settings:
 Navigate to Settings → Code Security:
 
 ```
-✓ Dependency graph — enable
-✓ Dependabot alerts — enable
-✓ Dependabot security updates — enable (auto-PR for fixes)
-✓ Code scanning (CodeQL) — enable
-✓ Secret scanning — enable
-  ✓ Push protection — enable (blocks commits containing secrets)
+✓ Dependency graph: enable
+✓ Dependabot alerts: enable
+✓ Dependabot security updates: enable (auto-PR for fixes)
+✓ Code scanning (CodeQL): enable
+✓ Secret scanning: enable
+  ✓ Push protection: enable (blocks commits containing secrets)
 ```
 
 **Step 4: Check for secrets in the repository**
@@ -75,7 +75,7 @@ git log -p | grep -i 'api_key\|password\|secret\|token' | head -50
 ```
 
 If secrets are found in git history:
-1. **Rotate them immediately** — assume they're compromised
+1. **Rotate them immediately**: assume they're compromised
 2. Use BFG Repo Cleaner or `git filter-repo` to remove them from history
 3. Force-push the cleaned history (coordinate with team)
 
@@ -86,7 +86,7 @@ Review all workflow files in `.github/workflows/`:
 1. **Check for unpinned actions:**
 ```bash
 grep -r "uses:" .github/workflows/ | grep -v "@[a-f0-9]\{40\}"
-# Any result that doesn't show a 40-character SHA is unpinned — flag it
+# Any result that doesn't show a 40-character SHA is unpinned: flag it
 ```
 
 2. **Check for dangerous permissions:**
@@ -105,7 +105,7 @@ grep -r 'github.event.pull_request.title\|github.event.issue.title\|github.head_
 4. **Check for excessive secret exposure:**
 ```bash
 grep -r "env:" .github/workflows/ | grep "secrets\."
-# Review each — are these secrets actually needed in this job?
+# Review each: are these secrets actually needed in this job?
 ```
 
 Produce a list of findings for each workflow file.
@@ -130,7 +130,7 @@ Settings → Actions → Workflow permissions → "Read repository contents and 
 
 Review Settings → Integrations → GitHub Apps:
 - List all installed apps
-- Review each app's permissions — do they have more access than needed?
+- Review each app's permissions: do they have more access than needed?
 - Remove apps that are no longer used
 
 **Step 8: Produce a security report**
@@ -150,6 +150,6 @@ A complete GitHub repository security audit: branch protection enabled, security
 
 ## Learn more
 
-[Secure GitHub Actions](../secure-github-actions.md)
+[GitHub Security (incl. Actions)](../github-security.md)
 [Environment Variables](../../06-secure-coding/env-secrets-management.md)
 [OWASP A08: Data Integrity Failures](../../02-owasp/web-top10/A08-data-integrity-failures.md)

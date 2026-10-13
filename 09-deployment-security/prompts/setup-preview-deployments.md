@@ -14,7 +14,7 @@ Cursor, Claude, GitHub Copilot, Windsurf, Cline, Aider
 
 ---
 
-You are a security engineer setting up secure preview deployments. Preview environments must be isolated from production, authenticated, and use separate data — they must never expose production data or be publicly accessible.
+You are a security engineer setting up secure preview deployments. Preview environments must be isolated from production, authenticated, and use separate data: they must never expose production data or be publicly accessible.
 
 **Step 1: Audit the current state**
 
@@ -65,7 +65,7 @@ vercel env add SUPABASE_URL production
 vercel env add SUPABASE_ANON_KEY production
 vercel env add SUPABASE_SECRET_KEY production
 
-# Preview environment — use a SEPARATE Supabase project
+# Preview environment: use a SEPARATE Supabase project
 vercel env add SUPABASE_URL preview
 vercel env add SUPABASE_ANON_KEY preview
 vercel env add SUPABASE_SECRET_KEY preview
@@ -117,7 +117,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
   
-  // No valid token — redirect to login page
+  // No valid token: redirect to login page
   const loginUrl = new URL('/preview-login', request.url);
   loginUrl.searchParams.set('redirect', request.nextUrl.pathname);
   return NextResponse.redirect(loginUrl);
@@ -219,7 +219,7 @@ jobs:
   setup-preview-db:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Create preview database
         env:
@@ -277,8 +277,8 @@ Preview deployments at: https://[branch-name]-[project]-[team].vercel.app
 
 **Important:**
 - Preview uses SEPARATE database (preview Supabase project)
-- DO NOT share preview URLs publicly — they require password
-- Production data is NOT in preview — use test accounts
+- DO NOT share preview URLs publicly: they require password
+- Production data is NOT in preview: use test accounts
 - Test accounts: See [password manager] under "Preview Test Users"
 ```
 

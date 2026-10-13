@@ -420,10 +420,10 @@ You should:
 
 ## Learn more
 
-- [Risk Appetite Framework](../risk-appetite-framework.md) — How to think about risk acceptance
-- [Threat Modeling 101](../threat-modeling-101.md) — Where these threats come from
-- [Threat Discovery Agent](./threat-discovery.md) — How to generate this threat list
-- [STRIDE Analysis Agent](./stride-analysis.md) — Systematic threat analysis
+- [Risk Appetite Framework](../risk-appetite-framework.md): How to think about risk acceptance
+- [Threat Modeling 101](../threat-modeling-101.md): Where these threats come from
+- [Threat Discovery Agent](./threat-discovery.md): How to generate this threat list
+- [STRIDE Analysis Agent](./stride-analysis.md): Systematic threat analysis
 
 ---
 

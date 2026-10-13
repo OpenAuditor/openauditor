@@ -2,7 +2,7 @@
 
 ## When to use this
 
-Use this when building auth from scratch, auditing existing auth, or after a failed login attempt. Authentication is the front door — it must be solid.
+Use this when building auth from scratch, auditing existing auth, or after a failed login attempt. Authentication is the front door: it must be solid.
 
 ## Works with
 

@@ -1,6 +1,6 @@
 # ISO 27001 Awareness
 
-ISO 27001 is the international standard for information security management. You don't need to be certified to benefit from it — but if you sell to enterprise, you'll probably be asked about it.
+ISO 27001 is the international standard for information security management. You don't need to be certified to benefit from it, but if you sell to enterprise, you'll probably be asked about it.
 
 ---
 
@@ -51,23 +51,23 @@ You don't implement all 114. You perform a risk assessment and implement control
 
 ## Practical Path to ISO 27001
 
-### Timeline: 12–18 months for a startup
+### Timeline: 12 to 18 months for a startup
 
-**Month 1–2: Scope and gap analysis**
+**Month 1 to 2: Scope and gap analysis**
 - Define what's in scope (your product, infrastructure, team)
 - Identify what you already do vs what's missing
 
-**Month 3–6: Build the ISMS**
+**Month 3 to 6: Build the ISMS**
 - Write security policies (access control, acceptable use, incident response)
 - Perform and document your risk assessment
 - Implement missing controls
 
-**Month 7–12: Operate and evidence**
+**Month 7 to 12: Operate and evidence**
 - Run the ISMS for 6 months minimum
 - Collect evidence (access logs, training records, vendor assessments)
 - Internal audit
 
-**Month 12–18: Certification audit**
+**Month 12 to 18: Certification audit**
 - Stage 1: Document review by certification body
 - Stage 2: On-site/remote audit
 - Certification issued (valid 3 years with annual surveillance audits)
@@ -78,11 +78,11 @@ You don't implement all 114. You perform a risk assessment and implement control
 
 | Item | Estimated Cost |
 |------|---------------|
-| Consultant to guide you | £5,000–£20,000 |
-| Compliance platform (Vanta, Drata) | £10,000–£30,000/year |
-| Certification body audit | £5,000–£15,000 |
+| Consultant to guide you | £5,000: £20,000 |
+| Compliance platform (Vanta, Drata) | £10,000: £30,000/year |
+| Certification body audit | £5,000: £15,000 |
 | Staff time (internal) | Significant |
-| **Total** | **£20,000–£60,000** for a startup |
+| **Total** | **£20,000: £60,000** for a startup |
 
 ---
 

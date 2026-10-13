@@ -1,6 +1,6 @@
 # Monitoring and Observability Tools
 
-A comparison of the most popular logging, monitoring, and alerting tools for indie hackers and small teams — with honest opinions on what to actually use.
+A comparison of the most popular logging, monitoring, and alerting tools for indie hackers and small teams: with honest opinions on what to actually use.
 
 ---
 
@@ -91,7 +91,7 @@ await axiom.ingest('my-dataset', [{
 - **Integration:** One-line setup
 
 ```javascript
-// Next.js — sentry.client.config.ts
+// Next.js: sentry.client.config.ts
 import * as Sentry from "@sentry/nextjs";
 
 Sentry.init({
@@ -134,11 +134,11 @@ Sentry.init({
 
 - **Free tier:** 10 checks/month
 - **Paid:** from $20/month
-- **What it does:** Run Playwright tests and API checks on a schedule — alerts when they fail
+- **What it does:** Run Playwright tests and API checks on a schedule: alerts when they fail
 - **Best for:** Teams that want to monitor actual user flows, not just HTTP 200
 
 ```javascript
-// Checkly — run a Playwright test every 5 minutes
+// Checkly: run a Playwright test every 5 minutes
 const { test, expect } = require('@playwright/test');
 
 test('Login flow works', async ({ page }) => {

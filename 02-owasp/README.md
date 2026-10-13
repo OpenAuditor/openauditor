@@ -1,4 +1,4 @@
-# OWASP Top 10 — Overview
+# OWASP Top 10: Overview
 
 The Open Web Application Security Project (OWASP) publishes the Top 10 as a consensus document representing the most critical security risks to web applications, APIs, and large language model integrations. It is updated roughly every three to four years based on real-world data from hundreds of organisations.
 
@@ -10,9 +10,9 @@ This section covers three Top 10 lists. Each maps to a different attack surface.
 
 | Sub-section | What It Covers |
 |-------------|---------------|
-| [Web Top 10 (2021)](./web-top10/README.md) | Classic web application vulnerabilities — broken access control, injection, misconfigurations, and more |
-| [API Top 10 (2023)](./api-top10/README.md) | API-specific risks — broken object-level authorisation, excessive data exposure, mass assignment |
-| [LLM Top 10 (2025)](./llm-top10/README.md) | Risks specific to large language model integrations — prompt injection, insecure output handling, training data poisoning |
+| [Web Top 10 (2021)](./web-top10/README.md) | Classic web application vulnerabilities: broken access control, injection, misconfigurations, and more |
+| [API Top 10 (2023)](./api-top10/README.md) | API-specific risks: broken object-level authorisation, excessive data exposure, mass assignment |
+| [LLM Top 10 (2025)](./llm-top10/README.md) | Risks specific to LLM features: prompt injection, sensitive data disclosure, supply chain (including MCP servers), RAG and vector store weaknesses, excessive agency, unbounded cost |
 
 ---
 
@@ -26,9 +26,9 @@ This section covers three Top 10 lists. Each maps to a different attack surface.
 
 ## Related Sections
 
-- [06 Secure Coding](../06-secure-coding/) — Implementation guidance for auth, validation, headers, database security
-- [10 Security Testing](../10-security-testing/) — How to test for OWASP vulnerabilities using SAST, DAST, and manual methods
-- [16 Checklists](../16-checklists/) — Pre-launch and production hardening checklists that cross-reference OWASP
+- [06 Secure Coding](../06-secure-coding/): Implementation guidance for auth, validation, headers, database security
+- [10 Security Testing](../10-security-testing/): How to test for OWASP vulnerabilities using SAST, DAST, and manual methods
+- [16 Checklists](../16-checklists/): Pre-launch and production hardening checklists that cross-reference OWASP
 
 ---
 

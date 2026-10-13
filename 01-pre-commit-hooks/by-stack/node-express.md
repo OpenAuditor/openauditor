@@ -54,7 +54,7 @@ npx lint-staged
 # 2. Secret scanning
 gitleaks protect --staged --config=.gitleaks.toml
 # If gitleaks is not installed, fail gracefully:
-# command -v gitleaks && gitleaks protect --staged || echo "gitleaks not installed — skipping"
+# command -v gitleaks && gitleaks protect --staged || echo "gitleaks not installed: skipping"
 
 # 3. Check for .env files accidentally staged
 if git diff --cached --name-only | grep -qE '\.env($|\.)'; then
@@ -199,32 +199,32 @@ const fs = require('fs');
 const DANGEROUS_PATTERNS = [
   {
     pattern: /eval\s*\(/,
-    message: 'eval() detected — remove this before committing',
+    message: 'eval() detected: remove this before committing',
     severity: 'error',
   },
   {
     pattern: /new Function\s*\(/,
-    message: 'new Function() detected — potential code injection',
+    message: 'new Function() detected: potential code injection',
     severity: 'error',
   },
   {
     pattern: /child_process\.exec\s*\(/,
-    message: 'child_process.exec() with shell — use execFile() instead',
+    message: 'child_process.exec() with shell: use execFile() instead',
     severity: 'warn',
   },
   {
     pattern: /Math\.random\s*\(\s*\)/,
-    message: 'Math.random() is not cryptographically secure — use crypto.randomBytes()',
+    message: 'Math.random() is not cryptographically secure: use crypto.randomBytes()',
     severity: 'warn',
   },
   {
     pattern: /innerHTML\s*=/,
-    message: 'innerHTML assignment detected — use textContent or sanitise first',
+    message: 'innerHTML assignment detected: use textContent or sanitise first',
     severity: 'warn',
   },
   {
     pattern: /dangerouslySetInnerHTML/,
-    message: 'dangerouslySetInnerHTML — ensure content is sanitised with DOMPurify',
+    message: 'dangerouslySetInnerHTML: ensure content is sanitised with DOMPurify',
     severity: 'warn',
   },
   {

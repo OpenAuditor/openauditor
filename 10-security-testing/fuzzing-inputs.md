@@ -15,7 +15,7 @@ Fuzzing is automated negative testing. Instead of testing what your app should d
 ## What Fuzzing Finds
 
 - Buffer overflows (in native modules, image parsers, binary parsers)
-- ReDoS — Regular Expression Denial of Service (catastrophic backtracking)
+- ReDoS: Regular Expression Denial of Service (catastrophic backtracking)
 - Parser edge cases (XML, JSON, YAML with unusual inputs)
 - Business logic failures (negative quantities, astronomical values, empty strings)
 - Error message information disclosure (stack traces on malformed input)
@@ -34,7 +34,7 @@ Send unexpected values to API endpoints and form inputs:
 // Jest-based fuzzer for your API endpoints
 const { faker } = require('@faker-js/faker');
 
-describe('Input Fuzzing — Registration Endpoint', () => {
+describe('Input Fuzzing: Registration Endpoint', () => {
   const endpoint = '/api/auth/register';
   
   // Boundary values
@@ -116,13 +116,13 @@ function testReDoS(pattern, maliciousInput, timeout = 1000) {
     }
     return true;
   } catch {
-    return true; // regex threw — acceptable
+    return true; // regex threw: acceptable
   }
 }
 
 // Common vulnerable patterns and their evil inputs:
 const REDOS_TESTS = [
-  // Email validation — common culprit
+  // Email validation: common culprit
   {
     pattern: '^([a-zA-Z0-9])(([-.]|[_]+)?([a-zA-Z0-9]+))*(@){1}[a-z0-9]+[.]{1}(([a-z]{2,3})|([a-z]{2,3}[.]{1}[a-z]{2,3}))$',
     evil: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaa!',

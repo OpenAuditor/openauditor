@@ -7,7 +7,44 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
-## [1.0.0] — 2026-04-27
+## [Unreleased]
+
+### Changed: OWASP Top 10 for LLM Applications updated to the 2025 edition
+- Files renamed to 2025 IDs: LLM02 Sensitive Information Disclosure, LLM03 Supply Chain, LLM04 Data and Model Poisoning, LLM05 Improper Output Handling, LLM06 Excessive Agency, LLM09 Misinformation, LLM10 Unbounded Consumption
+- New: LLM07 System Prompt Leakage, LLM08 Vector and Embedding Weaknesses (Supabase pgvector RLS patterns, tested)
+- Insecure Plugin Design merged into LLM06; Model Denial of Service and Model Theft merged into LLM10
+- New real-world cases: EchoLeak (CVE-2025-32711), postmark-mcp malicious MCP server, Replit production database deletion, Moffatt v. Air Canada, Anthropic/UK AISI/Turing 250-document poisoning study, LangChain CVE-2023-29374
+- Coverage of MCP servers, markdown-image data exfiltration, RAG tenancy, embedding erasure, AI-hallucinated packages and provider spend limits
+- LLM Top 10 audit prompt and PROMPTS.md index rewritten for the 2025 categories
+
+### Fixed (LLM section)
+- Removed `vm2` as a recommended sandbox (discontinued after sandbox escapes)
+- RAG examples no longer filter results after retrieval; a "secure" example that gave the model a free-form SQL tool was replaced
+- Sandbox path check used a string prefix test that `/sandbox2` could pass
+- Outdated APIs: `openai...acreate`, Pydantic v1 validators, `datetime.utcnow()`; a lowercase filter that could never match `DAN`
+- Inaccurate or unverifiable "real attack" examples replaced with documented incidents
+
+### Fixed
+- 15 broken internal links (cryptography, AI app security, foundations prompts, OWASP prompts)
+- `templates/github-actions/dependency-check.yml` was invalid YAML and used `hashFiles()` in a job-level `if`; GitHub rejected it. Now valid and actionlint-clean
+- `osv-scanner-action` was tag-pinned in a template that teaches SHA pinning; now SHA-pinned (v2.7.0)
+- File and prompt counts in README and STATUS now match the repository
+- STATUS no longer claims the OWASP Web and LLM lists are the 2025 editions
+- Creator and security contact links point to baulin.co.uk
+- Claude Code setup used a non-existent `/project:audit` CLAUDE.md command; replaced with skill install steps
+- Outdated model IDs in skill loading guides
+
+### Changed
+- All GitHub Action SHA pins refreshed (checkout v7, setup-node v7, setup-python v7, codeql-action v4, gitleaks-action v3, upload-artifact v7, github-script v9); Node 24 in templates
+- `production-readiness-audit/SKILL.md` now has Agent Skill frontmatter and installs into `.claude/skills/`
+- Em and en dashes replaced across the repo (house style)
+
+### Added
+- `.github/workflows/docs-check.yml`: offline link check, weekly external link report, actionlint on workflow templates, dash style check
+
+---
+
+## [1.0.0] - 2026-04-27
 
 First complete, production-ready release.
 
@@ -20,7 +57,7 @@ First complete, production-ready release.
 **00 Foundations** (11 files)
 - Threat modelling 101, secure by default, risk appetite framework
 - The human layer, why security matters, glossary
-- Deprecation and version hygiene — detecting outdated AI-generated patterns
+- Deprecation and version hygiene: detecting outdated AI-generated patterns
 - Prompt agents: STRIDE analysis, threat discovery, risk prioritisation, deprecated pattern check
 
 **01 Pre-Commit Hooks** (15 files)
@@ -29,9 +66,9 @@ First complete, production-ready release.
 - Prompts: setup, audit existing hooks, CI integration
 
 **02 OWASP** (40 files)
-- Web Top 10 (2021): A01–A10 with code fixes
-- API Top 10 (2023): API1–API10 with code fixes
-- LLM Top 10 (2025): LLM01–LLM10 with AI-specific defences
+- Web Top 10 (2021): A01 to A10 with code fixes
+- API Top 10 (2023): API1 to API10 with code fixes
+- LLM Top 10 (2025): LLM01 to LLM10 with AI-specific defences
 - Prompts: full Web audit, API audit, LLM audit, fix broken access control, fix injection, fix auth failures
 
 **03 MITRE ATT&CK** (6 files)
@@ -125,9 +162,9 @@ First complete, production-ready release.
 
 | Version range | Meaning |
 |---------------|---------|
-| `1.0.x` | Patches — typo fixes, clarifications, broken links |
-| `1.x.0` | Minor — new content, new prompts, new stack coverage |
-| `x.0.0` | Major — structural changes, breaking prompt format changes |
+| `1.0.x` | Patches: typo fixes, clarifications, broken links |
+| `1.x.0` | Minor: new content, new prompts, new stack coverage |
+| `x.0.0` | Major: structural changes, breaking prompt format changes |
 
 Versions are tagged on GitHub: [github.com/OpenAuditor/openauditor/releases](https://github.com/OpenAuditor/openauditor/releases)
 
@@ -135,18 +172,18 @@ Versions are tagged on GitHub: [github.com/OpenAuditor/openauditor/releases](htt
 
 ## Roadmap
 
-### [1.1.0] — May 2026
+### [1.1.0] - May 2026
 - [ ] Kubernetes and container orchestration security
 - [ ] GraphQL security guide
 - [ ] AWS and GCP deployment hardening
 - [ ] Additional CVE stack histories (Ruby, Go, Rust)
 
-### [1.2.0] — June 2026
+### [1.2.0] - June 2026
 - [ ] Community-reviewed prompt contributions
 - [ ] Interactive risk calculator (web tool)
 - [ ] Automated pre-audit questionnaire
 
-### [2.0.0] — Q3 2026
+### [2.0.0] - Q3 2026
 - [ ] Machine-readable audit output format (JSON/YAML)
 - [ ] GitHub App integration
 - [ ] Multi-language translations

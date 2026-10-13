@@ -23,7 +23,7 @@ If your app stores anything about a person's health **and** can identify that pe
 
 ## Who Does HIPAA Apply To?
 
-**Covered Entities:** Healthcare providers, health plans, healthcare clearinghouses — they must comply directly.
+**Covered Entities:** Healthcare providers, health plans, healthcare clearinghouses: they must comply directly.
 
 **Business Associates:** Companies that handle PHI on behalf of covered entities. If a hospital contracts your SaaS to manage patient data, you're a Business Associate.
 
@@ -46,11 +46,11 @@ If you're a Business Associate, you must sign a Business Associate Agreement (BA
 
 Under the Security Rule you must implement:
 
-- **Access controls** — unique user IDs, emergency access procedures, automatic logoff
-- **Audit controls** — log access to ePHI
-- **Integrity controls** — verify ePHI hasn't been improperly altered
-- **Transmission security** — encrypt ePHI in transit (TLS)
-- **Encryption at rest** — strongly recommended (technically "addressable" but expected)
+- **Access controls**: unique user IDs, emergency access procedures, automatic logoff
+- **Audit controls**: log access to ePHI
+- **Integrity controls**: verify ePHI hasn't been improperly altered
+- **Transmission security**: encrypt ePHI in transit (TLS)
+- **Encryption at rest**: strongly recommended (technically "addressable" but expected)
 
 ---
 
@@ -58,11 +58,11 @@ Under the Security Rule you must implement:
 
 | Service | HIPAA-Eligible? |
 |---------|----------------|
-| AWS (most services) | Yes — sign BAA with AWS |
-| Google Cloud | Yes — sign BAA |
-| Azure | Yes — sign BAA |
+| AWS (most services) | Yes: sign BAA with AWS |
+| Google Cloud | Yes: sign BAA |
+| Azure | Yes: sign BAA |
 | Heroku | No |
-| Vercel | No (as of 2026 — verify current status) |
+| Vercel | No (as of 2026: verify current status) |
 | Supabase | Check current BAA availability |
 | Stripe | Yes for payment; no for PHI |
 

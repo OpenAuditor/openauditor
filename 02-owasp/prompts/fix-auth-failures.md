@@ -33,7 +33,7 @@ Fix any insecure hashing:
 const hash = md5(password); // never
 const hash = crypto.createHash('sha256').update(password).digest('hex'); // never
 
-// SECURE — bcrypt with cost factor ≥12
+// SECURE: bcrypt with cost factor ≥12
 import bcrypt from 'bcrypt';
 const COST_FACTOR = 12; // Adjust so hashing takes ~100ms on your hardware
 const hash = await bcrypt.hash(password, COST_FACTOR);
@@ -101,7 +101,7 @@ export async function POST(request: Request) {
   const { email, password } = await request.json();
   const user = await db.users.findByEmail(email);
   
-  // Always run bcrypt even if user doesn't exist — prevents timing attacks
+  // Always run bcrypt even if user doesn't exist: prevents timing attacks
   const dummyHash = '$2b$12$invalidhashforconsistencyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
   const passwordMatch = user
     ? await bcrypt.compare(password, user.passwordHash)
@@ -129,19 +129,19 @@ grep -rn "logout\|signOut\|sign_out\|clearCookie\|destroySession" \
 Ensure server-side session destruction:
 
 ```typescript
-// VULNERABLE — only clears cookie, server session still valid
+// VULNERABLE: only clears cookie, server session still valid
 export async function POST() {
   const response = new Response(JSON.stringify({ success: true }));
   response.headers.set('Set-Cookie', 'session=; Max-Age=0; Path=/');
   return response;
 }
 
-// SECURE — destroy session on server first
+// SECURE: destroy session on server first
 export async function POST(request: Request) {
   const sessionId = request.cookies.get('session')?.value;
   
   if (sessionId) {
-    // Delete from session store — makes session permanently invalid
+    // Delete from session store: makes session permanently invalid
     await sessionStore.destroy(sessionId);
   }
   
@@ -199,9 +199,9 @@ grep -rn "setCookie\|set-cookie\|HttpOnly\|Secure\|SameSite" \
 ```
 
 All session cookies must have:
-- `HttpOnly` — prevents JavaScript access
-- `Secure` — HTTPS only
-- `SameSite=Lax` — CSRF protection
+- `HttpOnly`: prevents JavaScript access
+- `Secure`: HTTPS only
+- `SameSite=Lax`: CSRF protection
 
 ```typescript
 // SECURE cookie settings

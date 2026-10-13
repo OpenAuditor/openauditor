@@ -1,6 +1,6 @@
 # Negative Prompts: What NOT to Do
 
-A collection of anti-patterns for AI coding assistants — common patterns that produce insecure code. Use these as negative examples in your context window, or as a checklist when reviewing AI-generated code.
+A collection of anti-patterns for AI coding assistants: common patterns that produce insecure code. Use these as negative examples in your context window, or as a checklist when reviewing AI-generated code.
 
 ---
 
@@ -16,7 +16,7 @@ When using AI coding assistants for security-sensitive code, explicitly telling 
 DO NOT:
 - Hash passwords with MD5, SHA1, SHA256, or any fast hash
 - Store plaintext passwords in any form (including logs)
-- Use the same error message for "email not found" and "wrong password" if the distinction is logged — but DO return the same error to the user in both cases
+- Use the same error message for "email not found" and "wrong password" if the distinction is logged, but DO return the same error to the user in both cases
 - Create sessions without regenerating the session ID after login
 - Accept the user-provided role claim from the JWT payload without server-side verification
 - Set cookies without HttpOnly, Secure, and SameSite flags
@@ -31,7 +31,7 @@ DO NOT:
 ```
 DO NOT:
 - Concatenate user input directly into SQL queries (SQL injection)
-- Use string interpolation in database queries — always use parameterised queries
+- Use string interpolation in database queries: always use parameterised queries
 - Select * from tables in production queries (exposes all columns including sensitive ones)
 - Log database query results that may contain PII or sensitive data
 - Disable Supabase Row Level Security (RLS) as a "quick fix"
@@ -44,7 +44,7 @@ DO NOT:
 ```
 DO NOT:
 - Trust the user-provided MIME type (Content-Type header) for security decisions
-- Validate file type by extension only — validate by magic bytes
+- Validate file type by extension only: validate by magic bytes
 - Store uploaded files in a publicly web-accessible location without explicit opt-in
 - Execute or include uploaded files server-side
 - Allow filenames to include path traversal characters (../) without sanitisation
@@ -58,7 +58,7 @@ DO NOT:
 DO NOT:
 - Trust client-provided values for prices, quantities, or discounts without server-side validation
 - Accept object IDs in requests without verifying the requesting user has permission to access that object (IDOR)
-- Return different HTTP status codes for "resource not found" vs "resource exists but you can't access it" — always return 404 for both
+- Return different HTTP status codes for "resource not found" vs "resource exists but you can't access it": always return 404 for both
 - Use wildcard CORS (*) for APIs that require authentication
 - Log request bodies that may contain passwords, tokens, or payment data
 - Use eval() or Function() with user-controlled input
@@ -70,7 +70,7 @@ DO NOT:
 ```
 DO NOT:
 - Hardcode API keys, database URLs, or secrets in source code
-- Use NEXT_PUBLIC_ prefix for secrets — this exposes them in the client bundle
+- Use NEXT_PUBLIC_ prefix for secrets: this exposes them in the client bundle
 - Commit .env files to version control
 - Put the Supabase service_role key in any client-accessible code
 - Use the same secrets across development, staging, and production environments
@@ -121,13 +121,13 @@ DO NOT:
 
 ```
 DO NOT:
-- Roll your own encryption — use established libraries
+- Roll your own encryption: use established libraries
 - Use ECB mode for block cipher encryption (reveals patterns)
 - Reuse IVs/nonces for the same key
 - Use a fixed or predictable salt for password hashing
 - Use MD5 or SHA1 for any security purpose
 - Store private keys in source code or environment variables accessible to the client
-- Use Math.random() for security tokens — use crypto.getRandomValues() or crypto.randomBytes()
+- Use Math.random() for security tokens: use crypto.getRandomValues() or crypto.randomBytes()
 ```
 
 ---
@@ -139,7 +139,7 @@ DO NOT:
 ```
 You are writing authentication code for a production web application.
 
-CONSTRAINTS — do not violate these:
+CONSTRAINTS: do not violate these:
 [paste the relevant DO NOT sections]
 
 Now write a login handler that...

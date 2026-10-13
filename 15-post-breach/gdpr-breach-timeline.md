@@ -10,7 +10,7 @@ Under GDPR (and UK GDPR), you have 72 hours from becoming aware of a breach to r
 
 ## The 72-Hour Clock
 
-The clock starts when you become "aware" of the breach — not when you fully understand it. This means:
+The clock starts when you become "aware" of the breach, not when you fully understand it. This means:
 
 - Once you have credible evidence a breach occurred, the clock starts
 - You don't need to know the full scope before reporting
@@ -39,7 +39,7 @@ Hour 2:   Begin containment
 Hour 4:   Initial scope assessment complete
 Hour 24:  Internal legal review
 Hour 48:  Prepare ICO notification
-Hour 72:  Submit to ICO — THIS IS YOUR DEADLINE
+Hour 72:  Submit to ICO: THIS IS YOUR DEADLINE
 Hour 72+: Update ICO as you learn more (acceptable)
 Ongoing:  Notify affected individuals "without undue delay" (if high risk)
 ```
@@ -50,11 +50,11 @@ Ongoing:  Notify affected individuals "without undue delay" (if high risk)
 
 The ICO's online reporting tool (ico.org.uk/report-a-breach) asks for:
 
-1. **Nature of the breach** — What happened?
-2. **Categories of personal data** — What types of data? (email, password, health data, financial?)
+1. **Nature of the breach**: What happened?
+2. **Categories of personal data**: What types of data? (email, password, health data, financial?)
 3. **Approximate number of individuals affected**
-4. **Likely consequences** — What could happen to affected individuals?
-5. **Measures taken** — What have you done to address the breach?
+4. **Likely consequences**: What could happen to affected individuals?
+5. **Measures taken**: What have you done to address the breach?
 6. **Contact details** of your DPO or nominated contact
 
 You don't need all answers at hour 72. Tick "investigation ongoing" and update.
@@ -68,7 +68,7 @@ When to notify users:
 - "High risk" includes: passwords exposed, financial data accessed, health data, identity theft risk
 
 How quickly:
-- "Without undue delay" — generally interpreted as 72 hours from when you know *which* individuals are affected
+- "Without undue delay": generally interpreted as 72 hours from when you know *which* individuals are affected
 
 ---
 

@@ -7,21 +7,21 @@ Real patterns that appear in Node.js apps that create vulnerabilities.
 ## 1. Command Injection via Child Process
 
 ```javascript
-// WRONG — user input directly in shell command
+// WRONG: user input directly in shell command
 const { exec } = require('child_process');
 app.get('/convert', (req, res) => {
   exec(`ffmpeg -i ${req.query.file} output.mp4`, callback);
-  // If file = "; rm -rf /; echo " — server is destroyed
+  // If file = "; rm -rf /; echo ": server is destroyed
 });
 ```
 
 ```javascript
-// RIGHT — use execFile with argument array (no shell interpolation)
+// RIGHT: use execFile with argument array (no shell interpolation)
 const { execFile } = require('child_process');
 app.get('/convert', (req, res) => {
   const filename = sanitizeFilename(req.query.file); // validate first
   execFile('ffmpeg', ['-i', filename, 'output.mp4'], callback);
-  // Arguments are passed as array — no shell expansion
+  // Arguments are passed as array: no shell expansion
 });
 ```
 
@@ -30,7 +30,7 @@ app.get('/convert', (req, res) => {
 ## 2. Path Traversal via User-Supplied Filenames
 
 ```javascript
-// WRONG — user controls the path
+// WRONG: user controls the path
 app.get('/files/:name', (req, res) => {
   res.sendFile(path.join(__dirname, 'uploads', req.params.name));
   // Request: GET /files/../../etc/passwd
@@ -38,7 +38,7 @@ app.get('/files/:name', (req, res) => {
 ```
 
 ```javascript
-// RIGHT — resolve and verify the path stays within uploads dir
+// RIGHT: resolve and verify the path stays within uploads dir
 app.get('/files/:name', (req, res) => {
   const uploadsDir = path.resolve(__dirname, 'uploads');
   const requestedPath = path.resolve(uploadsDir, req.params.name);
@@ -57,7 +57,7 @@ app.get('/files/:name', (req, res) => {
 ## 3. Prototype Pollution
 
 ```javascript
-// WRONG — merging user input can pollute Object prototype
+// WRONG: merging user input can pollute Object prototype
 function merge(target, source) {
   for (let key in source) {
     target[key] = source[key]; // if source has __proto__ key, game over
@@ -70,7 +70,7 @@ merge({}, JSON.parse(req.body));
 ```
 
 ```javascript
-// RIGHT — use safe merge or JSON schema validation
+// RIGHT: use safe merge or JSON schema validation
 import { cloneDeep } from 'lodash'; // lodash merge is safe against this
 // Or use Object.assign with null prototype:
 const safe = Object.create(null);
@@ -82,14 +82,14 @@ Object.assign(safe, validatedData); // validated with Zod first
 ## 4. Unvalidated Redirects
 
 ```javascript
-// WRONG — redirects to user-controlled URL
+// WRONG: redirects to user-controlled URL
 app.get('/redirect', (req, res) => {
   res.redirect(req.query.next); // attacker redirects to phishing site
 });
 ```
 
 ```javascript
-// RIGHT — validate redirect URL is on your own domain
+// RIGHT: validate redirect URL is on your own domain
 app.get('/redirect', (req, res) => {
   const next = req.query.next;
   const url = new URL(next, 'https://yourapp.com');
@@ -107,14 +107,14 @@ app.get('/redirect', (req, res) => {
 ## 5. Trusting `req.body` Without Validation
 
 ```javascript
-// WRONG — directly uses user input
+// WRONG: directly uses user input
 app.post('/users', async (req, res) => {
   await db.users.create({ ...req.body }); // user could set role: 'admin'
 });
 ```
 
 ```javascript
-// RIGHT — pick only known fields
+// RIGHT: pick only known fields
 app.post('/users', async (req, res) => {
   const { email, name, password } = req.body; // destructure specific fields
   
@@ -136,14 +136,14 @@ app.post('/users', async (req, res) => {
 ## 6. CORS Misconfiguration
 
 ```javascript
-// WRONG — allows any origin
+// WRONG: allows any origin
 app.use(cors());
 // or
 res.setHeader('Access-Control-Allow-Origin', '*');
 ```
 
 ```javascript
-// RIGHT — allowlist specific origins
+// RIGHT: allowlist specific origins
 app.use(cors({
   origin: ['https://yourapp.com', 'https://www.yourapp.com'],
   credentials: true,
@@ -155,10 +155,10 @@ app.use(cors({
 ## 7. No Helmet.js
 
 ```javascript
-// WRONG — default Express exposes version info and lacks security headers
+// WRONG: default Express exposes version info and lacks security headers
 app.use(express.json());
 
-// RIGHT — add Helmet for security headers
+// RIGHT: add Helmet for security headers
 import helmet from 'helmet';
 app.use(helmet()); // adds X-Frame-Options, CSP, HSTS, and more
 ```

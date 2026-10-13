@@ -6,7 +6,7 @@ A practical guide to GDPR compliance for developers and founders. No law degree 
 
 ## Why This Matters
 
-GDPR fines can reach €20 million or 4% of global annual turnover — whichever is higher. But more immediately: users expect you to handle their data responsibly, and demonstrating that you do builds trust.
+GDPR fines can reach €20 million or 4% of global annual turnover: whichever is higher. But more immediately: users expect you to handle their data responsibly, and demonstrating that you do builds trust.
 
 The good news: most of what GDPR requires is also good product practice.
 

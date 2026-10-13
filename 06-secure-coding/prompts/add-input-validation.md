@@ -40,7 +40,7 @@ Flag any route that:
 
 **Step 3: Implement validation with the appropriate library**
 
-For TypeScript/Node.js — use Zod:
+For TypeScript/Node.js: use Zod:
 ```typescript
 import { z } from 'zod';
 const Schema = z.object({
@@ -52,7 +52,7 @@ const result = Schema.safeParse(req.body);
 if (!result.success) return res.status(400).json({ errors: result.error.flatten() });
 ```
 
-For Python — use Pydantic:
+For Python: use Pydantic:
 ```python
 from pydantic import BaseModel, EmailStr, Field
 class UserInput(BaseModel):

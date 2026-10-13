@@ -35,7 +35,7 @@ grep -r "supabase\.\|prisma\.\|mongoose\.\|knex\.\|sequelize\." \
 
 What framework? What database? What authentication system?
 
-**Step 2: A01 — Broken Access Control**
+**Step 2: A01: Broken Access Control**
 
 Check every API endpoint that accepts a resource ID:
 
@@ -55,7 +55,7 @@ Finding template:
 - **Issues found:** [list each IDOR or access control gap]
 - **Files:** [path:line for each issue]
 
-**Step 3: A02 — Cryptographic Failures**
+**Step 3: A02: Cryptographic Failures**
 
 ```bash
 # Find password hashing
@@ -76,7 +76,7 @@ grep -r "DATABASE_URL\|db_url" . --include="*.env*" 2>/dev/null
 - Are sensitive fields encrypted in the database?
 - Is HTTPS enforced?
 
-**Step 4: A03 — Injection**
+**Step 4: A03: Injection**
 
 ```bash
 # Find raw SQL queries
@@ -94,7 +94,7 @@ grep -rn "find({.*req\.\|findOne({.*req\." \
 
 Is all user input parameterised or validated before use in database queries?
 
-**Step 5: A04 — Insecure Design**
+**Step 5: A04: Insecure Design**
 
 Review the architecture for:
 - Missing rate limiting on login, registration, password reset
@@ -105,7 +105,7 @@ Review the architecture for:
 grep -r "rate.limit\|ratelimit\|RateLimit" --include="*.ts" --include="*.js" . | grep -v node_modules
 ```
 
-**Step 6: A05 — Security Misconfiguration**
+**Step 6: A05: Security Misconfiguration**
 
 ```bash
 # Check security headers
@@ -120,7 +120,7 @@ grep -r "DEBUG=true\|debug: true" . --include="*.env*" --include="*.ts" 2>/dev/n
 
 Are all OWASP-recommended security headers present? Is HTTPS enforced?
 
-**Step 7: A06 — Vulnerable Components**
+**Step 7: A06: Vulnerable Components**
 
 ```bash
 npm audit --json | head -50
@@ -130,7 +130,7 @@ pip-audit -r requirements.txt 2>/dev/null
 
 Are there High or Critical vulnerabilities in dependencies?
 
-**Step 8: A07 — Authentication Failures**
+**Step 8: A07: Authentication Failures**
 
 ```bash
 # Check for session invalidation on logout
@@ -143,7 +143,7 @@ grep -r "mfa\|totp\|two.factor\|2fa" --include="*.ts" --include="*.js" . | grep 
 grep -r "reset.password\|forgot.password" --include="*.ts" --include="*.js" . | grep -v node_modules
 ```
 
-**Step 9: A08 — Data Integrity Failures**
+**Step 9: A08: Data Integrity Failures**
 
 ```bash
 # Check for unsafe deserialisation
@@ -154,7 +154,7 @@ grep -rn "JSON.parse\|deserialize\|pickle\|unserialize" \
 grep -rn "uses:" .github/workflows/ | grep -v "@[a-f0-9]\{40\}"
 ```
 
-**Step 10: A09 — Logging and Monitoring Failures**
+**Step 10: A09: Logging and Monitoring Failures**
 
 ```bash
 # Find logging code
@@ -168,7 +168,7 @@ grep -r "logger\." --include="*.ts" --include="*.js" . | \
 
 Are security events logged? Are there alerts for anomalies?
 
-**Step 11: A10 — SSRF**
+**Step 11: A10: SSRF**
 
 ```bash
 # Find URL fetching with user-controlled input
@@ -180,7 +180,7 @@ Is user-supplied URL input validated before fetching?
 
 **Step 12: Produce the audit report**
 
-For each A01–A10 category:
+For each A01 to A10 category:
 
 | Category | Status | Critical Issues | High Issues | Notes |
 |----------|--------|-----------------|-------------|-------|

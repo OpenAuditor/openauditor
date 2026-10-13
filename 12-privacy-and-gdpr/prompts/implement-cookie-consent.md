@@ -36,10 +36,10 @@ cat app/layout.tsx 2>/dev/null || cat pages/_app.tsx 2>/dev/null
 ```
 
 Classify each cookie/tracker:
-- **Strictly necessary:** Authentication sessions, CSRF tokens, shopping cart — NO consent required
-- **Functional:** Remembering preferences (language, theme) — consent recommended
-- **Analytics:** Google Analytics, Hotjar, Plausible — consent required under UK GDPR
-- **Marketing:** Facebook Pixel, Google Ads, Intercom — consent required
+- **Strictly necessary:** Authentication sessions, CSRF tokens, shopping cart: NO consent required
+- **Functional:** Remembering preferences (language, theme): consent recommended
+- **Analytics:** Google Analytics, Hotjar, Plausible: consent required under UK GDPR
+- **Marketing:** Facebook Pixel, Google Ads, Intercom: consent required
 
 **Step 2: Implement consent storage**
 
@@ -48,7 +48,7 @@ Create a consent management system:
 ```typescript
 // lib/consent.ts
 export type ConsentCategories = {
-  necessary: true; // Always true — cannot be declined
+  necessary: true; // Always true: cannot be declined
   functional: boolean;
   analytics: boolean;
   marketing: boolean;
@@ -70,7 +70,7 @@ export function getConsent(): ConsentCategories | null {
     
     const parsed = JSON.parse(decodeURIComponent(value));
     
-    // Version mismatch — need new consent
+    // Version mismatch: need new consent
     if (parsed.version !== CONSENT_VERSION) return null;
     
     return parsed.categories;
@@ -193,7 +193,7 @@ export function CookieBanner() {
               <label className="flex items-center gap-3">
                 <input type="checkbox" checked disabled />
                 <span>
-                  <strong>Strictly necessary</strong> — Required for login and security.
+                  <strong>Strictly necessary</strong>: Required for login and security.
                   Cannot be disabled.
                 </span>
               </label>
@@ -204,7 +204,7 @@ export function CookieBanner() {
                   onChange={e => setPreferences(p => ({ ...p, functional: e.target.checked }))}
                 />
                 <span>
-                  <strong>Functional</strong> — Remember your preferences (language, theme).
+                  <strong>Functional</strong>: Remember your preferences (language, theme).
                 </span>
               </label>
               <label className="flex items-center gap-3">
@@ -214,7 +214,7 @@ export function CookieBanner() {
                   onChange={e => setPreferences(p => ({ ...p, analytics: e.target.checked }))}
                 />
                 <span>
-                  <strong>Analytics</strong> — Help us understand how the site is used
+                  <strong>Analytics</strong>: Help us understand how the site is used
                   (Google Analytics, Plausible).
                 </span>
               </label>
@@ -225,7 +225,7 @@ export function CookieBanner() {
                   onChange={e => setPreferences(p => ({ ...p, marketing: e.target.checked }))}
                 />
                 <span>
-                  <strong>Marketing</strong> — Personalised ads and retargeting.
+                  <strong>Marketing</strong>: Personalised ads and retargeting.
                 </span>
               </label>
             </div>
@@ -277,7 +277,7 @@ export function loadMarketing() {
 ```
 
 ```tsx
-// app/layout.tsx — DO NOT use next/script for GA4 without consent check
+// app/layout.tsx: DO NOT use next/script for GA4 without consent check
 // Instead, load conditionally from CookieBanner after consent is granted
 
 // Only load scripts that are strictly necessary in layout:
@@ -287,7 +287,7 @@ export default function RootLayout({ children }) {
       <body>
         {children}
         <CookieBanner />
-        {/* Do NOT put GA4 Script here — wait for consent */}
+        {/* Do NOT put GA4 Script here: wait for consent */}
       </body>
     </html>
   );
@@ -329,7 +329,7 @@ Test the implementation:
 - [ ] Analytics scripts are NOT loaded before consent is given (check Network tab)
 - [ ] "Manage cookies" in footer allows changing preferences
 - [ ] Changing preferences takes effect immediately
-- [ ] Consent cookie lasts 12 months (not more — reconsent required annually)
+- [ ] Consent cookie lasts 12 months (not more: reconsent required annually)
 
 ---
 

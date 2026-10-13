@@ -39,7 +39,7 @@ cat .github/workflows/*.yml 2>/dev/null | grep "npm ci\|npm install"
 Look for packages with these characteristics:
 
 ```bash
-# Packages with install scripts (run code on npm install — risk!)
+# Packages with install scripts (run code on npm install: risk!)
 cat package.json | node -e "
 const p = JSON.parse(require('fs').readFileSync('/dev/stdin'));
 const deps = {...(p.dependencies||{}), ...(p.devDependencies||{})};
@@ -150,7 +150,7 @@ For each secret:
 - Are secrets used in `run:` with user-controlled input? (script injection risk)
 
 ```yaml
-# VULNERABLE — secret exposed via GitHub event data
+# VULNERABLE: secret exposed via GitHub event data
 - run: echo ${{ github.event.pull_request.title }}  # PR title is user-controlled
   env:
     SECRET: ${{ secrets.MY_SECRET }}
@@ -165,14 +165,14 @@ For each secret:
 grep -rn "npm install\|npm ci" .github/workflows/ | grep -v "ignore-scripts"
 ```
 
-If `--ignore-scripts` is not used in CI, any package's install script runs with the permissions of the CI runner — a common supply chain attack vector.
+If `--ignore-scripts` is not used in CI, any package's install script runs with the permissions of the CI runner: a common supply chain attack vector.
 
 **Step 9: Produce the audit report**
 
 | Category | Status | Finding | Risk | Action |
 |----------|--------|---------|------|--------|
 | Vulnerability scan | FAIL | 2 high CVEs | High | Upgrade affected packages |
-| Lockfile committed | PASS | package-lock.json present | — | ✓ |
+| Lockfile committed | PASS | package-lock.json present | n/a | ✓ |
 | Actions pinned | FAIL | 5 unpinned actions | Medium | Pin to commit SHAs |
 | install scripts | WARN | 3 packages with postinstall | Medium | Review scripts |
 | npm ci in CI | FAIL | npm install used | Medium | Change to npm ci |

@@ -41,7 +41,7 @@ grep -rn "supabase\.\|prisma\.\|mongoose\.\|db\.query\|knex\." \
 
 What framework? What auth system? What database?
 
-**Step 2: API1 — Broken Object Level Authorisation (BOLA/IDOR)**
+**Step 2: API1: Broken Object Level Authorisation (BOLA/IDOR)**
 
 This is the most common critical API vulnerability.
 
@@ -50,7 +50,7 @@ This is the most common critical API vulnerability.
 grep -rn "params\.id\|params\.\w*Id\|req\.params\.\w*" \
   --include="*.ts" --include="*.js" . | grep -v node_modules
 
-# Find Supabase queries — check for auth.uid() in RLS
+# Find Supabase queries: check for auth.uid() in RLS
 grep -rn "\.from(\|\.select(\|\.update(\|\.delete(" \
   --include="*.ts" --include="*.js" . | grep -v node_modules
 ```
@@ -65,7 +65,7 @@ Finding template:
 - **IDOR vulnerabilities:** [list each endpoint]
 - **Files:** [path:line]
 
-**Step 3: API2 — Broken Authentication**
+**Step 3: API2: Broken Authentication**
 
 ```bash
 # Find authentication endpoints
@@ -89,7 +89,7 @@ Check:
 - Is there rate limiting on login (max 5 attempts per 15 minutes)?
 - Is the token invalidated on logout?
 
-**Step 4: API3 — Broken Object Property Level Authorisation (Mass Assignment)**
+**Step 4: API3: Broken Object Property Level Authorisation (Mass Assignment)**
 
 ```bash
 # Find where request body is spread directly into objects
@@ -112,18 +112,18 @@ Fix pattern:
 // VULNERABLE
 await prisma.user.update({ where: { id }, data: req.body });
 
-// SECURE — explicit allowlist
+// SECURE: explicit allowlist
 const { name, email, preferences } = req.body;
 await prisma.user.update({ where: { id }, data: { name, email, preferences } });
 ```
 
-**Step 5: API4 — Unrestricted Resource Consumption**
+**Step 5: API4: Unrestricted Resource Consumption**
 
 ```bash
 # Find rate limiting on all endpoints (not just auth)
 grep -rn "rateLimit\|Ratelimit" --include="*.ts" --include="*.js" . | grep -v node_modules
 
-# Find pagination — check for missing limits
+# Find pagination: check for missing limits
 grep -rn "\.findMany\|\.find(\|\.all(\|SELECT \*" \
   --include="*.ts" --include="*.js" . | grep -v node_modules
 
@@ -141,7 +141,7 @@ Verify:
 - List endpoints have `limit` and `offset` (and maximum limit enforced)
 - File uploads have size limits (max 10MB default)
 
-**Step 6: API5 — Broken Function Level Authorisation**
+**Step 6: API5: Broken Function Level Authorisation**
 
 ```bash
 # Find admin or management endpoints
@@ -159,7 +159,7 @@ grep -rn "router\.post\|router\.put\|router\.delete" \
 
 Verify that all sensitive operations check for admin/privileged role, not just authentication.
 
-**Step 7: API6 — Unrestricted Access to Sensitive Business Flows**
+**Step 7: API6: Unrestricted Access to Sensitive Business Flows**
 
 ```bash
 # Find business-critical endpoints
@@ -173,7 +173,7 @@ grep -rn "perUser\|perAccount\|dailyLimit\|maxPerDay" \
 
 Check: Are there limits on purchases per user, voucher codes per account, API calls per subscription tier?
 
-**Step 8: API7 — Server Side Request Forgery**
+**Step 8: API7: Server Side Request Forgery**
 
 ```bash
 # Find URL fetching that might accept user input
@@ -187,13 +187,13 @@ grep -rn "webhookUrl\|callbackUrl\|redirectUrl\|imageUrl\|url:" \
 
 For each fetch call: does the URL come from user input? If so, is it validated against an allowlist?
 
-**Step 9: API8 — Security Misconfiguration**
+**Step 9: API8: Security Misconfiguration**
 
 ```bash
 # Check CORS configuration
 grep -rn "cors(\|CORS\|Access-Control" --include="*.ts" --include="*.js" . | grep -v node_modules
 
-# Check error handling — does it expose stack traces?
+# Check error handling: does it expose stack traces?
 grep -rn "err\.stack\|error\.stack\|console\.error" \
   --include="*.ts" --include="*.js" . | grep -v node_modules
 
@@ -208,7 +208,7 @@ grep -rn "helmet\|x-powered-by\|security.*header" \
 
 Is CORS restricted to specific origins? Are error messages sanitised in production?
 
-**Step 10: API9 — Improper Inventory Management**
+**Step 10: API9: Improper Inventory Management**
 
 ```bash
 # Find API version routes
@@ -223,7 +223,7 @@ curl -s -o /dev/null -w "%{http_code}" https://api.example.com/v1/users
 grep -rn "staging\|localhost\|127\.0\.0\.1\|dev\." .env* 2>/dev/null
 ```
 
-**Step 11: API10 — Unsafe Consumption of Third-Party APIs**
+**Step 11: API10: Unsafe Consumption of Third-Party APIs**
 
 ```bash
 # Find third-party API calls

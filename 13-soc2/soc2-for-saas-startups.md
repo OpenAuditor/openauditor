@@ -17,16 +17,16 @@ Assessment      & Policy         & Type I           Period            Issued
 ```
 
 **Type I: ~3 months**
-**Type II: 6–12 months after Type I** (minimum 6-month observation window)
+**Type II: 6 to 12 months after Type I** (minimum 6-month observation window)
 
 ---
 
-## Phase 1: Readiness (Weeks 1–4)
+## Phase 1: Readiness (Weeks 1 to 4)
 
 ### What happens
 - Gap assessment: where are you now vs. what SOC 2 requires?
 - Scope definition: which systems are in scope? Which TSCs?
-- Policy writing: drafting the 10–15 policies auditors expect
+- Policy writing: drafting the 10 to 15 policies auditors expect
 - Control mapping: identifying which controls you have, which you need to build
 
 ### What you produce
@@ -43,24 +43,24 @@ Assessment      & Policy         & Type I           Period            Issued
 - Security training not tracked
 
 ### Typical effort
-- 2–3 weeks of focused work for a 10–20 person company
-- Use a compliance platform (Vanta, Drata, etc.) to automate evidence collection and reduce effort by 40–60%
+- 2 to 3 weeks of focused work for a 10 to 20 person company
+- Use a compliance platform (Vanta, Drata, etc.) to automate evidence collection and reduce effort by 40 to 60%
 
 ---
 
-## Phase 2: Gap Remediation (Weeks 4–10)
+## Phase 2: Gap Remediation (Weeks 4 to 10)
 
 ### What you build
 
 | Gap | Typical Fix | Time to Implement |
 |---|---|---|
-| No MFA on production | Enforce MFA in AWS IAM / GCP / Okta | 1–2 days |
+| No MFA on production | Enforce MFA in AWS IAM / GCP / Okta | 1 to 2 days |
 | No access reviews | Set up quarterly review in HR system or spreadsheet | 1 week |
-| No security training | Deploy KnowBe4, Curricula, or free alternatives | 1–2 weeks |
-| No vulnerability scanning | Add Snyk, Dependabot, or AWS Inspector | 2–3 days |
-| No endpoint management | Deploy Jamf (Mac) or Intune | 1–2 weeks |
+| No security training | Deploy KnowBe4, Curricula, or free alternatives | 1 to 2 weeks |
+| No vulnerability scanning | Add Snyk, Dependabot, or AWS Inspector | 2 to 3 days |
+| No endpoint management | Deploy Jamf (Mac) or Intune | 1 to 2 weeks |
 | No incident response plan | Write and table-top test a basic IR plan | 1 week |
-| No penetration test | Schedule with a pen test firm | 4–6 weeks lead time |
+| No penetration test | Schedule with a pen test firm | 4 to 6 weeks lead time |
 
 ### Key documents to have before the audit
 - Information Security Policy
@@ -74,7 +74,7 @@ Assessment      & Policy         & Type I           Period            Issued
 
 ---
 
-## Phase 3: Type I Audit (Weeks 10–12)
+## Phase 3: Type I Audit (Weeks 10 to 12)
 
 ### What the auditor does
 - Reviews your policies and procedures
@@ -85,13 +85,13 @@ Assessment      & Policy         & Type I           Period            Issued
 ### What auditors actually check (common samples)
 
 **Access Management**
-- List of users with production access — are roles appropriate?
-- Evidence of the last access review — who approved it? When?
-- Evidence that a departed employee's access was revoked within 24–48 hours
+- List of users with production access: are roles appropriate?
+- Evidence of the last access review, who approved it? When?
+- Evidence that a departed employee's access was revoked within 24 to 48 hours
 - MFA configuration screenshots for production systems
 
 **Change Management**
-- 5–10 recent pull requests — do they have code reviews?
+- 5 to 10 recent pull requests: do they have code reviews?
 - Evidence of a deployment approval for a recent release
 - A record of a change that was rejected or rolled back
 
@@ -102,7 +102,7 @@ Assessment      & Policy         & Type I           Period            Issued
 
 **Vendor Management**
 - List of critical vendors
-- Security review evidence for your top 3–5 vendors
+- Security review evidence for your top 3 to 5 vendors
 - Sub-processor list for your privacy notice
 
 **Security Training**
@@ -117,21 +117,21 @@ Assessment      & Policy         & Type I           Period            Issued
 
 ---
 
-## Phase 4: Type II Observation Period (Months 4–14)
+## Phase 4: Type II Observation Period (Months 4 to 14)
 
 ### What changes
-You must now **operate** your controls consistently over 6–12 months. Auditors will sample evidence from across the observation period, not just one point in time.
+You must now **operate** your controls consistently over 6 to 12 months. Auditors will sample evidence from across the observation period, not just one point in time.
 
 ### What this means in practice
-- Run access reviews every quarter — and document them every time
-- Log every incident, even minor ones — auditors want to see the process working
+- Run access reviews every quarter, and document them every time
+- Log every incident, even minor ones: auditors want to see the process working
 - Complete security training for every new hire within 30 days
-- Review vendor risk at least annually — document it
+- Review vendor risk at least annually: document it
 - Do not skip change management process even under deadline pressure
 
 ### What auditors sample for Type II
-- 25–30 change tickets (do they all show code review approval?)
-- 10–15 user provisioning/deprovisioning events (all done within policy timeframes?)
+- 25 to 30 change tickets (do they all show code review approval?)
+- 10 to 15 user provisioning/deprovisioning events (all done within policy timeframes?)
 - All incidents in the period (were they handled per the IR plan?)
 - Security training records for every employee hired during the period
 - Evidence of quarterly access reviews (all four quarters)
@@ -144,25 +144,25 @@ You must now **operate** your controls consistently over 6–12 months. Auditors
 
 | Item | Cost Range |
 |---|---|
-| Compliance platform (Vanta/Drata/etc.) — annual | £8,000–£25,000/year |
-| Auditor fees (CPA firm) — Type I | £5,000–£15,000 |
-| Penetration test | £5,000–£15,000 |
-| Internal engineering time (remediation) | 2–6 weeks of eng time |
-| **Total (first year)** | **~£20,000–£60,000** |
+| Compliance platform (Vanta/Drata/etc.): annual | £8,000: £25,000/year |
+| Auditor fees (CPA firm): Type I | £5,000: £15,000 |
+| Penetration test | £5,000: £15,000 |
+| Internal engineering time (remediation) | 2 to 6 weeks of eng time |
+| **Total (first year)** | **~£20,000: £60,000** |
 
 ### Type II (incremental)
 
 | Item | Cost Range |
 |---|---|
-| Auditor fees (Type II audit) | £15,000–£40,000 |
+| Auditor fees (Type II audit) | £15,000: £40,000 |
 | Continued compliance platform | Included in annual above |
-| **Total (Type II increment)** | **~£15,000–£40,000** |
+| **Total (Type II increment)** | **~£15,000: £40,000** |
 
 ### Cost reduction strategies
 - Choose a narrower scope (Security criterion only, fewer systems in scope)
 - Use a compliance platform to reduce auditor time
 - Use an auditor that partners with your compliance platform (discounts common)
-- Start Type I and Type II with the same firm — they know your environment
+- Start Type I and Type II with the same firm: they know your environment
 
 ---
 
@@ -186,10 +186,10 @@ Look for a CPA firm that:
 ## What Auditors Actually Want
 
 Auditors want to see that your controls are:
-1. **Documented** — written down somewhere
-2. **Communicated** — staff know about them
-3. **Followed** — there is evidence they are actually being used
-4. **Reviewed** — periodically checked and updated
+1. **Documented**: written down somewhere
+2. **Communicated**: staff know about them
+3. **Followed**: there is evidence they are actually being used
+4. **Reviewed**: periodically checked and updated
 
 A perfect policy that nobody follows is worse than an informal process that is consistently documented. **Evidence of operation matters more than elegant documentation.**
 

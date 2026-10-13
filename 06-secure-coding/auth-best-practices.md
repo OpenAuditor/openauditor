@@ -1,6 +1,6 @@
 # Authentication Best Practices
 
-Authentication is the front door to your application. Most breaches start with weak auth — predictable tokens, unsalted hashes, missing brute-force protection.
+Authentication is the front door to your application. Most breaches start with weak auth: predictable tokens, unsalted hashes, missing brute-force protection.
 
 ---
 
@@ -24,7 +24,7 @@ if (!isValid) {
 }
 ```
 
-### Use Argon2 (Node.js — even better)
+### Use Argon2 (Node.js: even better)
 
 ```javascript
 import argon2 from 'argon2';
@@ -50,7 +50,7 @@ hashed = pwd_context.hash(password)
 is_valid = pwd_context.verify(plain_password, hashed)
 ```
 
-> **Critical:** Never use MD5, SHA1, SHA256, or plain text for passwords. These are fast hash functions — fine for checksums, catastrophically weak for passwords. The 2012 LinkedIn breach exposed 6.5M passwords hashed with unsalted SHA1. They were cracked in days.
+> **Critical:** Never use MD5, SHA1, SHA256, or plain text for passwords. These are fast hash functions: fine for checksums, catastrophically weak for passwords. The 2012 LinkedIn breach exposed 6.5M passwords hashed with unsalted SHA1. They were cracked in days.
 
 ### Why Cost Factor Matters
 
@@ -62,7 +62,7 @@ bcrypt's cost factor controls how slow the hash is. Higher = slower = more expen
 | 12 | ~250ms | **Recommended** |
 | 14 | ~1000ms | High security (slow UX) |
 
-Benchmark on your hardware. Target 200–400ms per hash on your production server.
+Benchmark on your hardware. Target 200 to 400ms per hash on your production server.
 
 ---
 
@@ -71,7 +71,7 @@ Benchmark on your hardware. Target 200–400ms per hash on your production serve
 ### Use Secure Session Cookies
 
 ```javascript
-// Next.js API route — set session cookie
+// Next.js API route: set session cookie
 import { serialize } from 'cookie';
 
 res.setHeader('Set-Cookie', serialize('session', sessionToken, {
@@ -142,7 +142,7 @@ try {
 - **Don't store JWTs in localStorage.** XSS attacks steal them.
 - **Don't use `alg: none`.** This disables signature verification entirely.
 - **Don't put sensitive data in JWT payload.** It's base64-encoded, not encrypted.
-- **Don't use long-lived JWTs without refresh tokens.** 15–60 minute expiry is standard.
+- **Don't use long-lived JWTs without refresh tokens.** 15 to 60 minute expiry is standard.
 
 ### Refresh Token Pattern
 
@@ -191,10 +191,10 @@ Also implement:
 ## Timing Attack Prevention
 
 ```javascript
-// WRONG — leaks whether user exists via timing
+// WRONG: leaks whether user exists via timing
 if (user && user.password === hashedInput) { ... }
 
-// RIGHT — always run the hash comparison
+// RIGHT: always run the hash comparison
 const isValid = user 
   ? await bcrypt.compare(password, user.passwordHash)
   : await bcrypt.compare(password, '$2b$12$invalidhashpadding'); // dummy hash

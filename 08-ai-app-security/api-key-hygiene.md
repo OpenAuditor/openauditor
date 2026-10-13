@@ -7,11 +7,11 @@ LLM API keys are expensive to leak. A compromised key can rack up thousands in c
 ## Never Expose API Keys to the Client
 
 ```javascript
-// WRONG — key in client-side code or NEXT_PUBLIC_ variable
+// WRONG: key in client-side code or NEXT_PUBLIC_ variable
 const openai = new OpenAI({ apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY }); 
 // Now in JS bundle, visible to everyone
 
-// RIGHT — API calls made server-side only
+// RIGHT: API calls made server-side only
 // pages/api/chat.ts (server-side API route)
 export default async function handler(req, res) {
   const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY }); // server-only
@@ -41,7 +41,7 @@ Set the limit to 2-3x your expected monthly spend. This prevents a compromised k
 // Create separate keys for: development, staging, production
 // Use project keys instead of organisation keys
 
-// Anthropic — each API key tied to workspace
+// Anthropic: each API key tied to workspace
 // Use separate workspaces for different environments
 
 // Never share one key across all environments
@@ -90,7 +90,7 @@ console.log({
 ## Rate Limit Your AI Endpoints
 
 ```javascript
-// LLM API calls are expensive — rate limit per user
+// LLM API calls are expensive: rate limit per user
 const aiRateLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour
   max: 50,                   // 50 AI requests per hour per user
@@ -118,4 +118,4 @@ app.use('/api/ai', aiRateLimiter);
 ## Learn More
 
 - [Environment Secrets Management](../06-secure-coding/env-secrets-management.md)
-- [OWASP LLM06: Sensitive Info Disclosure](../02-owasp/llm-top10/LLM06-sensitive-info-disclosure.md)
+- [OWASP LLM02: Sensitive Information Disclosure](../02-owasp/llm-top10/LLM02-sensitive-information-disclosure.md)

@@ -24,17 +24,17 @@ In plain English: if you don't need it, don't collect it.
 ## Common Over-Collection Patterns
 
 ```javascript
-// WRONG — collecting date of birth when you only need age verification
+// WRONG: collecting date of birth when you only need age verification
 const RegisterSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8),
-  dateOfBirth: z.string(), // full DOB stored — usually unnecessary
+  dateOfBirth: z.string(), // full DOB stored, usually unnecessary
   phone: z.string(),       // only needed if you use SMS
   address: z.string(),     // only needed if you ship physical goods
   nationality: z.string(), // rarely needed for software products
 });
 
-// RIGHT — collect what you actually use
+// RIGHT: collect what you actually use
 const RegisterSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8),
@@ -55,9 +55,9 @@ Before collecting any data field, ask:
 | Field | Purpose | Currently Used? | Can Remove? |
 |-------|---------|----------------|-------------|
 | Email | Auth, notifications | Yes | No |
-| Phone | Was for SMS — disabled | No | Yes — delete existing |
+| Phone | Was for SMS: disabled | No | Yes: delete existing |
 | Company name | Analytics segment | Used in 1 report | Consider anon aggregate |
-| Date of birth | Age check at signup | One-time check | Yes — don't store |
+| Date of birth | Age check at signup | One-time check | Yes: don't store |
 ```
 
 ---

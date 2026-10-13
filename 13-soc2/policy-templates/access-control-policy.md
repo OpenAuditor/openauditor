@@ -101,13 +101,13 @@ MFA is required for:
 Accepted MFA methods (in order of preference):
 1. Hardware security key (FIDO2/WebAuthn)
 2. TOTP authenticator application (Google Authenticator, Authy)
-3. SMS — discouraged, only for systems that do not support above
+3. SMS: discouraged, only for systems that do not support above
 
 ### 5.2 Password Requirements
 
 - Minimum length: 16 characters (enforced via password manager)
 - All employees must use the company-approved password manager: [PASSWORD MANAGER]
-- Unique passwords for every account — no password reuse
+- Unique passwords for every account: no password reuse
 - Passwords are never shared between individuals
 - Service account passwords are rotated at least annually
 

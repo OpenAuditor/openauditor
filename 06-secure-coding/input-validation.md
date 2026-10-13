@@ -9,7 +9,7 @@ All user input is untrusted. Validate on the server, every time, regardless of f
 Frontend validation is UX. Server-side validation is security. An attacker can bypass your frontend entirely with curl.
 
 ```bash
-# Any attacker can do this — bypasses your React form validation entirely
+# Any attacker can do this: bypasses your React form validation entirely
 curl -X POST https://yourapp.com/api/users \
   -H "Content-Type: application/json" \
   -d '{"role": "admin", "email": "attacker@evil.com"}'
@@ -102,7 +102,7 @@ class CreateUserRequest(BaseModel):
 # FastAPI auto-validates
 @app.post("/users")
 async def create_user(request: CreateUserRequest):
-    # request is validated — safe to use
+    # request is validated: safe to use
     ...
 ```
 
@@ -150,11 +150,11 @@ function validateUpload(file: File) {
 Always use allow-lists (whitelist), never deny-lists (blacklist).
 
 ```javascript
-// WRONG — deny-list approach, attackers find gaps
+// WRONG: deny-list approach, attackers find gaps
 const blockedChars = ['<', '>', '"', "'", ';'];
 const isSafe = !blockedChars.some(c => input.includes(c)); // easy to bypass
 
-// RIGHT — allow-list approach
+// RIGHT: allow-list approach
 const isValid = /^[a-zA-Z0-9 ._-]+$/.test(input); // only allow what you know is safe
 ```
 
@@ -163,7 +163,7 @@ const isValid = /^[a-zA-Z0-9 ._-]+$/.test(input); // only allow what you know is
 ## Sanitisation vs Validation
 
 - **Validation:** Check if input meets requirements (reject if not)
-- **Sanitisation:** Clean input (use with care — don't use as your primary defence)
+- **Sanitisation:** Clean input (use with care: don't use as your primary defence)
 
 ```javascript
 // Validate first, sanitise if necessary for display
@@ -182,7 +182,7 @@ Never rely on sanitisation alone. Validate first, then sanitise if you need to r
 
 ## Why This Matters
 
-The Equifax 2017 breach started with CVE-2017-5638 — unvalidated user input in Apache Struts allowed remote code execution. The Content-Type header was passed to a template engine without validation. 147 million records were exposed.
+The Equifax 2017 breach started with CVE-2017-5638: unvalidated user input in Apache Struts allowed remote code execution. The Content-Type header was passed to a template engine without validation. 147 million records were exposed.
 
 ---
 

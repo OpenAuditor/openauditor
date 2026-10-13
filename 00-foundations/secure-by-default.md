@@ -70,7 +70,7 @@ cursor.execute("SELECT * FROM users WHERE name = %s", (user_input,))
 
 ---
 
-### 3. Assume the network is untrusted—encrypt in transit
+### 3. Assume the network is untrusted: encrypt in transit
 
 Every piece of data in flight should be encrypted.
 
@@ -166,7 +166,7 @@ def get_post(post_id):
 
 ---
 
-### 6. Use defense in depth—don't rely on one control
+### 6. Use defense in depth: don't rely on one control
 
 If one security measure fails, others catch the attack.
 
@@ -356,16 +356,16 @@ export const contentSecurityPolicy = csp({
 
 Following these 10 principles prevents most of the OWASP Top 10:
 
-1. **Broken Access Control** — Prevented by #5 (enforce auth/authz everywhere)
-2. **Cryptographic Failures** — Prevented by #3, #4 (encrypt in transit and at rest)
-3. **Injection** — Prevented by #1, #2 (validate everything; use parameterized queries)
-4. **Insecure Design** — Prevented by #6 (defense in depth)
-5. **Security Misconfiguration** — Prevented by all 10 (systematic approach)
-6. **Vulnerable Components** — Keep dependencies updated
-7. **Auth Failures** — Prevented by #5 (strong authentication)
-8. **Data Integrity Issues** — Prevented by #4 (encrypt at rest)
-9. **Logging Failures** — Prevented by #10 (log security events)
-10. **SSRF** — Prevented by #1 (validate everything)
+1. **Broken Access Control**: Prevented by #5 (enforce auth/authz everywhere)
+2. **Cryptographic Failures**: Prevented by #3, #4 (encrypt in transit and at rest)
+3. **Injection**: Prevented by #1, #2 (validate everything; use parameterized queries)
+4. **Insecure Design**: Prevented by #6 (defense in depth)
+5. **Security Misconfiguration**: Prevented by all 10 (systematic approach)
+6. **Vulnerable Components**: Keep dependencies updated
+7. **Auth Failures**: Prevented by #5 (strong authentication)
+8. **Data Integrity Issues**: Prevented by #4 (encrypt at rest)
+9. **Logging Failures**: Prevented by #10 (log security events)
+10. **SSRF**: Prevented by #1 (validate everything)
 
 ## Why this matters
 
@@ -375,10 +375,10 @@ The cost of following these principles is low. The cost of not following them is
 
 ## What comes next
 
-- **[Threat Modeling 101](./threat-modeling-101.md)** — Use these principles to design threat-resistant systems
-- **[Risk Appetite Framework](./risk-appetite-framework.md)** — Decide which risks are acceptable
-- **01-architecture/** — Design patterns that bake these principles in
-- **02-code/** — Implementation patterns for your specific framework
+- **[Threat Modeling 101](./threat-modeling-101.md)**: Use these principles to design threat-resistant systems
+- **[Risk Appetite Framework](./risk-appetite-framework.md)**: Decide which risks are acceptable
+- **01-architecture/**: Design patterns that bake these principles in
+- **02-code/**: Implementation patterns for your specific framework
 
 ---
 

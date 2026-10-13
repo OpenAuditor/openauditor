@@ -8,7 +8,7 @@ If you discover a vulnerability in OpenAuditor or its guidance, please report it
 
 ### How to Report
 
-1. Email: security@baulin.tech
+1. Email: hello@baulin.co.uk
 2. Include the following:
    - Description of the vulnerability
    - Affected section or file
@@ -27,10 +27,10 @@ If you discover a vulnerability in OpenAuditor or its guidance, please report it
 ## Scope
 
 This policy covers:
-- **Documentation vulnerabilities** — Guidance that could lead to insecure implementations
-- **Broken links or outdated advice** — Links to defunct tools, deprecated APIs
-- **Missing critical guidance** — Major OWASP, MITRE, or CVE topics we should cover
-- **Code examples with security flaws** — Examples that demonstrate insecurity
+- **Documentation vulnerabilities**: Guidance that could lead to insecure implementations
+- **Broken links or outdated advice**: Links to defunct tools, deprecated APIs
+- **Missing critical guidance**: Major OWASP, MITRE, or CVE topics we should cover
+- **Code examples with security flaws**: Examples that demonstrate insecurity
 
 This policy does NOT cover:
 - Requests for new features or sections (use GitHub issues instead)
@@ -54,4 +54,4 @@ Once a fix is released, we will document:
 
 ## Questions?
 
-If you have questions about this policy, email security@baulin.tech.
+If you have questions about this policy, email hello@baulin.co.uk.

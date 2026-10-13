@@ -1,4 +1,4 @@
-# API4 — Unrestricted Resource Consumption
+# API4: Unrestricted Resource Consumption
 
 ## 30-second summary
 
@@ -11,13 +11,13 @@ APIs that place no limits on request rate, payload size, query depth, or returne
 ## Vulnerable code example
 
 ```typescript
-// Express.js — VULNERABLE
+// Express.js: VULNERABLE
 
 // No rate limiting, no pagination limits, no payload size restriction
 app.get('/api/search', authenticate, async (req, res) => {
   const { query, page, pageSize } = req.query;
 
-  // pageSize has no upper bound — attacker requests pageSize=100000
+  // pageSize has no upper bound: attacker requests pageSize=100000
   const results = await db.query(
     'SELECT * FROM products WHERE name ILIKE $1 LIMIT $2 OFFSET $3',
     [`%${query}%`, pageSize, page * pageSize]
@@ -26,7 +26,7 @@ app.get('/api/search', authenticate, async (req, res) => {
   return res.json(results);
 });
 
-// No body size limit — attacker uploads 500MB JSON payload
+// No body size limit: attacker uploads 500MB JSON payload
 app.post('/api/upload-data', authenticate, async (req, res) => {
   const { records } = req.body;
 
@@ -38,7 +38,7 @@ app.post('/api/upload-data', authenticate, async (req, res) => {
   return res.json({ inserted: records.length });
 });
 
-// SMS OTP endpoint — no rate limit
+// SMS OTP endpoint: no rate limit
 app.post('/api/auth/send-otp', async (req, res) => {
   const { phone } = req.body;
   await smsProvider.send(phone, generateOTP()); // Each SMS costs money
@@ -51,7 +51,7 @@ app.post('/api/auth/send-otp', async (req, res) => {
 ## Fixed code example
 
 ```typescript
-// Express.js — FIXED
+// Express.js: FIXED
 import rateLimit from 'express-rate-limit';
 import slowDown from 'express-slow-down';
 
@@ -121,9 +121,9 @@ app.post('/api/auth/send-otp', otpLimiter, async (req, res) => {
 
 ## Real-world breach scenario
 
-**Parler (2021):** After Parler was removed from app stores, a researcher discovered the API had no rate limiting and returned posts in sequential numeric order with no authentication on public posts. She wrote a script to download all public content — 70+ terabytes of posts, images, and videos — before the platform went offline. The lack of rate limiting made large-scale automated harvesting trivial.
+**Parler (2021):** After Parler was removed from app stores, a researcher discovered the API had no rate limiting and returned posts in sequential numeric order with no authentication on public posts. She wrote a script to download all public content, 70+ terabytes of posts, images, and videos, before the platform went offline. The lack of rate limiting made large-scale automated harvesting trivial.
 
-**SMS bombing / financial abuse:** Several ride-sharing and food delivery startups have been targeted with OTP flooding — attackers send hundreds of SMS messages to victim phone numbers, causing harassment and running up provider bills in the thousands of pounds per hour. In some cases the attacker's goal was purely financial: the company pays per SMS.
+**SMS bombing / financial abuse:** Several ride-sharing and food delivery startups have been targeted with OTP flooding: attackers send hundreds of SMS messages to victim phone numbers, causing harassment and running up provider bills in the thousands of pounds per hour. In some cases the attacker's goal was purely financial: the company pays per SMS.
 
 ---
 
@@ -186,4 +186,4 @@ Unrestricted resource consumption is a direct path to service unavailability and
 
 For APIs that trigger paid third-party services (SMS, email, payment processing, LLM inference), the financial damage can accumulate in hours. A single unprotected OTP endpoint once cost a startup over £8,000 in a weekend from SMS flooding before anyone noticed.
 
-For analytics or search endpoints, lack of pagination limits can bring down a database by generating full table scans — not from malice, but from a single poorly written script by a legitimate API partner.
+For analytics or search endpoints, lack of pagination limits can bring down a database by generating full table scans, not from malice, but from a single poorly written script by a legitimate API partner.

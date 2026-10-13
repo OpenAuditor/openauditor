@@ -4,7 +4,7 @@
 
 ## Why Key Rotation Matters
 
-**Without rotation:** A key compromised in January — but not discovered until September — gives attackers 8 months of access. Rotation ensures that even undiscovered compromises have a bounded impact window.
+**Without rotation:** A key compromised in January, but not discovered until September, gives attackers 8 months of access. Rotation ensures that even undiscovered compromises have a bounded impact window.
 
 **Real incident:** In 2023, Microsoft's cloud signing key was compromised and used to forge authentication tokens for US government email services. The key had been valid for years without rotation. Had quarterly rotation been in place, the attack window would have been 3 months maximum instead of indeterminate.
 
@@ -23,7 +23,7 @@
 
 ## Rotation Without Downtime
 
-The critical challenge in key rotation is the transition period — you cannot simply swap a key if outstanding tokens, sessions, or encrypted data use the old key.
+The critical challenge in key rotation is the transition period: you cannot simply swap a key if outstanding tokens, sessions, or encrypted data use the old key.
 
 ### Pattern 1: Versioned Keys
 
@@ -76,7 +76,7 @@ async function decrypt(payload: string, keyStore: VersionedKeyStore): Promise<st
   const keyVersion = keyStore.getKey(keyId);
   
   if (!keyVersion) {
-    throw new Error(`Key version ${keyId} not found — may have been purged`);
+    throw new Error(`Key version ${keyId} not found: may have been purged`);
   }
   
   return decryptWithAES(ciphertext, keyVersion.key);
@@ -233,7 +233,7 @@ jobs:
           echo "Last rotation: check SECURITY.md rotation log"
 
       - name: Create GitHub Issue
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
           script: |
             github.rest.issues.create({
@@ -264,7 +264,7 @@ curl -X PATCH "https://api.supabase.com/v1/projects/${PROJECT_REF}/config/auth" 
   -d "{\"jwt_secret\": \"$(openssl rand -base64 32)\"}"
 ```
 
-Note: Rotating Supabase's JWT secret invalidates all existing sessions — plan for a maintenance window or use the versioned key pattern above.
+Note: Rotating Supabase's JWT secret invalidates all existing sessions: plan for a maintenance window or use the versioned key pattern above.
 
 ## Rotation Log Template
 
@@ -290,7 +290,7 @@ When a key is suspected or confirmed compromised:
 NEW_SECRET=$(openssl rand -base64 32)
 
 # Step 2: Deploy new key to all environments (with old key as fallback if applicable)
-# This is environment-specific — use your secrets manager (Vercel, AWS, Doppler)
+# This is environment-specific: use your secrets manager (Vercel, AWS, Doppler)
 
 # Step 3: Invalidate ALL existing sessions/tokens issued with the old key
 # For JWT: change the secret (all existing tokens become invalid)
@@ -310,5 +310,5 @@ NEW_SECRET=$(openssl rand -base64 32)
 
 - [Never Roll Your Own Crypto](./never-roll-your-own.md)
 - [Audit Crypto Usage](./prompts/audit-crypto-usage.md)
-- [A02: Cryptographic Failures](../02-owasp/web-top10/A02-crypto-failures.md)
+- [A02: Cryptographic Failures](../02-owasp/web-top10/A02-cryptographic-failures.md)
 - [SOC 2 Access Control Policy](../13-soc2/policy-templates/access-control-policy.md)

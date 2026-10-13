@@ -1,6 +1,6 @@
 # Vulnerable Sample Applications for Practice
 
-> **30-second summary:** The best way to learn to find and fix vulnerabilities is to exploit them in a safe, legal environment. These applications are intentionally vulnerable — they are designed for practice only and should never be deployed publicly.
+> **30-second summary:** The best way to learn to find and fix vulnerabilities is to exploit them in a safe, legal environment. These applications are intentionally vulnerable: they are designed for practice only and should never be deployed publicly.
 
 ## Why Practice Matters
 
@@ -55,7 +55,7 @@ docker run -d \
 # Default login: admin / password
 ```
 
-**Security levels:** Low → Medium → High — start at Low, work your way up.
+**Security levels:** Low → Medium → High: start at Low, work your way up.
 
 ```bash
 # Example: Automated SQL injection with SQLMap against DVWA
@@ -81,7 +81,7 @@ docker run -d \
   bkimminich/juice-shop
 
 # Access at: http://localhost:3000
-# No registration required — start hacking immediately
+# No registration required: start hacking immediately
 # Solutions: https://pwning.owasp-juice.shop
 ```
 
@@ -99,9 +99,9 @@ docker run -d \
 **Starting Point:** Free tier machines with guided walkthroughs
 
 Notable beginner-friendly web machines:
-- **Appointment** — SQL injection login bypass
-- **Archetype** — SMB + SQL Server (Windows perspective)
-- **Markup** — XXE injection
+- **Appointment**: SQL injection login bypass
+- **Archetype**: SMB + SQL Server (Windows perspective)
+- **Markup**: XXE injection
 
 ### PortSwigger Web Security Academy
 
@@ -110,7 +110,7 @@ Notable beginner-friendly web machines:
 **Cost:** Free  
 **Labs:** 250+ hands-on labs with their hosted practice targets
 
-Every OWASP category has multiple labs — no local setup required. The accompanying material is production-quality security education.
+Every OWASP category has multiple labs: no local setup required. The accompanying material is production-quality security education.
 
 **Recommended learning path:**
 1. SQL Injection (16 labs)

@@ -14,7 +14,7 @@ Check each area systematically:
 1. **Secrets**: Any hardcoded passwords, API keys, or tokens in source files (not env vars)
 2. **Password hashing**: Is bcrypt with cost≥12 or Argon2id used? Any MD5/SHA for passwords?
 3. **Injection**: Template literals in SQL queries, innerHTML with user data, shell exec with user input
-4. **Access control**: Endpoints accepting resource IDs — do they verify ownership against the authenticated user?
+4. **Access control**: Endpoints accepting resource IDs: do they verify ownership against the authenticated user?
 5. **Security headers**: HSTS, X-Content-Type-Options, X-Frame-Options, CORS restricted to specific origins
 6. **Dependencies**: Check package.json for known vulnerable packages (based on your training data)
 7. **TLS**: Any rejectUnauthorized:false, http:// in non-localhost contexts
@@ -73,7 +73,7 @@ If you have access to Copilot Workspace:
 ## Limitations
 
 Copilot Chat:
-- Does not execute code or run grep commands — you need to share relevant file contents
+- Does not execute code or run grep commands: you need to share relevant file contents
 - Works best with `@workspace` in VS Code where it has file access
 - May miss vulnerabilities in files not currently open
 

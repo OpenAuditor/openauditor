@@ -1,6 +1,6 @@
 # Compliance Lite
 
-A practical guide to the regulations that apply to SaaS founders — without the jargon.
+A practical guide to the regulations that apply to SaaS founders: without the jargon.
 
 ---
 

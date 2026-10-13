@@ -1,6 +1,6 @@
-# 09 — Deployment Security
+# 09: Deployment Security
 
-Deploying an application is where theoretical security meets the real world. Misconfigured deployments, exposed environment variables, insecure DNS settings, and missing HTTP headers are responsible for a significant share of real-world breaches — not sophisticated zero-days.
+Deploying an application is where theoretical security meets the real world. Misconfigured deployments, exposed environment variables, insecure DNS settings, and missing HTTP headers are responsible for a significant share of real-world breaches, not sophisticated zero-days.
 
 This section covers the full deployment surface: cloud platform settings, version control security, containerisation hardening, DNS configuration, HTTP response headers, preview deployment isolation, and backup strategies.
 
@@ -34,10 +34,10 @@ This section covers the full deployment surface: cloud platform settings, versio
 
 ### Real Incidents
 
-- **Uber (2022)** — A contractor's credentials were harvested via social engineering. The attacker then moved laterally through production deployments because secrets were reused across environments.
-- **Toyota (2023)** — An access key for a cloud storage service was accidentally committed to a public GitHub repository and left exposed for nearly five years, leaking location data on 2 million customers.
-- **Twitch (2021)** — Misconfigured internal server access resulted in a 125 GB data dump including source code, internal tooling, and revenue figures.
-- **CircleCI (2023)** — A malware-infected engineer laptop led to session token theft that gave attackers access to customer secrets stored in environment variables.
+- **Uber (2022)**: A contractor's credentials were harvested via social engineering. The attacker then moved laterally through production deployments because secrets were reused across environments.
+- **Toyota (2023)**: An access key for a cloud storage service was accidentally committed to a public GitHub repository and left exposed for nearly five years, leaking location data on 2 million customers.
+- **Twitch (2021)**: Misconfigured internal server access resulted in a 125 GB data dump including source code, internal tooling, and revenue figures.
+- **CircleCI (2023)**: A malware-infected engineer laptop led to session token theft that gave attackers access to customer secrets stored in environment variables.
 
 ### The Deployment Attack Surface
 
@@ -84,10 +84,10 @@ End user
 
 ## How to Use This Section
 
-1. **Start with the checklist above** — fix obvious gaps immediately.
+1. **Start with the checklist above**: fix obvious gaps immediately.
 2. **Use the agent prompts** in `prompts/` to automate auditing and remediation.
 3. **Read the detailed guides** for any area where you have gaps or uncertainty.
-4. **Re-check after every major deployment change** — security settings are often silently reset by platform updates or new team members.
+4. **Re-check after every major deployment change**: security settings are often silently reset by platform updates or new team members.
 
 ---
 

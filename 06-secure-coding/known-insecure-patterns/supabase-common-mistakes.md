@@ -7,7 +7,7 @@ The most dangerous Supabase mistakes, with fixes.
 ## 1. No RLS Policies (Most Critical)
 
 ```sql
--- WRONG — RLS enabled but no policies = table is locked to everyone
+-- WRONG: RLS enabled but no policies = table is locked to everyone
 -- But often tables are created WITHOUT enabling RLS at all
 CREATE TABLE public.orders (id UUID, user_id UUID, amount NUMERIC);
 -- No ALTER TABLE ... ENABLE ROW LEVEL SECURITY
@@ -15,7 +15,7 @@ CREATE TABLE public.orders (id UUID, user_id UUID, amount NUMERIC);
 ```
 
 ```sql
--- RIGHT — enable RLS AND create policies
+-- RIGHT: enable RLS AND create policies
 ALTER TABLE public.orders ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "users_own_orders" ON public.orders
@@ -27,7 +27,7 @@ CREATE POLICY "users_own_orders" ON public.orders
 ## 2. Service Role Key on the Frontend
 
 ```javascript
-// WRONG — service role key bypasses all RLS
+// WRONG: service role key bypasses all RLS
 // If this is in a React/Next.js client-side component, it's in the JS bundle
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
@@ -36,7 +36,7 @@ const supabase = createClient(
 ```
 
 ```javascript
-// RIGHT — use anon key on frontend
+// RIGHT: use anon key on frontend
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY, // safe with RLS
@@ -51,16 +51,16 @@ const supabase = createClient(
 ## 3. Permissive RLS Policies
 
 ```sql
--- WRONG — allows everything
+-- WRONG: allows everything
 CREATE POLICY "allow_all" ON public.profiles USING (true);
 
--- WRONG — allows reading but no insert restriction
+-- WRONG: allows reading but no insert restriction
 CREATE POLICY "users_read_profiles" ON public.profiles
   FOR SELECT USING (true); -- anyone can read all profiles
 ```
 
 ```sql
--- RIGHT — specific and restrictive
+-- RIGHT: specific and restrictive
 -- Users can only read their own profile
 CREATE POLICY "users_own_profile" ON public.profiles
   FOR SELECT USING (auth.uid() = user_id);
@@ -75,7 +75,7 @@ CREATE POLICY "read_public_or_own" ON public.profiles
 ## 4. Forgetting INSERT/UPDATE/DELETE Policies
 
 ```sql
--- WRONG — SELECT policy exists but no INSERT policy
+-- WRONG: SELECT policy exists but no INSERT policy
 -- This means inserts are blocked by default (which seems safe)
 -- But if you do:
 ALTER TABLE public.posts ENABLE ROW LEVEL SECURITY;
@@ -85,7 +85,7 @@ CREATE POLICY "read_own_posts" ON public.posts
 ```
 
 ```sql
--- RIGHT — explicit policies for each operation
+-- RIGHT: explicit policies for each operation
 CREATE POLICY "read_own_posts" ON public.posts
   FOR SELECT USING (auth.uid() = user_id);
 
@@ -104,14 +104,14 @@ CREATE POLICY "delete_own_posts" ON public.posts
 ## 5. Exposing User Emails via Profiles
 
 ```sql
--- WRONG — allows anyone to read all user emails
+-- WRONG: allows anyone to read all user emails
 CREATE POLICY "public_profiles" ON public.profiles
   FOR SELECT USING (true);
 -- If profiles includes email column, all emails are now public
 ```
 
 ```sql
--- RIGHT — expose only what's needed publicly
+-- RIGHT: expose only what's needed publicly
 -- Create a separate view for public profile data
 CREATE VIEW public_profiles AS
   SELECT id, display_name, avatar_url, created_at
@@ -127,13 +127,13 @@ CREATE POLICY "read_own_email" ON public.profiles
 ## 6. Using `select('*')` When Not Needed
 
 ```javascript
-// WRONG — fetches all columns including sensitive ones
+// WRONG: fetches all columns including sensitive ones
 const { data } = await supabase.from('users').select('*');
 // Returns password_hash, internal_notes, billing_info, etc.
 ```
 
 ```javascript
-// RIGHT — select only needed columns
+// RIGHT: select only needed columns
 const { data } = await supabase
   .from('users')
   .select('id, display_name, avatar_url, created_at');

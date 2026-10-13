@@ -23,7 +23,7 @@ This includes: database dumps exposed online, compromised admin accounts, miscon
 When a breach is likely to result in a risk to individuals' rights and freedoms.
 
 **To individuals:**  
-When a breach is likely to result in **high risk** to individuals — which generally means: passwords, financial data, health data, or identity theft risk.
+When a breach is likely to result in **high risk** to individuals, which generally means: passwords, financial data, health data, or identity theft risk.
 
 **You do NOT need to report if:**
 - Data is encrypted and the key is not compromised
@@ -49,12 +49,12 @@ You can submit an initial report and update it as your investigation continues.
 
 Submit via ico.org.uk/report-a-breach (UK). Include:
 
-1. **Nature of the breach** — what happened, how, when discovered
-2. **Categories of personal data** — email? health? payment?
+1. **Nature of the breach**: what happened, how, when discovered
+2. **Categories of personal data**: email? health? payment?
 3. **Approximate number of records/individuals affected**
-4. **Likely consequences** — what could happen to affected individuals?
-5. **Measures taken or proposed** — containment, remediation, notification
-6. **Contact details** — DPO or nominated contact for follow-up
+4. **Likely consequences**: what could happen to affected individuals?
+5. **Measures taken or proposed**: containment, remediation, notification
+6. **Contact details**: DPO or nominated contact for follow-up
 
 ---
 

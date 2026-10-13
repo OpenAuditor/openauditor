@@ -1,6 +1,6 @@
 # Serverless and Edge Function Security
 
-Serverless and edge computing shift the security model from "secure a long-running server" to "secure short-lived, distributed function invocations". The attack surface is different — and some misconfigurations that are benign in traditional deployments become critical in serverless.
+Serverless and edge computing shift the security model from "secure a long-running server" to "secure short-lived, distributed function invocations". The attack surface is different, and some misconfigurations that are benign in traditional deployments become critical in serverless.
 
 ---
 
@@ -25,7 +25,7 @@ Key differences from traditional servers:
 
 | Traditional Server | Serverless Function |
 |---|---|
-| Persistent process, long-lived memory | Ephemeral — dies after invocation |
+| Persistent process, long-lived memory | Ephemeral: dies after invocation |
 | Single deployment environment | Potentially thousands of concurrent instances |
 | You control the OS and dependencies | Runtime managed by vendor |
 | One network interface | Outbound calls to any destination by default |
@@ -50,7 +50,7 @@ const supabase = createClient(
 )
 
 export default async function handler(req: Request) {
-  // supabase client is reused — this is fine
+  // supabase client is reused: this is fine
   // But if you rotate secrets without redeploying, this will use stale credentials
   const data = await supabase.from('users').select('*')
   return Response.json(data)
@@ -62,14 +62,14 @@ export default async function handler(req: Request) {
 ### Secrets That Should NOT Be Module-Scoped
 
 ```javascript
-// WRONG — if this value changes, stale warm instances won't see the update
+// WRONG: if this value changes, stale warm instances won't see the update
 const FEATURE_FLAGS = await fetch('https://flags-service/flags').then(r => r.json())
 
 export default async function handler(req: Request) {
   if (FEATURE_FLAGS.newFeature) { ... }
 }
 
-// CORRECT — fetch fresh on each invocation for mutable external data
+// CORRECT: fetch fresh on each invocation for mutable external data
 export default async function handler(req: Request) {
   const flags = await fetch('https://flags-service/flags').then(r => r.json())
   if (flags.newFeature) { ... }
@@ -159,7 +159,7 @@ ENVIRONMENT = "production"
 Server-Side Request Forgery (SSRF) is particularly dangerous in cloud environments because the instance metadata service is reachable from any function:
 
 ```
-# AWS metadata endpoint — returns instance credentials
+# AWS metadata endpoint: returns instance credentials
 http://169.254.169.254/latest/meta-data/iam/security-credentials/
 http://100.100.100.200/latest/meta-data/  # Alibaba Cloud
 
@@ -257,7 +257,7 @@ export async function GET(request: Request) {
   if (authResult instanceof Response) return authResult  // Auth failed
 
   const { userId } = authResult
-  // Authorised — proceed
+  // Authorised: proceed
 }
 ```
 
@@ -271,7 +271,7 @@ Implement rate limiting in edge middleware before requests hit function compute:
 // middleware.ts
 import { NextRequest, NextResponse } from 'next/server'
 
-// In-memory store (per-instance) — use KV/Redis for distributed rate limiting
+// In-memory store (per-instance): use KV/Redis for distributed rate limiting
 const requestCounts = new Map<string, { count: number; resetAt: number }>()
 
 const WINDOW_MS = 60_000  // 1 minute
@@ -314,7 +314,7 @@ export const config = {
 
 ## Logging and Observability
 
-Serverless functions are ephemeral — logs are the only record of what happened.
+Serverless functions are ephemeral: logs are the only record of what happened.
 
 ```typescript
 // Structured logging for serverless

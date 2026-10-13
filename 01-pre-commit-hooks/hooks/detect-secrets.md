@@ -105,7 +105,7 @@ git commit -m "Add database config"
 ### Scanning Phase
 1. Regex scans files for known patterns (AWS keys, tokens, etc.)
 2. Entropy analysis flags random-looking strings
-3. Compares against baseline—ignores known secrets
+3. Compares against baseline: ignores known secrets
 4. Fails if any NEW secrets found
 
 ### Baseline Management
@@ -144,7 +144,7 @@ When a secret is flagged but it's a test value or legitimate constant:
 # 1. detect-secrets fails the commit
 detect-secrets: Found potential secret in tests/test_auth.py:15
 
-# 2. Review the secret—confirm it's safe (test data, mock, etc.)
+# 2. Review the secret: confirm it's safe (test data, mock, etc.)
 
 # 3. Update baseline to allowlist it
 detect-secrets scan --all-files \

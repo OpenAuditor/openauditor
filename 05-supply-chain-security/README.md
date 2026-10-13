@@ -1,18 +1,18 @@
-# 05 — Supply Chain Security
+# 05: Supply Chain Security
 
-> **30-second summary:** Your application is only as secure as every package it depends on. Supply chain attacks target the tools and libraries you install rather than your own code — and they are increasingly common, sophisticated, and devastating.
+> **30-second summary:** Your application is only as secure as every package it depends on. Supply chain attacks target the tools and libraries you install rather than your own code, and they are increasingly common, sophisticated, and devastating.
 
 ---
 
 ## What Is a Software Supply Chain Attack?
 
-A supply chain attack occurs when an adversary compromises software **upstream** of the target — infecting a library, build tool, or update mechanism — so that every downstream user installs the malicious code automatically. Instead of hacking you directly, attackers hack the things you trust.
+A supply chain attack occurs when an adversary compromises software **upstream** of the target, infecting a library, build tool, or update mechanism, so that every downstream user installs the malicious code automatically. Instead of hacking you directly, attackers hack the things you trust.
 
 ```
 Attacker → compromises package → published to npm/PyPI → you run npm install → malware in prod
 ```
 
-The attack surface is enormous. A typical Node.js project has **hundreds of transitive dependencies** — code written by thousands of strangers whose security practices you cannot control.
+The attack surface is enormous. A typical Node.js project has **hundreds of transitive dependencies**: code written by thousands of strangers whose security practices you cannot control.
 
 ---
 
@@ -60,14 +60,14 @@ Every level is a potential attack vector.
 
 ## Core Defences
 
-1. **Commit your lockfile** — prevents resolution drift and version substitution attacks
-2. **Run `npm audit` in CI** — catches known vulnerabilities before deployment
-3. **Pin exact versions** — use `=` or `--save-exact` for critical deps
-4. **Vet before installing** — check maintainer history, repo activity, download trends
-5. **Enable Dependabot / Renovate** — automated dependency update PRs with changelogs
-6. **Use npm provenance** — verify packages were built from the stated source
-7. **Restrict install scripts** — `npm install --ignore-scripts` where possible
-8. **Monitor for anomalies** — watch for unexpected outbound network calls at runtime
+1. **Commit your lockfile**: prevents resolution drift and version substitution attacks
+2. **Run `npm audit` in CI**: catches known vulnerabilities before deployment
+3. **Pin exact versions**: use `=` or `--save-exact` for critical deps
+4. **Vet before installing**: check maintainer history, repo activity, download trends
+5. **Enable Dependabot / Renovate**: automated dependency update PRs with changelogs
+6. **Use npm provenance**: verify packages were built from the stated source
+7. **Restrict install scripts**: `npm install --ignore-scripts` where possible
+8. **Monitor for anomalies**: watch for unexpected outbound network calls at runtime
 
 ---
 

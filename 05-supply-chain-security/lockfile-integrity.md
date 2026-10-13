@@ -1,6 +1,6 @@
 # Lockfile Integrity
 
-> **30-second summary:** Lockfiles (`package-lock.json`, `yarn.lock`, `pnpm-lock.yaml`) pin every dependency to an exact version and verified hash. Without them, `npm install` can silently install different — potentially malicious — versions across environments.
+> **30-second summary:** Lockfiles (`package-lock.json`, `yarn.lock`, `pnpm-lock.yaml`) pin every dependency to an exact version and verified hash. Without them, `npm install` can silently install different, potentially malicious, versions across environments.
 
 ---
 
@@ -9,8 +9,8 @@
 When you run `npm install`, npm resolves all your `package.json` version ranges (e.g., `^1.2.3`) into specific versions and writes the results to `package-lock.json`. This file records:
 
 - **Exact version** of every dependency (direct and transitive)
-- **Resolved URL** — where the package was actually downloaded from
-- **Integrity hash** — a SHA-512 hash of the package contents
+- **Resolved URL**: where the package was actually downloaded from
+- **Integrity hash**: a SHA-512 hash of the package contents
 
 ```json
 {
@@ -29,7 +29,7 @@ When you run `npm install`, npm resolves all your `package.json` version ranges 
 }
 ```
 
-The `integrity` field is cryptographically verified by npm — if the downloaded package doesn't match this hash, installation fails.
+The `integrity` field is cryptographically verified by npm: if the downloaded package doesn't match this hash, installation fails.
 
 ---
 
@@ -54,7 +54,7 @@ All three are running different code. The caret (`^`) allows any minor/patch ver
 
 ### With a Committed Lockfile
 
-Everyone installs exactly `2.0.0` — the version that was pinned when the lockfile was created. No surprises.
+Everyone installs exactly `2.0.0`: the version that was pinned when the lockfile was created. No surprises.
 
 ---
 
@@ -68,11 +68,11 @@ Everyone installs exactly `2.0.0` — the version that was pinned when the lockf
 > **Critical:** Always use `npm ci` in CI/CD pipelines. It fails if `package-lock.json` is missing or out of sync with `package.json`, ensuring you always get exactly what was committed.
 
 ```yaml
-# ✅ Correct — CI pipeline
+# ✅ Correct: CI pipeline
 - name: Install dependencies
   run: npm ci
 
-# ❌ Wrong — allows version drift in CI
+# ❌ Wrong: allows version drift in CI
 - name: Install dependencies
   run: npm install
 ```
@@ -87,7 +87,7 @@ A lockfile in your repository is only as safe as your repository. Attackers who 
 - Change the `integrity` hash to match a malicious package
 - Downgrade a dependency to a vulnerable version
 
-### Example — Malicious Lockfile Change
+### Example: Malicious Lockfile Change
 
 ```diff
   "node_modules/some-util": {
@@ -114,7 +114,7 @@ grep '"resolved"' package-lock.json | grep -v "registry.npmjs.org" | grep -v "yo
 # In CI: verify lockfile hasn't changed after install
 npm ci
 git diff --exit-code package-lock.json
-# Fails if lockfile was modified during install — sign of tampering
+# Fails if lockfile was modified during install: sign of tampering
 ```
 
 ---

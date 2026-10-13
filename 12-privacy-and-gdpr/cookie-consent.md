@@ -10,7 +10,7 @@ Not all cookies require consent. Knowing which do and which don't lets you avoid
 - Session authentication cookies (keeping users logged in)
 - Security cookies (CSRF tokens)
 - Load balancer cookies
-- User preference cookies (saved language, dark mode) — debate exists here
+- User preference cookies (saved language, dark mode): debate exists here
 
 These are "strictly necessary" for the service to function.
 
@@ -96,11 +96,11 @@ Your consent banner must:
 - Allow users to withdraw consent later
 
 ```html
-<!-- WRONG — dark pattern: accept is prominent, reject is hidden -->
+<!-- WRONG: dark pattern: accept is prominent, reject is hidden -->
 <button class="primary-btn">Accept all cookies</button>
 <small><a href="/preferences">Manage cookies</a></small>
 
-<!-- RIGHT — both options equally prominent -->
+<!-- RIGHT: both options equally prominent -->
 <button onclick="setConsent(false, false)">Reject non-essential</button>
 <button onclick="setConsent(true, false)">Accept analytics only</button>
 <button onclick="setConsent(true, true)">Accept all</button>

@@ -23,12 +23,12 @@ The OWASP Web Application Security Top 10 (2021 edition) lists the ten most crit
 
 ## What Changed from 2017
 
-- **Broken Access Control** moved from A05 to A01 — it is now the most commonly found vulnerability in the dataset
+- **Broken Access Control** moved from A05 to A01: it is now the most commonly found vulnerability in the dataset
 - **Cryptographic Failures** (formerly "Sensitive Data Exposure") was renamed to focus on root cause rather than symptom
 - **Injection** dropped from A01 to A03 as awareness and tooling improved
-- **Insecure Design** is new in 2021 — addresses architectural and design-level flaws, not just implementation bugs
-- **Software and Data Integrity Failures** is new — covers CI/CD pipeline attacks, auto-update poisoning, and deserialisation
-- **SSRF** is new — elevated due to cloud infrastructure abuse and the prevalence of metadata endpoint attacks
+- **Insecure Design** is new in 2021: addresses architectural and design-level flaws, not just implementation bugs
+- **Software and Data Integrity Failures** is new: covers CI/CD pipeline attacks, auto-update poisoning, and deserialisation
+- **SSRF** is new: elevated due to cloud infrastructure abuse and the prevalence of metadata endpoint attacks
 
 ---
 
@@ -36,14 +36,14 @@ The OWASP Web Application Security Top 10 (2021 edition) lists the ten most crit
 
 Each vulnerability file follows a consistent format:
 
-1. **Summary** — what the vulnerability is in plain language
-2. **Vulnerable pattern** — code showing the problem
-3. **Fixed pattern** — code showing the correct approach
-4. **Real-world breach** — a named incident with real impact figures
-5. **How to test** — manual steps or tool commands you can run today
-6. **Checklist** — 5–8 items to verify your application is not affected
-7. **Why this matters** — consequences of ignoring it
-8. **Learn more** — links to OWASP and related OpenAuditor sections
+1. **Summary**: what the vulnerability is in plain language
+2. **Vulnerable pattern**: code showing the problem
+3. **Fixed pattern**: code showing the correct approach
+4. **Real-world breach**: a named incident with real impact figures
+5. **How to test**: manual steps or tool commands you can run today
+6. **Checklist**: 5 to 8 items to verify your application is not affected
+7. **Why this matters**: consequences of ignoring it
+8. **Learn more**: links to OWASP and related OpenAuditor sections
 
 Work through them in order if you are auditing a new codebase. If you have a specific concern, jump directly to the relevant file.
 

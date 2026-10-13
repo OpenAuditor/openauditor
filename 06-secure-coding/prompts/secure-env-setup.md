@@ -2,7 +2,7 @@
 
 ## When to use this
 
-Use this when starting a new project, onboarding a new developer, or auditing how secrets are currently managed in your codebase. It's also useful after a secret leak — to understand what's exposed and fix the configuration.
+Use this when starting a new project, onboarding a new developer, or auditing how secrets are currently managed in your codebase. It's also useful after a secret leak: to understand what's exposed and fix the configuration.
 
 ## Works with
 
@@ -62,7 +62,7 @@ For each Critical or High finding:
 1. Move the secret to the correct environment variable
 2. Update .gitignore if needed
 3. Create/update .env.example
-4. If a secret was committed to git: flag it as "ROTATED REQUIRED" — the secret must be rotated since it's in git history
+4. If a secret was committed to git: flag it as "ROTATED REQUIRED": the secret must be rotated since it's in git history
 
 ---
 

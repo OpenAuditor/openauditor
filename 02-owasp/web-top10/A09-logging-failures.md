@@ -1,6 +1,6 @@
 # A09: Security Logging and Monitoring Failures
 
-**Formerly "Insufficient Logging & Monitoring" (2017 #10) — OWASP Web Top 10 2021**
+**Formerly "Insufficient Logging & Monitoring" (2017 #10): OWASP Web Top 10 2021**
 
 Without proper logging and monitoring, breaches go undetected for months. The average time to identify a breach is 194 days. Logging is your evidence trail, anomaly detector, and forensic toolkit.
 
@@ -8,9 +8,9 @@ Without proper logging and monitoring, breaches go undetected for months. The av
 
 ## 30-Second Summary
 
-Applications that don't log security events, don't alert on anomalies, or don't retain logs long enough are flying blind. Attackers know this — they deliberately operate slowly to avoid triggering thresholds. The Equifax breach (2017) was active for 78 days before detection. The Target breach (2013) triggered security alerts that were ignored.
+Applications that don't log security events, don't alert on anomalies, or don't retain logs long enough are flying blind. Attackers know this: they deliberately operate slowly to avoid triggering thresholds. The Equifax breach (2017) was active for 78 days before detection. The Target breach (2013) triggered security alerts that were ignored.
 
-**Real breach:** The 2013 Target breach — attackers exfiltrated 40 million credit card numbers over weeks. Target's security tools *did* alert. The alerts were ignored. Logging without monitoring is nearly useless.
+**Real breach:** The 2013 Target breach: attackers exfiltrated 40 million credit card numbers over weeks. Target's security tools *did* alert. The alerts were ignored. Logging without monitoring is nearly useless.
 
 ---
 
@@ -47,7 +47,7 @@ logger.error({ event: 'error.unhandled', path: req.path, error: err.message, use
 ### What NOT to Log
 
 ```javascript
-// NEVER log these — they're sensitive data
+// NEVER log these: they're sensitive data
 logger.info({ password: req.body.password });          // passwords
 logger.info({ token: req.headers.authorization });     // auth tokens
 logger.info({ card: req.body.cardNumber });            // payment data
@@ -73,7 +73,7 @@ logger.info({ event: 'user.updated', body: sanitiseForLog(req.body) });
 ## Structured Logging Implementation
 
 ```javascript
-// Use structured (JSON) logging — easy to query and alert on
+// Use structured (JSON) logging: easy to query and alert on
 import pino from 'pino';
 
 const logger = pino({
@@ -91,7 +91,7 @@ const logger = pino({
 // Every log line is JSON with consistent fields:
 // {"level":"warn","service":"api","event":"auth.login.failure","email":"test@example.com","ip":"1.2.3.4","time":"2026-01-15T12:00:00.000Z"}
 
-// Middleware — log every request
+// Middleware: log every request
 app.use((req, res, next) => {
   const start = Date.now();
   res.on('finish', () => {
@@ -110,7 +110,7 @@ app.use((req, res, next) => {
 ```
 
 ```python
-# Python — use structlog
+# Python: use structlog
 import structlog
 
 logger = structlog.get_logger()
@@ -131,7 +131,7 @@ logger.warning(
 Set up alerts for these patterns. If using Datadog, Grafana, or CloudWatch:
 
 ```javascript
-// Express middleware — track metrics for alerting
+// Express middleware: track metrics for alerting
 const metrics = {
   loginFailures: new Map(), // ip -> count
 };
@@ -188,10 +188,10 @@ access_logs:
 **Anti-pattern:** Logs stored where attackers can delete them:
 
 ```bash
-# VULNERABLE — attacker who compromises app server can delete logs
+# VULNERABLE: attacker who compromises app server can delete logs
 /var/log/app/security.log   # on the same server
 
-# SECURE — ship logs to separate service immediately
+# SECURE: ship logs to separate service immediately
 # Options: Datadog, Logtail, Axiom, CloudWatch, Loki
 # Attacker can't delete logs from a service they don't control
 ```
@@ -201,14 +201,14 @@ access_logs:
 ## Log Injection Prevention
 
 ```javascript
-// VULNERABLE — log injection (attacker controls log content)
+// VULNERABLE: log injection (attacker controls log content)
 const username = req.body.username;
 logger.info(`User logged in: ${username}`);
 // If username = "admin\nINFO: User logged in: attacker", this injects a fake log line
 
-// SECURE — use structured logging (fields, not concatenation)
+// SECURE: use structured logging (fields, not concatenation)
 logger.info({ event: 'auth.login', username: req.body.username });
-// The logger serialises the value safely — no injection
+// The logger serialises the value safely: no injection
 ```
 
 ---

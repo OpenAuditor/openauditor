@@ -65,18 +65,18 @@ if (detectInjectionAttempt(userMessage)) {
 }
 ```
 
-This is not sufficient alone — determined attackers will bypass pattern matching. Use it as a first layer.
+This is not sufficient alone: determined attackers will bypass pattern matching. Use it as a first layer.
 
 ### 3. Output Validation
 
 Never execute LLM output directly. Always validate it against expected formats.
 
 ```javascript
-// WRONG — executing LLM output directly
+// WRONG: executing LLM output directly
 const code = await llm.complete("Write code to delete a file");
 eval(code); // direct code execution from LLM output
 
-// RIGHT — validate output structure before use
+// RIGHT: validate output structure before use
 const response = await llm.complete(prompt);
 const parsed = JSON.parse(response); // expect structured JSON
 const validated = OutputSchema.parse(parsed); // validate schema
@@ -86,7 +86,7 @@ const validated = OutputSchema.parse(parsed); // validate schema
 ### 4. Principle of Least Privilege for Tools
 
 ```javascript
-// WRONG — agent has access to everything
+// WRONG: agent has access to everything
 const tools = [
   readFileTool,   // can read any file
   writeFileTool,  // can write any file  
@@ -95,7 +95,7 @@ const tools = [
   emailTool,      // can send emails
 ];
 
-// RIGHT — give only the tools needed for the task
+// RIGHT: give only the tools needed for the task
 const tools = [
   readSpecificDirectoryTool('./user-uploads/'), // scoped to one dir
   // No exec, no unrestricted db, no email unless specifically needed
@@ -126,7 +126,7 @@ When feeding documents or external data to LLMs:
 // 1. Strip hidden/invisible text before processing
 import pdfParse from 'pdf-parse';
 const text = (await pdfParse(buffer)).text;
-// PDF parsing strips formatting — some hidden text may remain
+// PDF parsing strips formatting: some hidden text may remain
 
 // 2. Clearly delimit user content from instructions
 const prompt = `
@@ -150,7 +150,7 @@ ${sanitisedDocumentContent}
 
 ## Why This Matters
 
-In 2023, a researcher demonstrated that a malicious email forwarded to an AI assistant could extract the user's other emails and forward them to the attacker. The indirect injection was in the email body — the user didn't type a single character of the attack.
+In 2023, a researcher demonstrated that a malicious email forwarded to an AI assistant could extract the user's other emails and forward them to the attacker. The indirect injection was in the email body: the user didn't type a single character of the attack.
 
 ---
 

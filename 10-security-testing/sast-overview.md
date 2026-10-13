@@ -1,6 +1,6 @@
 # SAST (Static Application Security Testing)
 
-SAST analyses your source code without running it. It finds security issues — potential injections, hardcoded secrets, unsafe functions — before they go to production.
+SAST analyses your source code without running it. It finds security issues, potential injections, hardcoded secrets, unsafe functions, before they go to production.
 
 ---
 
@@ -105,14 +105,14 @@ bandit -r . --severity-level medium
 ```
 
 Common Bandit findings:
-- B307: Use of `eval` — dangerous
+- B307: Use of `eval`: dangerous
 - B501: SSL context without verification
 - B601: Shell injection via paramiko
 - B106: Hardcoded password function arguments
 
 ---
 
-## CodeQL (GitHub — Free for Open Source)
+## CodeQL (GitHub: Free for Open Source)
 
 ```yaml
 # .github/workflows/codeql.yml
@@ -132,7 +132,7 @@ jobs:
       - uses: github/codeql-action/analyze@v3
 ```
 
-CodeQL is deeper than Semgrep — it models data flow through your application to find more complex vulnerabilities.
+CodeQL is deeper than Semgrep: it models data flow through your application to find more complex vulnerabilities.
 
 ---
 
@@ -156,7 +156,7 @@ CodeQL is deeper than Semgrep — it models data flow through your application t
 semgrep:
   severity: ERROR  # or WARNING
   
-# Never block CI on low severity — it creates alert fatigue
+# Never block CI on low severity: it creates alert fatigue
 ```
 
 ---

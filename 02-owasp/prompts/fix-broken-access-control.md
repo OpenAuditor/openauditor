@@ -40,7 +40,7 @@ For each resource: document who should be able to access it (owner only? team me
 Review each endpoint that accepts a resource ID (user ID, order ID, document ID, etc.):
 
 ```typescript
-// VULNERABLE — takes ID from URL without ownership check
+// VULNERABLE: takes ID from URL without ownership check
 export async function GET(
   request: Request,
   { params }: { params: { id: string } }
@@ -49,7 +49,7 @@ export async function GET(
   return Response.json(order);
 }
 
-// SECURE — verify the authenticated user owns the resource
+// SECURE: verify the authenticated user owns the resource
 export async function GET(
   request: Request,
   { params }: { params: { id: string } }
@@ -59,15 +59,15 @@ export async function GET(
   
   const order = await db.orders.findOne({
     id: params.id,
-    userId: session.user.id, // MUST match — IDOR prevention
+    userId: session.user.id, // MUST match: IDOR prevention
   });
   
-  if (!order) return new Response('Not found', { status: 404 }); // Not 403 — don't reveal existence
+  if (!order) return new Response('Not found', { status: 404 }); // Not 403: don't reveal existence
   return Response.json(order);
 }
 ```
 
-**Step 3: For Supabase — implement Row Level Security**
+**Step 3: For Supabase: implement Row Level Security**
 
 If using Supabase, enable RLS on every table that contains user data:
 
@@ -113,7 +113,7 @@ Test that users cannot access each other's resources:
 - User A creates a resource (order, document, etc.)
 - Log in as User B
 - Attempt to access User A's resource with its ID
-- Expected: 404 (not 403 — don't reveal the resource exists)
+- Expected: 404 (not 403: don't reveal the resource exists)
 
 Write automated IDOR tests:
 ```typescript

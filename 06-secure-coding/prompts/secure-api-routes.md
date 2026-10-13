@@ -41,7 +41,7 @@ For every route that returns or modifies a specific resource (by ID):
 
 Example check:
 ```javascript
-// This is insecure — must also check ownership
+// This is insecure: must also check ownership
 const item = await db.items.findOne({ where: { id: req.params.id } });
 
 // This is correct

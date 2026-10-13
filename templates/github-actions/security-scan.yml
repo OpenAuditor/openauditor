@@ -29,13 +29,13 @@ jobs:
     name: Dependency Audit
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup Node.js
         if: hashFiles('package.json') != ''
-        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: '20'
+          node-version: '24'
           cache: 'npm'
 
       - name: Install dependencies (npm)
@@ -49,7 +49,7 @@ jobs:
 
       - name: Setup Python
         if: hashFiles('requirements.txt') != ''
-        uses: actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c # v5.0.0
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: '3.12'
 
@@ -61,7 +61,7 @@ jobs:
         # Fails if High or Critical Python package vulnerabilities found
 
   # ============================================================
-  # 2. SAST — Static Application Security Testing
+  # 2. SAST: Static Application Security Testing
   # ============================================================
   semgrep:
     name: Semgrep SAST
@@ -69,7 +69,7 @@ jobs:
     container:
       image: returntocorp/semgrep
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Run Semgrep
         env:
@@ -89,7 +89,7 @@ jobs:
 
       - name: Upload Semgrep results to GitHub
         if: always()  # Upload even if scan finds issues
-        uses: github/codeql-action/upload-sarif@c7f9125735019aa87cfc361530512d50ea439c71 # v3
+        uses: github/codeql-action/upload-sarif@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
         with:
           sarif_file: semgrep.sarif
           category: semgrep
@@ -101,17 +101,17 @@ jobs:
     name: Secret Scanning
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0  # Full history for secret scanning
 
       - name: Run Gitleaks
-        uses: gitleaks/gitleaks-action@cb7149a9b57195b609c63e8518d2c6ef8e492c33 # v2.3.3
+        uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   # ============================================================
-  # 4. CodeQL (GitHub's own SAST — free for public repos)
+  # 4. CodeQL (GitHub's own SAST: free for public repos)
   # ============================================================
   codeql:
     name: CodeQL Analysis
@@ -122,30 +122,30 @@ jobs:
         language: [javascript-typescript]
         # Add 'python' if applicable
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Initialise CodeQL
-        uses: github/codeql-action/init@c7f9125735019aa87cfc361530512d50ea439c71 # v3
+        uses: github/codeql-action/init@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
         with:
           languages: ${{ matrix.language }}
           queries: security-extended
 
       - name: Autobuild
-        uses: github/codeql-action/autobuild@c7f9125735019aa87cfc361530512d50ea439c71 # v3
+        uses: github/codeql-action/autobuild@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@c7f9125735019aa87cfc361530512d50ea439c71 # v3
+        uses: github/codeql-action/analyze@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
         with:
           category: codeql-${{ matrix.language }}
 
   # ============================================================
-  # 5. Snyk (optional — uncomment if SNYK_TOKEN is configured)
+  # 5. Snyk (optional: uncomment if SNYK_TOKEN is configured)
   # ============================================================
   # snyk:
   #   name: Snyk Security
   #   runs-on: ubuntu-latest
   #   steps:
-  #     - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+  #     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
   #
   #     - name: Run Snyk
   #       uses: snyk/actions/node@b98d498629f1c5e001b02839e95fe3a63eba4c42
@@ -161,7 +161,7 @@ jobs:
     name: Check Action Pins
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Check for unpinned actions
         run: |

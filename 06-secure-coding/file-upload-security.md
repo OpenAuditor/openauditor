@@ -18,7 +18,7 @@ File uploads are one of the most exploited features in web applications. Attacke
 
 ### 1. Validate File Type (Server-Side)
 
-Don't trust the `Content-Type` header or file extension — they can be spoofed. Check the actual file magic bytes.
+Don't trust the `Content-Type` header or file extension: they can be spoofed. Check the actual file magic bytes.
 
 ```javascript
 import { fileTypeFromBuffer } from 'file-type';
@@ -65,7 +65,7 @@ import { randomUUID } from 'crypto';
 
 function safeFileName(originalName: string): string {
   const ext = extname(originalName).toLowerCase();
-  // Generate a random name — don't trust the original
+  // Generate a random name: don't trust the original
   return `${randomUUID()}${ext}`;
 }
 ```
@@ -143,12 +143,12 @@ CREATE POLICY "Users read own files"
 ## Serving Files Safely
 
 ```javascript
-// WRONG — serving files from a path derived from user input
+// WRONG: serving files from a path derived from user input
 app.get('/uploads/:filename', (req, res) => {
   res.sendFile(path.join(uploadsDir, req.params.filename)); // path traversal risk!
 });
 
-// RIGHT — look up file by UUID in database, then serve
+// RIGHT: look up file by UUID in database, then serve
 app.get('/files/:id', authenticate, async (req, res) => {
   const file = await db.files.findOne({ 
     where: { id: req.params.id, userId: req.user.id } // auth check!
@@ -177,7 +177,7 @@ import sharp from 'sharp'; // npm install sharp
 async function processImage(buffer: Buffer): Promise<Buffer> {
   return sharp(buffer)
     .resize(2000, 2000, { fit: 'inside', withoutEnlargement: true })
-    .jpeg({ quality: 85 }) // re-encode — strips EXIF, malicious data
+    .jpeg({ quality: 85 }) // re-encode: strips EXIF, malicious data
     .toBuffer();
 }
 ```

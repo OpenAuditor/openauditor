@@ -40,10 +40,10 @@ A practical decision tree for SaaS founders and indie hackers.
 |---------------|-----------|---------|
 | Have EU/UK users | GDPR/UK GDPR | Immediate |
 | Have California users, revenue >$25M or >100K users | CCPA | High |
-| Process US health data | HIPAA | Critical — get a lawyer |
-| Store payment cards | PCI DSS | Critical — use Stripe instead |
-| B2B SaaS targeting enterprise | SOC 2 | 12–18 months out |
-| Any serious security posture | ISO 27001 | 18–24 months out |
+| Process US health data | HIPAA | Critical: get a lawyer |
+| Store payment cards | PCI DSS | Critical: use Stripe instead |
+| B2B SaaS targeting enterprise | SOC 2 | 12 to 18 months out |
+| Any serious security posture | ISO 27001 | 18 to 24 months out |
 
 ---
 
@@ -60,7 +60,7 @@ Stripe handles PCI DSS compliance for card storage and processing. You must stil
 
 ### If You Handle No Personal Data
 
-If you process completely anonymised data with no way to re-identify individuals, GDPR does not apply. But be careful — "anonymous" is hard to achieve, and most apps handle at least IP addresses and emails.
+If you process completely anonymised data with no way to re-identify individuals, GDPR does not apply. But be careful: "anonymous" is hard to achieve, and most apps handle at least IP addresses and emails.
 
 ### If You're Under the GDPR Threshold
 
@@ -70,9 +70,9 @@ GDPR applies to any organisation that processes EU/UK personal data, regardless 
 
 ## Where to Start
 
-1. **Read [GDPR for Founders](../12-privacy-and-gdpr/uk-gdpr-for-founders.md)** — almost every SaaS founder needs this
+1. **Read [GDPR for Founders](../12-privacy-and-gdpr/uk-gdpr-for-founders.md)**: almost every SaaS founder needs this
 2. **Use [Compliance Triage prompt](./prompts/compliance-triage.md)** to get an AI to assess your scope
-3. **Get a lawyer** for anything involving HIPAA, PCI DSS, or FedRAMP — these have real penalties
+3. **Get a lawyer** for anything involving HIPAA, PCI DSS, or FedRAMP: these have real penalties
 
 ---
 

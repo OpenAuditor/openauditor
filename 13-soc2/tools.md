@@ -1,6 +1,6 @@
 # SOC 2 Tooling
 
-You don't need an enterprise budget to prepare for SOC 2. This guide covers the tools — from free open source to commercial platforms — that make evidence collection, policy management, and audit preparation manageable.
+You don't need an enterprise budget to prepare for SOC 2. This guide covers the tools, from free open source to commercial platforms, that make evidence collection, policy management, and audit preparation manageable.
 
 ---
 
@@ -15,25 +15,25 @@ SOC 2 Type II audits require continuous evidence: logs, access reviews, vulnerab
 These platforms automate evidence collection and connect to your cloud infrastructure, code repos, and HR systems:
 
 ### Vanta (Popular for startups)
-- **Cost:** ~$15,000–40,000/year
+- **Cost:** ~$15,000 to 40,000/year
 - **Covers:** SOC 2, ISO 27001, HIPAA, GDPR, PCI DSS
 - **Integrations:** AWS, GCP, Azure, GitHub, Google Workspace, Okta, Jira
 - **Best for:** Series A+ startups that need to move fast
 - **Automates:** Access reviews, vulnerability scans, background check tracking, employee security training
 
 ### Drata
-- **Cost:** ~$10,000–30,000/year
+- **Cost:** ~$10,000 to 30,000/year
 - **Covers:** SOC 2, ISO 27001, HIPAA, PCI DSS
 - **Best for:** Companies that want strong automation and a polished audit experience
 - **Notable:** Strong integration with common SaaS tools
 
 ### Secureframe
-- **Cost:** ~$12,000–35,000/year
+- **Cost:** ~$12,000 to 35,000/year
 - **Covers:** SOC 2, ISO 27001, HIPAA, PCI DSS, GDPR
 - **Best for:** Mid-market companies; good customer support reputation
 
 ### Sprinto (Good value)
-- **Cost:** ~$8,000–20,000/year
+- **Cost:** ~$8,000 to 20,000/year
 - **Covers:** SOC 2, ISO 27001, GDPR, HIPAA
 - **Best for:** Startups wanting good automation at lower price point
 
@@ -52,7 +52,7 @@ For early-stage startups not yet ready for a compliance platform:
 
 **Okta (Identity Provider)**
 - Single sign-on for all company tools
-- Automatic access logs — SOC 2 auditors love Okta exports
+- Automatic access logs: SOC 2 auditors love Okta exports
 - MFA enforcement (required for SOC 2)
 - Automated access reviews via Okta Lifecycle Management
 - ~$6/user/month
@@ -79,7 +79,7 @@ For early-stage startups not yet ready for a compliance platform:
 
 **AWS Inspector / Google Container Analysis**
 - Infrastructure and container vulnerability scanning
-- Automatic, continuous — strong SOC 2 evidence
+- Automatic, continuous: strong SOC 2 evidence
 
 ### Change Management Evidence
 
@@ -103,7 +103,7 @@ For early-stage startups not yet ready for a compliance platform:
 
 **StatusPage (Atlassian)**
 - Public uptime history
-- Incident disclosure records — evidence of transparency
+- Incident disclosure records: evidence of transparency
 
 ### Logging Evidence
 

@@ -1,14 +1,14 @@
-# API10:2023 — Unsafe Consumption of Third-Party APIs
+# API10:2023: Unsafe Consumption of Third-Party APIs
 
-> **30-second summary:** Developers trust third-party APIs unconditionally — no input validation on responses, following redirects blindly, passing API responses directly into database queries or shell commands. When a third-party API is compromised or returns unexpected data, your application becomes the attack vector into your users.
+> **30-second summary:** Developers trust third-party APIs unconditionally: no input validation on responses, following redirects blindly, passing API responses directly into database queries or shell commands. When a third-party API is compromised or returns unexpected data, your application becomes the attack vector into your users.
 
 ## Severity
 
-**Medium-High** — Exploiting this requires compromising a third-party API or performing a MitM attack, but when exploited the impact can be critical (RCE, data injection, SSRF).
+**Medium-High**: Exploiting this requires compromising a third-party API or performing a MitM attack, but when exploited the impact can be critical (RCE, data injection, SSRF).
 
 ## Real-World Incident: SolarWinds (2020)
 
-SolarWinds's Orion build pipeline consumed a third-party package that had been compromised by nation-state attackers. The build system trusted the package without verification, executed its code, and backdoored 18,000 customers' networks including US government agencies. This is the supply chain variant — but the same trust issue applies at runtime when APIs consume external responses.
+SolarWinds's Orion build pipeline consumed a third-party package that had been compromised by nation-state attackers. The build system trusted the package without verification, executed its code, and backdoored 18,000 customers' networks including US government agencies. This is the supply chain variant, but the same trust issue applies at runtime when APIs consume external responses.
 
 ## Attack Scenarios
 
@@ -21,7 +21,7 @@ SolarWinds's Orion build pipeline consumed a third-party package that had been c
 
 const customer = await paymentAPI.getCustomer(id);
 
-// VULNERABLE — direct interpolation of API response into SQL
+// VULNERABLE: direct interpolation of API response into SQL
 const order = await db.query(
   `SELECT * FROM orders WHERE customer_id = '${customer.customerId}'`
 );
@@ -31,7 +31,7 @@ const order = await db.query(
 ### Scenario 2: SSRF via Open Redirect
 
 ```javascript
-// VULNERABLE — following redirects from external API
+// VULNERABLE: following redirects from external API
 const avatarUrl = await socialAPI.getUserAvatarUrl(userId);
 // API returns: https://evil.com/redirect?to=http://169.254.169.254/latest/meta-data/
 
@@ -42,7 +42,7 @@ const avatar = await fetch(avatarUrl, { follow: 10 }); // follows redirects
 ### Scenario 3: XSS via Unsanitised API Response
 
 ```typescript
-// VULNERABLE — rendering third-party content as HTML
+// VULNERABLE: rendering third-party content as HTML
 const review = await reviewsAPI.getLatestReview(productId);
 
 // API compromised; returns:
@@ -56,7 +56,7 @@ document.getElementById('review').innerHTML = review.text;
 ### Scenario 4: Webhook Payload Injection
 
 ```javascript
-// VULNERABLE — trusting webhook payloads without validation
+// VULNERABLE: trusting webhook payloads without validation
 app.post('/webhooks/payment', (req, res) => {
   const { amount, userId, status } = req.body;
   
@@ -90,25 +90,25 @@ type Customer = z.infer<typeof CustomerSchema>;
 async function getCustomer(id: string): Promise<Customer> {
   const response = await paymentAPI.getCustomer(id);
   
-  // Parse and validate — throws ZodError if schema doesn't match
+  // Parse and validate: throws ZodError if schema doesn't match
   return CustomerSchema.parse(response);
 }
 
-// Usage: validated, typed customer — safe to use in DB queries
+// Usage: validated, typed customer: safe to use in DB queries
 const customer = await getCustomer(customerId);
 await db.query('SELECT * FROM orders WHERE customer_id = $1', [customer.id]);
 ```
 
-### 2. Use Parameterised Queries — Always
+### 2. Use Parameterised Queries: Always
 
 ```typescript
 // Even with validated data, always use parameterised queries
-// (defence in depth — schema validation can have edge cases)
+// (defence in depth: schema validation can have edge cases)
 
 async function getOrdersForCustomer(customerId: string) {
   const customer = await getCustomer(customerId); // validated above
   
-  // Still parameterised — never interpolate, even "safe" values
+  // Still parameterised: never interpolate, even "safe" values
   return db.query(
     'SELECT id, amount, created_at FROM orders WHERE customer_id = $1',
     [customer.id]  // parameterised

@@ -51,7 +51,7 @@ NextAuth handles PKCE, state parameter, and token storage automatically.
 
 ## The State Parameter (CSRF Protection)
 
-> **Critical:** Always validate the `state` parameter. Without it, your OAuth flow is vulnerable to CSRF — attackers can force users to link their account to the attacker's identity.
+> **Critical:** Always validate the `state` parameter. Without it, your OAuth flow is vulnerable to CSRF: attackers can force users to link their account to the attacker's identity.
 
 ```javascript
 // 1. Generate state before redirect
@@ -69,7 +69,7 @@ const authUrl = `https://accounts.google.com/o/oauth2/auth?
 // 3. Validate on callback
 app.get('/callback', async (req, res) => {
   if (req.query.state !== req.session.oauthState) {
-    return res.status(403).json({ error: 'Invalid state — possible CSRF attack' });
+    return res.status(403).json({ error: 'Invalid state: possible CSRF attack' });
   }
   // proceed with token exchange
 });
@@ -141,25 +141,25 @@ async function verifyGoogleToken(idToken: string) {
 ## Common OAuth Mistakes
 
 ```javascript
-// WRONG — using implicit flow (tokens in URL fragment)
+// WRONG: using implicit flow (tokens in URL fragment)
 const authUrl = `...&response_type=token`; // token in URL = visible in logs
 
-// RIGHT — authorisation code flow
+// RIGHT: authorisation code flow
 const authUrl = `...&response_type=code`;
 
-// WRONG — skipping state validation
+// WRONG: skipping state validation
 app.get('/callback', async (req, res) => {
   const { code } = req.query; // no state check!
   ...
 });
 
-// WRONG — storing access token in localStorage
+// WRONG: storing access token in localStorage
 localStorage.setItem('access_token', token); // XSS steals this
 
-// WRONG — not validating the audience in ID token
+// WRONG, not validating the audience in ID token
 jwt.decode(idToken); // decode only, no signature verification!
 
-// RIGHT — always verify
+// RIGHT: always verify
 jwt.verify(idToken, PUBLIC_KEY, { audience: CLIENT_ID });
 ```
 

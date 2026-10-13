@@ -12,7 +12,7 @@ Before using any model, verify its source:
 # Only use models from verified, reputable sources
 # Major providers: OpenAI, Anthropic, Google, Meta (Llama), Mistral AI
 
-# If using HuggingFace — vet the model carefully:
+# If using HuggingFace: vet the model carefully:
 # 1. Check the organisation (huggingface.co/openai is official)
 # 2. Check download count and age (new models with no history = risk)
 # 3. Check the model card for red flags
@@ -34,10 +34,10 @@ model = AutoModelForCausalLM.from_pretrained(
 PyTorch `.bin` files use Python's `pickle` format, which can execute arbitrary code on load.
 
 ```python
-# DANGEROUS — pickle can execute code on load
+# DANGEROUS: pickle can execute code on load
 model = torch.load('model.bin')  # don't do this with untrusted models
 
-# SAFER — safetensors format cannot execute code
+# SAFER: safetensors format cannot execute code
 from safetensors.torch import load_file
 tensors = load_file('model.safetensors')  # safe
 ```
@@ -55,7 +55,7 @@ For MCP servers, LangChain tools, or other plugins:
 // 3. Updates: Is it maintained? When was the last update?
 // 4. Open source: Can you audit the code?
 
-// For MCP servers — verify the server's identity
+// For MCP servers: verify the server's identity
 // Only use MCP servers over HTTPS with valid certificates
 // Never use MCP servers from unknown sources
 ```
@@ -87,4 +87,4 @@ If you're fine-tuning on external data:
 ## Learn More
 
 - [Supply Chain Security](../05-supply-chain-security/)
-- [OWASP LLM05: Supply Chain Vulnerabilities](../02-owasp/llm-top10/LLM05-supply-chain-vulnerabilities.md)
+- [OWASP LLM03: Supply Chain](../02-owasp/llm-top10/LLM03-supply-chain.md)

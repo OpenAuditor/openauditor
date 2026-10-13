@@ -79,7 +79,7 @@ ws.on('message', (data) => {
 
 ## Origin Validation
 
-WebSocket handshakes don't enforce CORS — you must check the `Origin` header yourself.
+WebSocket handshakes don't enforce CORS: you must check the `Origin` header yourself.
 
 ```javascript
 const wss = new WebSocketServer({

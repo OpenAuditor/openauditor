@@ -1,8 +1,8 @@
-# A04 — Insecure Design
+# A04: Insecure Design
 
 ## Summary
 
-Insecure design is a new category in the 2021 OWASP Top 10 that addresses flaws baked into an application's architecture and business logic before a single line of code is written. Unlike implementation bugs (where code does the wrong thing), insecure design means the specification itself is missing security controls, makes incorrect assumptions about trust, or lacks business logic constraints that should be obvious. You cannot patch your way out of insecure design — the architecture must change. Common examples include: password reset flows that do not rate-limit OTP guessing, checkout flows that do not validate price server-side, and multi-tenant systems that share a single database schema with only application-layer separation.
+Insecure design is a new category in the 2021 OWASP Top 10 that addresses flaws baked into an application's architecture and business logic before a single line of code is written. Unlike implementation bugs (where code does the wrong thing), insecure design means the specification itself is missing security controls, makes incorrect assumptions about trust, or lacks business logic constraints that should be obvious. You cannot patch your way out of insecure design: the architecture must change. Common examples include: password reset flows that do not rate-limit OTP guessing, checkout flows that do not validate price server-side, and multi-tenant systems that share a single database schema with only application-layer separation.
 
 ---
 
@@ -11,7 +11,7 @@ Insecure design is a new category in the 2021 OWASP Top 10 that addresses flaws 
 ### Password reset OTP with no rate limiting
 
 ```javascript
-// Next.js API route — VULNERABLE
+// Next.js API route: VULNERABLE
 // An attacker can try all 10,000 combinations of a 4-digit OTP
 export default async function handler(req, res) {
   const { email, otp } = req.body;
@@ -30,10 +30,10 @@ export default async function handler(req, res) {
 // No rate limit. No OTP attempt counter. No lockout after N failures.
 ```
 
-### Price manipulation — server trusts client-supplied price
+### Price manipulation: server trusts client-supplied price
 
 ```javascript
-// Express checkout endpoint — VULNERABLE
+// Express checkout endpoint: VULNERABLE
 app.post("/checkout", authenticate, async (req, res) => {
   const { items, totalPrice } = req.body; // Attacker sends totalPrice: 0.01
 
@@ -89,7 +89,7 @@ app.post("/forgot-password", async (req, res) => {
 ### Rate-limit and lock OTP verification
 
 ```javascript
-// Next.js API route — FIXED
+// Next.js API route: FIXED
 import rateLimit from "express-rate-limit";
 
 // Limit: 5 attempts per 15 minutes per IP
@@ -130,11 +130,11 @@ export default async function handler(req, res) {
 ### Always calculate price server-side
 
 ```javascript
-// Express checkout endpoint — FIXED
+// Express checkout endpoint: FIXED
 app.post("/checkout", authenticate, async (req, res) => {
   const { items } = req.body;
 
-  // Recalculate total from your own database — never trust client price
+  // Recalculate total from your own database: never trust client price
   const productIds = items.map((i) => i.productId);
   const products = await db.products.findMany({ where: { id: { in: productIds } } });
 
@@ -152,7 +152,7 @@ app.post("/checkout", authenticate, async (req, res) => {
 ### Use Row Level Security for multi-tenant data isolation
 
 ```sql
--- PostgreSQL Row Level Security — FIXED
+-- PostgreSQL Row Level Security: FIXED
 -- Database enforces tenant isolation even if application code forgets a WHERE clause
 
 ALTER TABLE documents ENABLE ROW LEVEL SECURITY;
@@ -174,7 +174,7 @@ app.post("/forgot-password", async (req, res) => {
   if (user) {
     await sendResetEmail(user.email);
   }
-  // Always return the same message — prevents email enumeration
+  // Always return the same message: prevents email enumeration
   return res.json({ message: "If an account exists, a reset email has been sent." });
 });
 ```
@@ -185,7 +185,7 @@ app.post("/forgot-password", async (req, res) => {
 
 ## Real-World Breach
 
-**Instagram — 2019 (OTP brute force)**
+**Instagram: 2019 (OTP brute force)**
 Instagram's "forgot password" flow used a 6-digit OTP sent via SMS. The flow had no rate limiting or IP-based lockout on OTP submission. A researcher demonstrated that an attacker could systematically guess all one million possible 6-digit codes through a distributed network of IP addresses, bypassing Instagram's per-IP rate limit. Instagram rotated accounts to 8-digit codes and added stricter rate limiting. The vulnerability was a design flaw, not an implementation bug: the system was designed without considering that an attacker might distribute requests across IPs.
 
 ---
@@ -234,7 +234,7 @@ curl -s -X POST https://yourapp.com/api/forgot-password \
 
 - [ ] Password reset and OTP flows are rate-limited per IP and per account
 - [ ] OTP attempt counts are tracked server-side; accounts lock after N failures
-- [ ] Prices, totals, and quantities are always recalculated on the server — never taken from client input
+- [ ] Prices, totals, and quantities are always recalculated on the server: never taken from client input
 - [ ] Multi-tenant data isolation is enforced at the database layer (Row Level Security), not only in application code
 - [ ] Account existence is not revealed through different API responses (forgot password, login errors)
 - [ ] Business logic constraints (order limits, discount caps, withdrawal limits) are enforced server-side
@@ -245,14 +245,14 @@ curl -s -X POST https://yourapp.com/api/forgot-password \
 
 ## Why This Matters
 
-Insecure design is the hardest category to fix because it often requires redesigning core flows. A checkout that trusts client prices will be exploited — automated scripts test for this within days of a site launching. OTP flows without rate limiting are trivially attacked with distributed requests. Multi-tenant bugs with application-only isolation have caused dozens of major data breaches where one customer's data leaked to another. Fixing these issues after launch is expensive, disruptive, and sometimes impossible without downtime. The only effective response is to build correctly from the start.
+Insecure design is the hardest category to fix because it often requires redesigning core flows. A checkout that trusts client prices will be exploited: automated scripts test for this within days of a site launching. OTP flows without rate limiting are trivially attacked with distributed requests. Multi-tenant bugs with application-only isolation have caused dozens of major data breaches where one customer's data leaked to another. Fixing these issues after launch is expensive, disruptive, and sometimes impossible without downtime. The only effective response is to build correctly from the start.
 
 ---
 
 ## Learn More
 
-- [OWASP A04:2021 — Insecure Design](https://owasp.org/Top10/A04_2021-Insecure_Design/)
+- [OWASP A04:2021: Insecure Design](https://owasp.org/Top10/A04_2021-Insecure_Design/)
 - [OWASP Threat Modeling](https://owasp.org/www-community/Threat_Modeling)
 - [OWASP Business Logic Testing Guide](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/10-Business_Logic_Testing/)
-- [OpenAuditor: 00 Foundations — Threat Modelling](../../00-foundations/)
-- [OpenAuditor: Secure Coding — Auth Best Practices](../../06-secure-coding/auth-best-practices.md)
+- [OpenAuditor: 00 Foundations: Threat Modelling](../../00-foundations/)
+- [OpenAuditor: Secure Coding: Auth Best Practices](../../06-secure-coding/auth-best-practices.md)

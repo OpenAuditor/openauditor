@@ -1,8 +1,8 @@
 # A07: Identification and Authentication Failures
 
-**Formerly "Broken Authentication" (2017 #2) — OWASP Web Top 10 2021**
+**Formerly "Broken Authentication" (2017 #2): OWASP Web Top 10 2021**
 
-Authentication failures let attackers impersonate users, take over accounts, or bypass access entirely. This category moved down the list in 2021 only because frameworks now handle more automatically — but custom auth code remains extremely vulnerable.
+Authentication failures let attackers impersonate users, take over accounts, or bypass access entirely. This category moved down the list in 2021 only because frameworks now handle more automatically, but custom auth code remains extremely vulnerable.
 
 ---
 
@@ -19,21 +19,21 @@ Weak authentication gives attackers the keys to your users' accounts. The most c
 ### 1. Weak Password Policies
 
 ```javascript
-// VULNERABLE — accepts any password
+// VULNERABLE: accepts any password
 app.post('/register', async (req, res) => {
   const { email, password } = req.body;
   const hash = await bcrypt.hash(password, 10); // even '1' is accepted
   await db.users.create({ email, password_hash: hash });
 });
 
-// SECURE — enforce minimum requirements
+// SECURE: enforce minimum requirements
 const passwordSchema = z.string()
   .min(12, 'Password must be at least 12 characters')
   .regex(/[A-Z]/, 'Must contain uppercase')
   .regex(/[0-9]/, 'Must contain a number')
   .regex(/[^A-Za-z0-9]/, 'Must contain a special character');
 
-// Even better — check against HaveIBeenPwned API
+// Even better: check against HaveIBeenPwned API
 import { pwnedPassword } from 'hibp';
 const count = await pwnedPassword(password);
 if (count > 0) {
@@ -46,7 +46,7 @@ if (count > 0) {
 ### 2. Missing Rate Limiting (Brute Force)
 
 ```javascript
-// VULNERABLE — unlimited login attempts
+// VULNERABLE: unlimited login attempts
 app.post('/login', async (req, res) => {
   const user = await db.users.findByEmail(req.body.email);
   if (user && await bcrypt.compare(req.body.password, user.password_hash)) {
@@ -56,7 +56,7 @@ app.post('/login', async (req, res) => {
   return res.status(401).json({ error: 'Invalid credentials' });
 });
 
-// SECURE — rate limiting with lockout
+// SECURE: rate limiting with lockout
 import { Ratelimit } from '@upstash/ratelimit';
 import { Redis } from '@upstash/redis';
 
@@ -81,20 +81,20 @@ app.post('/login', async (req, res) => {
 ### 3. Weak Password Hashing
 
 ```javascript
-// CRITICAL VULNERABILITY — MD5 (cracks in seconds)
+// CRITICAL VULNERABILITY: MD5 (cracks in seconds)
 const hash = md5(password); // never do this
 
-// CRITICAL VULNERABILITY — SHA-256 (fast hash, no work factor)
+// CRITICAL VULNERABILITY: SHA-256 (fast hash, no work factor)
 const hash = crypto.createHash('sha256').update(password).digest('hex');
 
-// CRITICAL VULNERABILITY — unsalted bcrypt (rainbow tables work)
+// CRITICAL VULNERABILITY: unsalted bcrypt (rainbow tables work)
 const hash = bcrypt.hashSync(password, '$2b$10$fixedsaltfixedsaltfixe');
 
-// SECURE — bcrypt with sufficient cost factor
+// SECURE: bcrypt with sufficient cost factor
 const COST_FACTOR = 12; // adjust so hashing takes ~100-200ms on your hardware
 const hash = await bcrypt.hash(password, COST_FACTOR);
 
-// SECURE — Argon2 (preferred for new projects)
+// SECURE: Argon2 (preferred for new projects)
 import argon2 from 'argon2';
 const hash = await argon2.hash(password, {
   type: argon2.argon2id,
@@ -107,13 +107,13 @@ const hash = await argon2.hash(password, {
 ### 4. Session Not Invalidated on Logout
 
 ```javascript
-// VULNERABLE — client-side only logout
+// VULNERABLE: client-side only logout
 app.post('/logout', (req, res) => {
   res.clearCookie('session'); // only removes cookie, server session still valid
   res.json({ success: true });
 });
 
-// SECURE — server-side session destruction
+// SECURE: server-side session destruction
 app.post('/logout', async (req, res) => {
   const sessionId = req.cookies.session;
   
@@ -130,7 +130,7 @@ app.post('/logout', async (req, res) => {
   res.json({ success: true });
 });
 
-// For JWT — maintain a denylist (Redis)
+// For JWT: maintain a denylist (Redis)
 app.post('/logout', async (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];
   const decoded = jwt.decode(token);
@@ -153,13 +153,13 @@ async function authMiddleware(req, res, next) {
 ### 5. Insecure "Remember Me"
 
 ```javascript
-// VULNERABLE — predictable remember-me token
+// VULNERABLE: predictable remember-me token
 const rememberToken = userId + ':' + Date.now(); // guessable
 
-// VULNERABLE — token stored in DB without hashing (stolen DB = stolen sessions)
+// VULNERABLE: token stored in DB without hashing (stolen DB = stolen sessions)
 await db.sessions.create({ user_id: userId, token: rememberToken });
 
-// SECURE — cryptographically random, hashed in DB
+// SECURE: cryptographically random, hashed in DB
 import { randomBytes, createHash } from 'crypto';
 
 const selector = randomBytes(16).toString('hex'); // for DB lookup
@@ -187,14 +187,14 @@ const [selector, verifier] = req.cookies.remember_me.split(':');
 const record = await db.rememberTokens.findBySelector(selector);
 const hash = createHash('sha256').update(verifier).digest('hex');
 if (record && timingSafeEqual(Buffer.from(record.hashed_verifier), Buffer.from(hash))) {
-  // Valid — rotate the token immediately
+  // Valid: rotate the token immediately
 }
 ```
 
 ### 6. Username Enumeration
 
 ```javascript
-// VULNERABLE — different error messages reveal valid emails
+// VULNERABLE: different error messages reveal valid emails
 if (!user) {
   return res.status(404).json({ error: 'Email not found' }); // reveals email existence
 }
@@ -202,7 +202,7 @@ if (!passwordMatch) {
   return res.status(401).json({ error: 'Wrong password' }); // confirms email is valid
 }
 
-// SECURE — identical error for both cases + consistent timing
+// SECURE: identical error for both cases + consistent timing
 import { timingSafeEqual } from 'crypto';
 
 app.post('/login', async (req, res) => {
@@ -240,14 +240,14 @@ app.post('/login', async (req, res) => {
 ```
 
 ```javascript
-// Supabase — always handle auth errors generically
+// Supabase: always handle auth errors generically
 const { data, error } = await supabase.auth.signInWithPassword({
   email,
   password,
 });
 
 if (error) {
-  // Don't return error.message directly — it may reveal too much
+  // Don't return error.message directly: it may reveal too much
   return res.status(401).json({ error: 'Invalid email or password' });
 }
 ```
@@ -257,10 +257,10 @@ if (error) {
 ## OAuth Security
 
 ```javascript
-// VULNERABLE — missing state parameter (CSRF attack possible)
+// VULNERABLE: missing state parameter (CSRF attack possible)
 const authUrl = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}`;
 
-// SECURE — include unpredictable state
+// SECURE: include unpredictable state
 import { randomBytes } from 'crypto';
 
 app.get('/auth/github', (req, res) => {

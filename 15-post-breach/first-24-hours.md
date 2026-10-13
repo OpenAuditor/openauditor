@@ -1,6 +1,6 @@
 # The First 24 Hours After a Breach
 
-Every minute matters. This is a numbered runbook — follow it in order.
+Every minute matters. This is a numbered runbook: follow it in order.
 
 ---
 
@@ -16,7 +16,7 @@ If confirmed: start the clock. GDPR requires you notify the ICO within 72 hours 
 
 ---
 
-## Hours 0–1: Contain
+## Hours 0 to 1: Contain
 
 Stop the bleeding before investigating.
 
@@ -36,7 +36,7 @@ Stop the bleeding before investigating.
 
 ---
 
-## Hours 1–4: Assess
+## Hours 1 to 4: Assess
 
 Understand the scope.
 
@@ -52,11 +52,11 @@ Understand the scope.
 - [ ] Preserve logs (see [Forensic Evidence](./forensic-evidence.md))
 - [ ] Screenshot or export evidence before anything is changed
 - [ ] Start an incident log (time-stamped notes of every action taken)
-- [ ] Do NOT delete or alter evidence — this has legal implications
+- [ ] Do NOT delete or alter evidence: this has legal implications
 
 ---
 
-## Hours 4–8: Involve the Right People
+## Hours 4 to 8: Involve the Right People
 
 Don't handle this alone.
 
@@ -67,21 +67,21 @@ Don't handle this alone.
 
 **People to involve externally:**
 - Your data protection officer or legal team
-- Cyber insurance provider (if applicable) — call them before doing too much
-- Law enforcement (if criminal activity — in the UK: Action Fraud; in the US: FBI)
+- Cyber insurance provider (if applicable): call them before doing too much
+- Law enforcement (if criminal activity: in the UK: Action Fraud; in the US: FBI)
 
 ---
 
-## Hours 8–24: Begin Remediation
+## Hours 8 to 24: Begin Remediation
 
 Once contained and assessed:
 
-1. **Fix the root cause** — don't just patch the symptom
+1. **Fix the root cause**: don't just patch the symptom
 2. **Reset all credentials** that could have been exposed
 3. **Deploy fixes** through your normal CI/CD with security review
 4. **Verify the attacker is fully evicted** (check for persistence mechanisms: backdoors, new admin accounts, scheduled tasks)
 5. **Test systems** before bringing them back online
-6. **Draft user notification** (don't send yet — legal review first)
+6. **Draft user notification** (don't send yet: legal review first)
 7. **Begin GDPR/regulatory notification process** if personal data was involved
 
 ---
@@ -91,9 +91,9 @@ Once contained and assessed:
 Keep a running incident log:
 ```
 [Timestamp] [Action] [Who] [Notes]
-2026-04-26 02:14 — Detected unusual API traffic from 45.33.32.156
-2026-04-26 02:18 — Blocked IP at Cloudflare by [name]
-2026-04-26 02:30 — Rotated database credentials, checked active sessions
+2026-04-26 02:14: Detected unusual API traffic from 45.33.32.156
+2026-04-26 02:18: Blocked IP at Cloudflare by [name]
+2026-04-26 02:30: Rotated database credentials, checked active sessions
 ...
 ```
 

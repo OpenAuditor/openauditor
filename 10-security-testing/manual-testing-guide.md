@@ -18,22 +18,22 @@ Before testing:
 
 ### Login
 
-- [ ] Submit empty username and password — what error message appears? (Should not reveal which field is missing)
-- [ ] Submit valid email + wrong password — does error differ from invalid email? (Shouldn't — timing attacks)
-- [ ] Submit 20 rapid login attempts — does rate limiting trigger?
-- [ ] Send the same request twice rapidly (double-click protection) — one should succeed, one fail
+- [ ] Submit empty username and password: what error message appears? (Should not reveal which field is missing)
+- [ ] Submit valid email + wrong password, does error differ from invalid email? (Shouldn't, timing attacks)
+- [ ] Submit 20 rapid login attempts: does rate limiting trigger?
+- [ ] Send the same request twice rapidly (double-click protection): one should succeed, one fail
 
 ### Session
 
-- [ ] Log out, then press the browser back button — does it still show protected content?
-- [ ] Copy session cookie from browser to curl — does it authenticate? (It should — but once you're done, does logout invalidate it?)
-- [ ] Log out — is the session token invalidated server-side?
-- [ ] Wait for session timeout (if configured) — does the session expire?
+- [ ] Log out, then press the browser back button: does it still show protected content?
+- [ ] Copy session cookie from browser to curl, does it authenticate? (It should, but once you're done, does logout invalidate it?)
+- [ ] Log out: is the session token invalidated server-side?
+- [ ] Wait for session timeout (if configured): does the session expire?
 
 ### Password Reset
 
-- [ ] Submit reset for an email that doesn't exist — does the response differ from a real email? (Shouldn't)
-- [ ] Request two reset tokens for the same email — is the first token invalidated?
+- [ ] Submit reset for an email that doesn't exist: does the response differ from a real email? (Shouldn't)
+- [ ] Request two reset tokens for the same email: is the first token invalidated?
 - [ ] Does the reset link expire? (Test after 1 hour)
 - [ ] Can you reuse a reset link after using it once? (Shouldn't work)
 
@@ -51,7 +51,7 @@ This is the most common finding. Test whether you can access other users' data.
 4. Log in as User B
 5. Try to access User A's resource directly: `GET /api/posts/123`
 6. Expected: 404 or 403
-7. Unexpected: the resource is returned — CRITICAL finding
+7. Unexpected: the resource is returned: CRITICAL finding
 
 Test for every resource type: GET, PUT, DELETE.
 
@@ -74,7 +74,7 @@ Test for every resource type: GET, PUT, DELETE.
 "><script>alert('XSS')</script>
 ```
 
-Does the alert appear? If yes — XSS vulnerability.
+Does the alert appear? If yes: XSS vulnerability.
 
 ### SQL Injection
 
@@ -111,17 +111,17 @@ Does the query return unexpected results or errors?
 ## API-Specific Tests
 
 - [ ] Try changing the HTTP method: POST → GET, DELETE → GET for the same endpoint
-- [ ] Send a request with no `Content-Type` header — does it still work?
-- [ ] Send a request with `Content-Type: text/xml` instead of JSON — server side parsing different?
-- [ ] Add extra fields to request bodies — are they rejected or silently accepted?
+- [ ] Send a request with no `Content-Type` header: does it still work?
+- [ ] Send a request with `Content-Type: text/xml` instead of JSON: server side parsing different?
+- [ ] Add extra fields to request bodies: are they rejected or silently accepted?
 
 ---
 
 ## Output Tests
 
-- [ ] Trigger a 500 error (malformed request) — does it return a stack trace?
-- [ ] Access a non-existent page — does the 404 reveal server info?
-- [ ] Check response headers — are debug headers present (`X-Powered-By: Express 4.18.2`)?
+- [ ] Trigger a 500 error (malformed request): does it return a stack trace?
+- [ ] Access a non-existent page: does the 404 reveal server info?
+- [ ] Check response headers: are debug headers present (`X-Powered-By: Express 4.18.2`)?
 
 ---
 

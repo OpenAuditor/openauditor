@@ -4,10 +4,10 @@
 
 | Section | Status | Files |
 |---------|--------|-------|
-| Core (README, START-HERE, PROMPTS, CHANGELOG) | ✓ Complete | 6 |
-| 00 Foundations | ✓ Complete | 11 |
+| Core (README, START-HERE, PROMPTS, CHANGELOG, STATUS, CONTRIBUTING, SECURITY, LICENSE) | ✓ Complete | 8 |
+| 00 Foundations | ✓ Complete | 13 |
 | 01 Pre-Commit Hooks | ✓ Complete | 15 |
-| 02 OWASP (Web Top 10, API Top 10, LLM Top 10) | ✓ Complete | 40 |
+| 02 OWASP (Web Top 10, API Top 10, LLM Top 10) | ⚠ LLM Top 10 updated to 2025; Web Top 10 update to 2025 in progress | 40 |
 | 03 MITRE ATT&CK | ✓ Complete | 6 |
 | 04 CVE Awareness | ✓ Complete | 10 |
 | 05 Supply Chain Security | ✓ Complete | 8 |
@@ -23,23 +23,25 @@
 | 15 Post-Breach | ✓ Complete | 6 |
 | 16 Checklists | ✓ Complete | 5 |
 | 17 Resources | ✓ Complete | 4 |
-| Skills (Production Readiness Audit) | ✓ Complete | 8 |
+| Skills (Production Readiness Audit) | ✓ Complete | 9 |
 | Templates (Gitignore, env, GitHub Actions, negative prompts) | ✓ Complete | 15 |
 
-**Total: 229 files across 18 sections**
+| .github (issue, PR and discussion templates, CI) | ✓ Complete | 5 |
+
+**Total: 246 files across 18 sections**
 
 ## Current Version
 
-**v1.0.0 — Initial Complete Release** (2026-04-27)
+**v1.0.0: Initial Complete Release** (2026-04-27)
 
 All 18 sections are complete with production-quality content, real-world breach examples, and copy-paste agent prompts for Claude, Cursor, GitHub Copilot, Windsurf, Cline, and Aider.
 
 ## What's Included
 
 ### Content
-- ✓ OWASP Web Top 10 (2021) — all 10 categories with code fixes
-- ✓ OWASP API Top 10 (2023) — all 10 categories with code fixes
-- ✓ OWASP LLM Top 10 (2025) — all 10 categories with AI-specific defences
+- ⚠ OWASP Web Top 10 (2021 edition; update to the 2025 edition in progress)
+- ✓ OWASP API Top 10 (2023): all 10 categories with code fixes
+- ✓ OWASP Top 10 for LLM Applications (2025 edition): all 10 categories, including the new System Prompt Leakage and Vector and Embedding Weaknesses
 - ✓ MITRE ATT&CK for Web, SaaS, and AI apps
 - ✓ MITRE to OWASP cross-reference mapping
 - ✓ CVE triage framework with CVSS v3.1 guide
@@ -57,7 +59,7 @@ All 18 sections are complete with production-quality content, real-world breach 
 - ✓ Compliance lite (ISO 27001, PCI DSS, HIPAA awareness)
 - ✓ Post-breach response (first 24 hours, forensics, GDPR timeline, user notification)
 
-### Prompts (60+)
+### Prompts (50+)
 - ✓ Pre-commit setup, audit, CI integration
 - ✓ OWASP Web Top 10 full audit
 - ✓ OWASP API Top 10 full audit
@@ -91,10 +93,10 @@ All 18 sections are complete with production-quality content, real-world breach 
 
 ## Known Limitations
 
-- **Not a certification program** — This is guidance, not a formal compliance audit
-- **Not a replacement for security professionals** — For critical apps, hire specialists
-- **Stack coverage** — Primarily Next.js, Python, Node.js, Django. Other stacks may vary.
-- **Point-in-time advice** — Security evolves; check back for updates and watch for CVE advisories
+- **Not a certification program**: This is guidance, not a formal compliance audit
+- **Not a replacement for security professionals**: For critical apps, hire specialists
+- **Stack coverage**: Primarily Next.js, Python, Node.js, Django. Other stacks may vary.
+- **Point-in-time advice**: Security evolves; check back for updates and watch for CVE advisories
 
 ## How to Use
 

@@ -1,8 +1,8 @@
 # A10: Server-Side Request Forgery (SSRF)
 
-**New entry — OWASP Web Top 10 2021**
+**New entry: OWASP Web Top 10 2021**
 
-SSRF lets attackers make the server fetch URLs on their behalf — accessing internal services, cloud metadata APIs, and internal network resources that are otherwise unreachable from the internet.
+SSRF lets attackers make the server fetch URLs on their behalf: accessing internal services, cloud metadata APIs, and internal network resources that are otherwise unreachable from the internet.
 
 ---
 
@@ -19,7 +19,7 @@ SSRF occurs when your server fetches a URL provided (or influenced) by the user 
 ### 1. Basic SSRF
 
 ```javascript
-// VULNERABLE — user controls the URL completely
+// VULNERABLE: user controls the URL completely
 app.get('/preview', async (req, res) => {
   const url = req.query.url;
   const response = await fetch(url); // attacker sends: http://169.254.169.254/latest/meta-data/
@@ -38,7 +38,7 @@ app.get('/preview', async (req, res) => {
 ### 2. Blind SSRF
 
 ```javascript
-// VULNERABLE — server makes request, result not shown to user
+// VULNERABLE: server makes request, result not shown to user
 // But attacker can use an external server to detect which internal hosts respond
 app.post('/webhook-test', async (req, res) => {
   const { url } = req.body;
@@ -46,7 +46,7 @@ app.post('/webhook-test', async (req, res) => {
     await fetch(url, { method: 'POST', body: JSON.stringify({ test: true }) });
     res.json({ success: true }); // attacker can infer if request succeeded
   } catch {
-    res.json({ success: false }); // vs failed — reveals internal topology
+    res.json({ success: false }); // vs failed: reveals internal topology
   }
 });
 ```
@@ -54,18 +54,18 @@ app.post('/webhook-test', async (req, res) => {
 ### 3. PDF/Image Generation Services
 
 ```javascript
-// VULNERABLE — Puppeteer/wkhtmltopdf rendering user-controlled HTML
+// VULNERABLE: Puppeteer/wkhtmltopdf rendering user-controlled HTML
 app.post('/generate-pdf', async (req, res) => {
   const html = req.body.html;
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  await page.setContent(html); // <img src="http://169.254.169.254/..."> — SSRF
+  await page.setContent(html); // <img src="http://169.254.169.254/...">: SSRF
   // or <iframe src="file:///etc/passwd">
   const pdf = await page.pdf();
   res.send(pdf);
 });
 
-// VULNERABLE — image proxy without validation
+// VULNERABLE: image proxy without validation
 app.get('/proxy-image', async (req, res) => {
   const imageUrl = req.query.url;
   const image = await fetch(imageUrl); // SSRF
@@ -80,7 +80,7 @@ app.get('/proxy-image', async (req, res) => {
 ### 1. Allowlist External Domains
 
 ```javascript
-// SECURE — only allow explicitly approved domains
+// SECURE: only allow explicitly approved domains
 const ALLOWED_DOMAINS = new Set([
   'api.github.com',
   'api.stripe.com',
@@ -124,7 +124,7 @@ const PRIVATE_RANGES = [
 ];
 
 async function isPrivateHost(hostname) {
-  // Prevent DNS rebinding — resolve THEN check
+  // Prevent DNS rebinding: resolve THEN check
   const addresses = await resolve4(hostname).catch(() => []);
   return addresses.some(addr => PRIVATE_RANGES.some(range => range.test(addr)));
 }
@@ -155,10 +155,10 @@ async function safeFetch(url) {
 ### 3. Disable Redirects or Validate Redirect Destinations
 
 ```javascript
-// VULNERABLE — follows redirects to private IPs
+// VULNERABLE: follows redirects to private IPs
 const response = await fetch(url, { redirect: 'follow' });
 
-// SECURE — either disable redirects or validate each hop
+// SECURE: either disable redirects or validate each hop
 const response = await fetch(url, { redirect: 'manual' });
 if (response.status >= 300 && response.status < 400) {
   const location = response.headers.get('location');
@@ -170,7 +170,7 @@ if (response.status >= 300 && response.status < 400) {
 ### 4. For PDF/Screenshot Generation
 
 ```javascript
-// SECURE — Puppeteer with strict CSP and no local file access
+// SECURE: Puppeteer with strict CSP and no local file access
 const browser = await puppeteer.launch({
   args: [
     '--disable-web-security=false',

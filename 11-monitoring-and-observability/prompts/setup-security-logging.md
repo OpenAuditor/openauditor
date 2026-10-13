@@ -2,7 +2,7 @@
 
 ## When to use this
 
-Use this when starting a new project, inheriting a codebase that has no security logging, or after a security audit identifies logging gaps. Security logging is evidence — you need it before an incident, not after.
+Use this when starting a new project, inheriting a codebase that has no security logging, or after a security audit identifies logging gaps. Security logging is evidence: you need it before an incident, not after.
 
 ## Works with
 
@@ -104,7 +104,7 @@ async function handleLogin(email: string, password: string, ip: string) {
   if (!user || !passwordMatch) {
     logger.warn({
       event: 'auth.login.failure',
-      email, // OK to log — not a secret
+      email, // OK to log, not a secret
       ip,
       reason: !user ? 'user_not_found' : 'wrong_password',
       // IMPORTANT: Use the same reason for both cases externally
@@ -138,7 +138,7 @@ logger.warn({ event: 'auth.rate_limited', ip, endpoint: req.path });
 **Step 4: Instrument authorisation events**
 
 ```typescript
-// Log every 403 — these are potential IDOR attempts
+// Log every 403: these are potential IDOR attempts
 function forbidden(userId: string, resource: string, resourceId: string) {
   logger.warn({
     event: 'authz.forbidden',
@@ -207,7 +207,7 @@ npm install @logtail/pino
 ```
 
 ```typescript
-// lib/logger.ts — update to ship to Logtail
+// lib/logger.ts: update to ship to Logtail
 import pino from 'pino';
 import { createWriteStream } from '@logtail/pino';
 
@@ -249,7 +249,7 @@ Do a grep to check for any PII leakage in log statements:
 grep -rn "logger\.\|console\." --include="*.ts" --include="*.js" . | \
   grep -v node_modules | \
   grep -i "password\|token\|secret\|card\|ssn\|dob"
-# Any results here need to be fixed — PII should not appear in log calls
+# Any results here need to be fixed: PII should not appear in log calls
 ```
 
 ---

@@ -56,8 +56,8 @@ Complete the Vendor Security Questionnaire covering:
 ### 4.2 Contractual Requirements
 
 All Critical and High-tier vendors must sign:
-- **Data Processing Agreement (DPA)** — required for any GDPR sub-processors
-- **Confidentiality Agreement** — for vendors with access to confidential data
+- **Data Processing Agreement (DPA)**: required for any GDPR sub-processors
+- **Confidentiality Agreement**: for vendors with access to confidential data
 
 The DPA must include:
 - Processing only on [COMPANY NAME]'s instructions

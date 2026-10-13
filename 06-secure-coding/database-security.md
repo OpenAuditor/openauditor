@@ -4,22 +4,22 @@ Your database holds everything worth stealing. Misconfigured databases are respo
 
 ---
 
-## Parameterised Queries — No Exceptions
+## Parameterised Queries: No Exceptions
 
 Raw string concatenation in SQL queries is the definition of SQL injection.
 
 ```javascript
-// WRONG — SQL injection waiting to happen
+// WRONG: SQL injection waiting to happen
 const query = `SELECT * FROM users WHERE email = '${email}'`;
 // If email = "'; DROP TABLE users; --" you're done.
 
-// RIGHT — parameterised query
+// RIGHT: parameterised query
 const result = await db.query('SELECT * FROM users WHERE email = $1', [email]);
 
-// RIGHT — using an ORM (Prisma)
+// RIGHT: using an ORM (Prisma)
 const user = await prisma.user.findUnique({ where: { email } });
 
-// RIGHT — Supabase
+// RIGHT: Supabase
 const { data, error } = await supabase
   .from('users')
   .select('*')
@@ -30,10 +30,10 @@ const { data, error } = await supabase
 # WRONG
 cursor.execute(f"SELECT * FROM users WHERE email = '{email}'")
 
-# RIGHT — psycopg2 parameterised
+# RIGHT: psycopg2 parameterised
 cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
 
-# RIGHT — SQLAlchemy ORM
+# RIGHT: SQLAlchemy ORM
 user = session.query(User).filter(User.email == email).first()
 ```
 
@@ -88,12 +88,12 @@ CREATE POLICY "Users insert own data"
 ### Dangerous Anti-Patterns
 
 ```sql
--- WRONG — allows anyone to do anything
+-- WRONG: allows anyone to do anything
 CREATE POLICY "Allow all"
   ON public.users
   USING (true);
 
--- WRONG — using service role on frontend
+-- WRONG: using service role on frontend
 -- The SUPABASE_SERVICE_ROLE_KEY bypasses RLS entirely
 -- Never expose it to the frontend or client
 ```
@@ -152,15 +152,15 @@ conn = psycopg2.connect(
 ## Don't Expose Internal IDs
 
 ```javascript
-// WRONG — exposes sequential IDs (easy to enumerate)
+// WRONG: exposes sequential IDs (easy to enumerate)
 GET /api/posts/1
 GET /api/posts/2
 ...
 
-// RIGHT — use UUIDs
+// RIGHT: use UUIDs
 GET /api/posts/550e8400-e29b-41d4-a716-446655440000
 
-// In Supabase / Postgres — use gen_random_uuid()
+// In Supabase / Postgres: use gen_random_uuid()
 CREATE TABLE posts (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   ...
@@ -172,10 +172,10 @@ CREATE TABLE posts (
 ## Backup Strategy
 
 ```bash
-# Supabase — enable Point-in-Time Recovery (PITR) in dashboard
+# Supabase: enable Point-in-Time Recovery (PITR) in dashboard
 # This gives you second-by-second backups for the past 7-30 days
 
-# For self-hosted Postgres — automated daily backup
+# For self-hosted Postgres: automated daily backup
 pg_dump -Fc -h $DB_HOST -U $DB_USER -d $DB_NAME > backup_$(date +%Y%m%d).dump
 
 # Encrypt backups before storing

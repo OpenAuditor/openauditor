@@ -1,21 +1,21 @@
-# API8:2023 — Security Misconfiguration
+# API8:2023: Security Misconfiguration
 
-> **30-second summary:** APIs running with default configurations, overly permissive CORS, verbose error messages, unnecessary HTTP methods enabled, or missing security headers. Security misconfiguration is the most widespread API vulnerability — it takes minutes to exploit and seconds to prevent.
+> **30-second summary:** APIs running with default configurations, overly permissive CORS, verbose error messages, unnecessary HTTP methods enabled, or missing security headers. Security misconfiguration is the most widespread API vulnerability: it takes minutes to exploit and seconds to prevent.
 
 ## Severity
 
-**High** — Frequently exploited, easy to discover with automated scanners. Often the first step in a broader attack chain.
+**High**: Frequently exploited, easy to discover with automated scanners. Often the first step in a broader attack chain.
 
 ## Real-World Breach: Peloton (2021)
 
-Peloton's API returned full user profile data (age, weight, location, workout history) with no authentication required — their API server was misconfigured to allow unauthenticated access to endpoints that should have required a session. Over 3 million accounts were exposed. The misconfiguration had been reported months earlier and not fixed.
+Peloton's API returned full user profile data (age, weight, location, workout history) with no authentication required: their API server was misconfigured to allow unauthenticated access to endpoints that should have required a session. Over 3 million accounts were exposed. The misconfiguration had been reported months earlier and not fixed.
 
 ## How It Happens
 
 ### 1. Overly Permissive CORS
 
 ```javascript
-// VULNERABLE — wildcard CORS in production
+// VULNERABLE: wildcard CORS in production
 app.use(cors({
   origin: '*',  // any site can make credentialed requests
   credentials: true
@@ -33,14 +33,14 @@ curl -X OPTIONS https://api.example.com/users -i
 # Response:
 # Allow: GET, POST, PUT, DELETE, PATCH, OPTIONS, TRACE, CONNECT
 #
-# TRACE is dangerous — enables Cross-Site Tracing (XST) attacks
+# TRACE is dangerous: enables Cross-Site Tracing (XST) attacks
 # CONNECT enables proxy abuse
 ```
 
 ### 3. Verbose Error Messages
 
 ```json
-// VULNERABLE — stack trace in production error response
+// VULNERABLE: stack trace in production error response
 {
   "error": "Internal Server Error",
   "message": "relation \"users\" does not exist",
@@ -114,7 +114,7 @@ This works only if CORS is misconfigured with `origin: '*'` and `credentials: tr
 curl -X TRACE https://api.example.com/ \
   -H "Cookie: session=abc123"
 
-# Response includes the Cookie header — extractable via XSS
+# Response includes the Cookie header: extractable via XSS
 ```
 
 ## Fixes
@@ -229,7 +229,7 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'none'"],
-      // APIs typically return JSON — no script/style sources needed
+      // APIs typically return JSON: no script/style sources needed
     },
   },
   hsts: {
@@ -377,7 +377,7 @@ docker run -t owasp/zap2docker-stable zap-baseline.py \
   -t https://api.example.com \
   -r misconfiguration-report.html
 
-# Mozilla Observatory — checks headers
+# Mozilla Observatory: checks headers
 curl -s "https://http.observatory.mozilla.org/api/v1/analyze?host=api.example.com" | jq '.grade'
 
 # SecurityHeaders.com (manual check)

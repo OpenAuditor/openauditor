@@ -190,7 +190,7 @@ Note: `email_hash` rather than plain email. Use SHA-256. This lets you correlate
 
 ## Category 3: Data access events
 
-Log access to sensitive resources. You do not need to log every database read — only access to data classified as sensitive (PII, financial, health, credentials).
+Log access to sensitive resources. You do not need to log every database read: only access to data classified as sensitive (PII, financial, health, credentials).
 
 ### Sensitive record accessed
 
@@ -395,7 +395,7 @@ Any action taken by an admin or privileged user must be logged, regardless of wh
 | API errors | 90 days | 1 year |
 | Infrastructure | 90 days | 1 year |
 
-Check your jurisdiction. GDPR Article 5(1)(e) requires you not to retain data longer than necessary — but security logs have a legitimate interest basis for extended retention.
+Check your jurisdiction. GDPR Article 5(1)(e) requires you not to retain data longer than necessary, but security logs have a legitimate interest basis for extended retention.
 
 ---
 

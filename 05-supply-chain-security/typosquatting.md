@@ -1,6 +1,6 @@
 # Typosquatting
 
-> **30-second summary:** Typosquatting is when attackers register package names that look almost identical to popular packages — relying on you to mistype or misremember a name. One wrong character installs malware instead of the library you intended.
+> **30-second summary:** Typosquatting is when attackers register package names that look almost identical to popular packages: relying on you to mistype or misremember a name. One wrong character installs malware instead of the library you intended.
 
 ---
 
@@ -16,7 +16,7 @@ An attacker studies the most downloaded packages on npm, PyPI, or RubyGems, then
 - **Different TLD/scope:** `@react` instead of `react`, `react-dom` vs `reactdom`
 - **Pluralisation:** `color` → `colors` (the latter exists but was also weaponised)
 
-The malicious package often provides the same functionality as the real one — so the victim never notices anything is wrong. The malware runs silently in the background.
+The malicious package often provides the same functionality as the real one, so the victim never notices anything is wrong. The malware runs silently in the background.
 
 ---
 
@@ -48,7 +48,7 @@ The malicious package often provides the same functionality as the real one — 
 
 ## How to Detect Typosquatting
 
-### Before Installing — Manual Checks
+### Before Installing: Manual Checks
 
 ```bash
 # 1. Check the exact package name on npm
@@ -58,27 +58,27 @@ npm info <package-name>
 npm info <package-name> homepage
 npm info <package-name> repository
 
-# 3. Check who maintains it — does it match the known author?
+# 3. Check who maintains it: does it match the known author?
 npm info <package-name> maintainers
 
-# 4. Look at download counts — legitimate packages have consistent history
+# 4. Look at download counts: legitimate packages have consistent history
 # Typosquatted packages often have zero downloads or a sudden spike
 npm info <package-name> downloads
 
-# 5. Check when it was first published — new packages are higher risk
+# 5. Check when it was first published: new packages are higher risk
 npm info <package-name> time.created
 ```
 
 ### Use Automated Tools
 
 ```bash
-# confusable — checks if a package name is visually confusable
+# confusable: checks if a package name is visually confusable
 npm install -g confusable
 confusable lodash
 
 # npm-cli-login with 2FA protects your own published packages
-# Socket.dev browser extension — warns before installing suspicious packages
-# retire.js — detects use of packages with known vulnerabilities
+# Socket.dev browser extension: warns before installing suspicious packages
+# retire.js: detects use of packages with known vulnerabilities
 npx retire
 ```
 
@@ -101,7 +101,7 @@ tar tzf <package-name>-<version>.tgz
 ```bash
 # Run both commands and compare output carefully:
 npm info express
-npm info expres   # typosquatted — will show different maintainers/dates
+npm info expres   # typosquatted: will show different maintainers/dates
 
 # Legitimate package signs:
 # - Maintainer: tj <tj@apex.sh> (for express, it's the expressjs org)
@@ -122,12 +122,12 @@ npm info expres   # typosquatted — will show different maintainers/dates
 Using scoped packages under a verified organisation namespace makes typosquatting harder:
 
 ```bash
-# More secure — scoped to a verified org
+# More secure: scoped to a verified org
 npm install @aws-sdk/client-s3
 npm install @supabase/supabase-js
 npm install @tanstack/react-query
 
-# Less safe — unscoped, easier to typosquat
+# Less safe: unscoped, easier to typosquat
 npm install aws-sdk-client-s3  # if this existed, it'd be suspicious
 ```
 
@@ -161,10 +161,10 @@ Major projects like React and Lodash do this proactively.
 
 npm has introduced some defences:
 
-- **Package name similarity check** — npm rejects packages that are too similar to popular existing ones
-- **Maintainer email verification** — required before publishing
-- **2FA enforcement** — top packages now require 2FA for maintainers
-- **Automated malware scanning** — npm scans for known malicious patterns
+- **Package name similarity check**: npm rejects packages that are too similar to popular existing ones
+- **Maintainer email verification**: required before publishing
+- **2FA enforcement**: top packages now require 2FA for maintainers
+- **Automated malware scanning**: npm scans for known malicious patterns
 
 These help but are not foolproof. Attackers find variations that pass automated checks.
 

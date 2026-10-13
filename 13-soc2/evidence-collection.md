@@ -6,10 +6,10 @@ This document lists exactly what SOC 2 auditors request and how to collect it. U
 
 ## How Evidence Collection Works
 
-Auditors typically send a PBC (Provided by Client) list 2–4 weeks before fieldwork begins. Each item requests either:
-- A **population** — the complete list of something (e.g., all employees, all vendors)
-- A **sample** — evidence for a subset of items drawn from the population
-- A **document** — a policy, procedure, or configuration screenshot
+Auditors typically send a PBC (Provided by Client) list 2 to 4 weeks before fieldwork begins. Each item requests either:
+- A **population**: the complete list of something (e.g., all employees, all vendors)
+- A **sample**: evidence for a subset of items drawn from the population
+- A **document**: a policy, procedure, or configuration screenshot
 
 For Type II, auditors sample across the full observation period. They want to see that controls worked consistently, not just that they worked once.
 
@@ -33,7 +33,7 @@ For Type II, auditors sample across the full observation period. They want to se
 
 **Pro tips:**
 - Run `aws iam generate-credential-report` monthly and store the output
-- Keep a log of all offboarding events with timestamps — auditors love these
+- Keep a log of all offboarding events with timestamps: auditors love these
 - Access review spreadsheets must show the reviewer's name, date, and their attestation
 
 ---
@@ -87,7 +87,7 @@ For Type II, auditors sample across the full observation period. They want to se
 
 **Pro tips:**
 - Tier your vendors: Tier 1 (critical), Tier 2 (important), Tier 3 (low risk). Auditors focus on Tier 1.
-- Collect the SOC 2 reports of your key vendors (AWS, Stripe, Salesforce, etc.) — these are your assurance
+- Collect the SOC 2 reports of your key vendors (AWS, Stripe, Salesforce, etc.): these are your assurance
 - A Notion database or Airtable works well for a vendor register
 
 ---
@@ -106,7 +106,7 @@ For Type II, auditors sample across the full observation period. They want to se
 
 **Pro tips:**
 - Enable branch protection on main/production and screenshot the settings
-- GitHub PR reviews are excellent evidence — export or screenshot them
+- GitHub PR reviews are excellent evidence: export or screenshot them
 - Keep a log of emergency changes (hotfixes) with post-mortem notes
 
 ---
@@ -145,7 +145,7 @@ For Type II, auditors sample across the full observation period. They want to se
 **Pro tips:**
 - Automated tools like Snyk, Dependabot, or GitHub Advanced Security can export CSV reports
 - Even if you have open vulnerabilities, auditors want to see they are being tracked and prioritised
-- The pen test report itself is evidence — you do not need a clean report, just evidence of response
+- The pen test report itself is evidence: you do not need a clean report, just evidence of response
 
 ---
 
@@ -192,7 +192,7 @@ For cloud-hosted companies:
 
 **Pro tips:**
 - AWS Artifact, Google Cloud Compliance Manager, and Azure Trust Center host SOC 2 reports for download
-- Review and retain these annually — they cover the physical security controls for your infrastructure
+- Review and retain these annually: they cover the physical security controls for your infrastructure
 
 ---
 
@@ -207,7 +207,7 @@ Use this before your audit fieldwork begins:
 - [ ] Vendor register with tier classifications
 - [ ] DPAs / sub-processor agreements
 - [ ] GitHub branch protection settings screenshot
-- [ ] PR history showing code review approvals (sample 20–30)
+- [ ] PR history showing code review approvals (sample 20 to 30)
 - [ ] Incident log for full period
 - [ ] Incident response plan + last review date
 - [ ] Pen test report + remediation tracking

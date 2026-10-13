@@ -1,4 +1,4 @@
-# A02 — Cryptographic Failures
+# A02: Cryptographic Failures
 
 ## Summary
 
@@ -24,7 +24,7 @@ const handleLogin = async (email, password) => {
 ### Storing passwords with a weak or reversible algorithm
 
 ```python
-# VULNERABLE: SHA-1 is a fast hash — not suitable for passwords
+# VULNERABLE: SHA-1 is a fast hash: not suitable for passwords
 import hashlib
 
 def store_password(plain_text):
@@ -65,7 +65,7 @@ const token = jwt.sign({ userId }, JWT_SECRET);
 ### Always use HTTPS; enforce it at the infrastructure level
 
 ```javascript
-// next.config.js — redirect all HTTP to HTTPS
+// next.config.js: redirect all HTTP to HTTPS
 const nextConfig = {
   async redirects() {
     return [
@@ -147,7 +147,7 @@ const token = jwt.sign({ userId }, JWT_SECRET, { expiresIn: "15m" });
 
 ## Real-World Breach
 
-**RockYou — 2009**
+**RockYou: 2009**
 RockYou, a social gaming company, stored 32 million user passwords in plaintext in a MySQL database. A SQL injection attack in December 2009 exposed the entire database. Because passwords were unencrypted, the dump was immediately usable for credential-stuffing attacks across the entire internet. The RockYou wordlist derived from this breach is still the most widely used password cracking dictionary in security research today, 15 years later. The fix was trivially simple: bcrypt with a work factor of 10 would have rendered the dump useless.
 
 ---
@@ -198,7 +198,7 @@ trufflehog git file://. --only-verified
 
 - [ ] All traffic is served over HTTPS; HTTP redirects to HTTPS automatically
 - [ ] HSTS header is set with `max-age` of at least 1 year
-- [ ] Passwords are hashed with bcrypt, Argon2id, or scrypt — not MD5, SHA-1, or SHA-256
+- [ ] Passwords are hashed with bcrypt, Argon2id, or scrypt, not MD5, SHA-1, or SHA-256
 - [ ] No sensitive data (passwords, tokens, API keys) is stored in source code or version control
 - [ ] PII fields (national insurance numbers, payment card data, health records) are encrypted at rest
 - [ ] TLS certificates are valid, unexpired, and use TLS 1.2 or higher
@@ -209,14 +209,14 @@ trufflehog git file://. --only-verified
 
 ## Why This Matters
 
-Cryptographic failures are catastrophic and silent — you do not know the breach happened until attackers have already used the data. Exposed passwords lead to credential stuffing across every service your users use. Exposed PII triggers mandatory GDPR breach notifications within 72 hours, potential fines, and user churn. Payment card data exposure falls under PCI DSS, which carries financial penalties and loss of card processing rights. The RockYou breach, Adobe's 2013 breach (153 million passwords in weak encryption), and LinkedIn's 2012 breach (6.5 million SHA-1 hashed passwords) all share the same root cause: cryptography was treated as optional.
+Cryptographic failures are catastrophic and silent: you do not know the breach happened until attackers have already used the data. Exposed passwords lead to credential stuffing across every service your users use. Exposed PII triggers mandatory GDPR breach notifications within 72 hours, potential fines, and user churn. Payment card data exposure falls under PCI DSS, which carries financial penalties and loss of card processing rights. The RockYou breach, Adobe's 2013 breach (153 million passwords in weak encryption), and LinkedIn's 2012 breach (6.5 million SHA-1 hashed passwords) all share the same root cause: cryptography was treated as optional.
 
 ---
 
 ## Learn More
 
-- [OWASP A02:2021 — Cryptographic Failures](https://owasp.org/Top10/A02_2021-Cryptographic_Failures/)
+- [OWASP A02:2021: Cryptographic Failures](https://owasp.org/Top10/A02_2021-Cryptographic_Failures/)
 - [OWASP Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html)
 - [OWASP Password Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html)
 - [OpenAuditor: Cryptography](../../07-cryptography/)
-- [OpenAuditor: Secure Coding — Auth Best Practices](../../06-secure-coding/auth-best-practices.md)
+- [OpenAuditor: Secure Coding: Auth Best Practices](../../06-secure-coding/auth-best-practices.md)

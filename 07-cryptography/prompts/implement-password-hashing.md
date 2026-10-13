@@ -44,13 +44,13 @@ For new projects: **Use Argon2id** (OWASP recommended, memory-hard, resistant to
 For projects needing wide library support: **Use bcrypt** (cost factor ≥ 12)
 
 Never use:
-- MD5, SHA-1, SHA-256, SHA-512 directly for passwords (fast hashes — attackers compute billions/second)
+- MD5, SHA-1, SHA-256, SHA-512 directly for passwords (fast hashes: attackers compute billions/second)
 - bcrypt cost < 10 (too fast)
 - Custom schemes combining hash algorithms
 
 **Step 3: Implement the hashing module**
 
-**Node.js / TypeScript — Argon2id (preferred)**
+**Node.js / TypeScript: Argon2id (preferred)**
 
 ```typescript
 // src/lib/password.ts
@@ -59,7 +59,7 @@ import argon2 from 'argon2';
 // OWASP-recommended parameters for Argon2id (2023)
 const ARGON2_OPTIONS = {
   type: argon2.argon2id,
-  memoryCost: 19456, // 19 MiB — balance between security and server RAM
+  memoryCost: 19456, // 19 MiB: balance between security and server RAM
   timeCost: 2,       // 2 iterations
   parallelism: 1,
 };
@@ -72,7 +72,7 @@ export async function hashPassword(plaintext: string): Promise<string> {
 
 export async function verifyPassword(hash: string, plaintext: string): Promise<boolean> {
   return argon2.verify(hash, plaintext);
-  // Returns false on mismatch — never throws on wrong password
+  // Returns false on mismatch: never throws on wrong password
 }
 
 export function needsRehash(hash: string): boolean {
@@ -81,7 +81,7 @@ export function needsRehash(hash: string): boolean {
 }
 ```
 
-**Node.js / TypeScript — bcrypt (if Argon2 not available)**
+**Node.js / TypeScript: bcrypt (if Argon2 not available)**
 
 ```typescript
 // src/lib/password.ts
@@ -99,7 +99,7 @@ export async function verifyPassword(hash: string, plaintext: string): Promise<b
   return bcrypt.compare(plaintext, hash);
 }
 
-// bcrypt truncates at 72 bytes — use pre-hashing for very long passwords
+// bcrypt truncates at 72 bytes: use pre-hashing for very long passwords
 export async function hashPasswordSafe(plaintext: string): Promise<string> {
   // Pre-hash to handle passwords > 72 bytes safely
   const { createHash } = await import('crypto');
@@ -108,7 +108,7 @@ export async function hashPasswordSafe(plaintext: string): Promise<string> {
 }
 ```
 
-**Python — Argon2id**
+**Python: Argon2id**
 
 ```python
 # auth/password.py
@@ -194,7 +194,7 @@ If users already exist with MD5, SHA, or weak bcrypt hashes:
 
 ```typescript
 // Migration strategy: verify with old algorithm on login, re-hash with new algorithm
-// NEVER require all users to reset — that's a poor experience
+// NEVER require all users to reset: that's a poor experience
 
 // src/api/auth/login.ts (migration version)
 import { createHash } from 'crypto';
@@ -229,10 +229,10 @@ export async function POST(request: Request) {
   let needsMigration = false;
   
   if (user.hashAlgorithm === 'argon2id' || user.passwordHash.startsWith('$argon2')) {
-    // Modern hash — use normal verification
+    // Modern hash: use normal verification
     isValid = await verifyPassword(user.passwordHash, password);
   } else {
-    // Legacy hash — verify with old algorithm
+    // Legacy hash: verify with old algorithm
     isValid = await verifyLegacyHash(password, user.passwordHash);
     needsMigration = isValid; // Only migrate on successful login
   }

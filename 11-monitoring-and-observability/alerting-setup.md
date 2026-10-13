@@ -10,10 +10,10 @@ Before defining rules, classify alerts by urgency:
 
 | Tier | Response time | Examples | Channel |
 |---|---|---|---|
-| P1 — Critical | Immediately (24/7) | Active breach, credential stuffing, mass data export | PagerDuty wake-up |
-| P2 — High | Within 30 minutes | Brute force, unusual admin access, certificate expiry | Slack + PagerDuty |
-| P3 — Medium | Within 4 hours | Rate limit spikes, error rate increase, new device login | Slack channel |
-| P4 — Low | Next business day | Single failed login, minor config change | Email digest |
+| P1: Critical | Immediately (24/7) | Active breach, credential stuffing, mass data export | PagerDuty wake-up |
+| P2: High | Within 30 minutes | Brute force, unusual admin access, certificate expiry | Slack + PagerDuty |
+| P3: Medium | Within 4 hours | Rate limit spikes, error rate increase, new device login | Slack channel |
+| P4: Low | Next business day | Single failed login, minor config change | Email digest |
 
 ---
 
@@ -114,7 +114,7 @@ async function detectImpossibleTravel(userId: string, currentLogin: LoginEvent) 
 
 ### 4. Admin action outside business hours
 
-**Trigger:** Any admin action (role changes, user deletions, config changes) occurring outside 08:00–20:00 UTC on weekdays.
+**Trigger:** Any admin action (role changes, user deletions, config changes) occurring outside 08:00 to 20:00 UTC on weekdays.
 
 ```yaml
 # Grafana alert
@@ -304,9 +304,9 @@ Every P1/P2 alert should link to a runbook. Minimum runbook content:
 [Description of the alert condition]
 
 ## Immediate actions
-1. [Step 1 — usually: assess scope]
-2. [Step 2 — usually: contain if active]
-3. [Step 3 — escalate if needed]
+1. [Step 1, usually: assess scope]
+2. [Step 2, usually: contain if active]
+3. [Step 3: escalate if needed]
 
 ## Investigation steps
 - Check: [specific log query]
@@ -326,7 +326,7 @@ Every P1/P2 alert should link to a runbook. Minimum runbook content:
 
 Alerts are worthless if they are ignored. To prevent alert fatigue:
 
-1. **Every alert must be actionable.** If there is no action to take, it is not an alert — it is a metric. Put it on a dashboard.
+1. **Every alert must be actionable.** If there is no action to take, it is not an alert: it is a metric. Put it on a dashboard.
 2. **Review alert volume weekly.** More than 5 P2+ alerts per week from the same rule means the threshold is wrong.
 3. **Suppress during deployments.** Use maintenance windows in your alert platform during planned deployments.
 4. **Track alert-to-action rate.** If more than 20% of alerts require no action, recalibrate thresholds.

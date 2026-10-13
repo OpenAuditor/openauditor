@@ -1,6 +1,6 @@
 # Security Certifications
 
-A practical guide to certifications that matter — who they're for, what they actually cover, realistic costs, and how long they take.
+A practical guide to certifications that matter, who they're for, what they actually cover, realistic costs, and how long they take.
 
 > **Honest note:** Certifications signal baseline competence. They don't replace hands-on experience. Employers increasingly value a HackTheBox or CTF portfolio over a cert you crammed for in two weeks.
 
@@ -24,7 +24,7 @@ A practical guide to certifications that matter — who they're for, what they a
 
 **Cost:** ~£350 / $404 USD exam voucher. Study materials (Professor Messer's free videos + Darril Gibson's book) can keep total cost under £500.
 
-**Time to prepare:** 2–3 months for someone with an IT background; 4–6 months if starting from scratch.
+**Time to prepare:** 2 to 3 months for someone with an IT background; 4 to 6 months if starting from scratch.
 
 **Validity:** 3 years; renew via continuing education or re-exam.
 
@@ -34,7 +34,7 @@ A practical guide to certifications that matter — who they're for, what they a
 
 ---
 
-## CEH — Certified Ethical Hacker (EC-Council)
+## CEH: Certified Ethical Hacker (EC-Council)
 
 **Who it's for:** Developers or security engineers wanting a structured overview of offensive techniques. Widely recognised in corporate hiring, particularly in financial services and government sectors.
 
@@ -47,13 +47,13 @@ A practical guide to certifications that matter — who they're for, what they a
 - Web application hacking, SQL injection, XSS
 - Cryptography basics
 
-**Depth:** Broader than Security+ but still conceptual rather than deeply practical. The exam is multiple choice — you're recognising attack descriptions, not performing them.
+**Depth:** Broader than Security+ but still conceptual rather than deeply practical. The exam is multiple choice: you're recognising attack descriptions, not performing them.
 
 **Format:** 125 multiple choice questions, 4 hours.
 
-**Cost:** £1,200–£1,800 / $1,699 USD for official training + exam. Without training, the exam alone is ~$950 + an eligibility application fee.
+**Cost:** £1,200: £1,800 / $1,699 USD for official training + exam. Without training, the exam alone is ~$950 + an eligibility application fee.
 
-**Time to prepare:** 2–3 months with official courseware.
+**Time to prepare:** 2 to 3 months with official courseware.
 
 **Validity:** 3 years; CECs (Continuing Education Credits) required to renew.
 
@@ -63,7 +63,7 @@ A practical guide to certifications that matter — who they're for, what they a
 
 ---
 
-## OSCP — Offensive Security Certified Professional
+## OSCP: Offensive Security Certified Professional
 
 **Who it's for:** Security engineers, pentesters, and developers who want real offensive skills. Considered the benchmark practical penetration testing certification.
 
@@ -77,23 +77,23 @@ A practical guide to certifications that matter — who they're for, what they a
 - Active Directory attacks
 - Tunnelling and port forwarding
 
-**Depth:** Very deep, entirely practical. The exam is a 24-hour hands-on lab — you must compromise machines, not answer questions.
+**Depth:** Very deep, entirely practical. The exam is a 24-hour hands-on lab: you must compromise machines, not answer questions.
 
 **Format:** 24-hour practical exam (compromise 3+ machines + write a professional pentest report within 24 hours).
 
 **Cost:** $1,499 USD for 90 days of lab access + exam attempt (PEN-200 course). Additional attempts cost extra.
 
-**Time to prepare:** 3–12 months depending on prior experience. Extensive home lab practice expected.
+**Time to prepare:** 3 to 12 months depending on prior experience. Extensive home lab practice expected.
 
 **Validity:** Does not expire. Widely regarded as more valuable than CEH by technical hiring managers.
 
-**Useful for:** Penetration tester roles, red team positions, security engineers. Overkill for most developers — unless you want to move into offensive security.
+**Useful for:** Penetration tester roles, red team positions, security engineers. Overkill for most developers, unless you want to move into offensive security.
 
 **Official:** https://www.offsec.com/courses/pen-200/
 
 ---
 
-## CKS — Certified Kubernetes Security Specialist
+## CKS: Certified Kubernetes Security Specialist
 
 **Who it's for:** Platform engineers, DevOps engineers, and developers who run workloads on Kubernetes and need to harden them.
 
@@ -112,7 +112,7 @@ A practical guide to certifications that matter — who they're for, what they a
 
 **Cost:** $395 USD exam + 2 attempts.
 
-**Time to prepare:** 2–4 months after earning CKA. Killer.sh simulator is the recommended prep.
+**Time to prepare:** 2 to 4 months after earning CKA. Killer.sh simulator is the recommended prep.
 
 **Validity:** 2 years.
 
@@ -124,7 +124,7 @@ A practical guide to certifications that matter — who they're for, what they a
 
 ## Cloud Security Certifications
 
-### AWS Certified Security – Specialty
+### AWS Certified Security: Specialty
 
 **Who it's for:** Developers and architects who deploy on AWS and need to own their security posture.
 
@@ -134,7 +134,7 @@ A practical guide to certifications that matter — who they're for, what they a
 
 **Cost:** $300 USD.
 
-**Time:** 3–6 months. Adrian Cantrill's and Stephane Maarek's courses are popular.
+**Time:** 3 to 6 months. Adrian Cantrill's and Stephane Maarek's courses are popular.
 
 **Official:** https://aws.amazon.com/certification/certified-security-specialty/
 
@@ -146,7 +146,7 @@ A practical guide to certifications that matter — who they're for, what they a
 
 **What it covers:** Configuring cloud security, managing operations, identity, access, networking policies, data protection, compliance.
 
-**Format:** 50–60 questions, 2 hours.
+**Format:** 50 to 60 questions, 2 hours.
 
 **Cost:** $200 USD.
 
@@ -156,7 +156,7 @@ A practical guide to certifications that matter — who they're for, what they a
 
 ### Microsoft SC-900 / SC-200
 
-**SC-900** is the entry-level Microsoft security fundamentals cert — useful as a starting point. **SC-200** (Security Operations Analyst) is more advanced and covers Microsoft Sentinel, Defender, and threat investigation.
+**SC-900** is the entry-level Microsoft security fundamentals cert: useful as a starting point. **SC-200** (Security Operations Analyst) is more advanced and covers Microsoft Sentinel, Defender, and threat investigation.
 
 **Cost:** SC-900 ~$165 USD; SC-200 ~$165 USD.
 
@@ -173,7 +173,7 @@ A practical guide to certifications that matter — who they're for, what they a
 | Running Kubernetes in production | CKA → CKS |
 | Deploying on AWS | AWS Security Specialty |
 | Corporate compliance / government contracting | Security+ (DoD 8570 compliant) |
-| Just want to learn — no cert required | PortSwigger Academy + TryHackMe (free) |
+| Just want to learn: no cert required | PortSwigger Academy + TryHackMe (free) |
 
 ---
 
@@ -181,11 +181,11 @@ A practical guide to certifications that matter — who they're for, what they a
 
 Before spending money on certifications, these free resources build comparable practical skills:
 
-- **PortSwigger Web Security Academy** — https://portswigger.net/web-security
-- **TryHackMe** (free tier) — https://tryhackme.com
-- **HackTheBox Starting Point** — https://www.hackthebox.com
-- **SANS Cyber Aces** — https://www.sans.org/cyberaces/
-- **Cybrary** (free tier) — https://www.cybrary.it
+- **PortSwigger Web Security Academy**: https://portswigger.net/web-security
+- **TryHackMe** (free tier): https://tryhackme.com
+- **HackTheBox Starting Point**: https://www.hackthebox.com
+- **SANS Cyber Aces**: https://www.sans.org/cyberaces/
+- **Cybrary** (free tier): https://www.cybrary.it
 
 ---
 

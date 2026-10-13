@@ -29,7 +29,7 @@ Read the monitoring configuration files and identify what's already in place.
 
 Set up alerts for these security events (priority order):
 
-**P0 — Immediate alert (within 5 minutes):**
+**P0: Immediate alert (within 5 minutes):**
 
 | Event | Threshold | What it indicates |
 |-------|-----------|------------------|
@@ -39,7 +39,7 @@ Set up alerts for these security events (priority order):
 | Admin account login (outside hours) | Any time between 11pm-6am | Potential compromise |
 | New admin user created | Any event | Privilege escalation |
 
-**P1 — Urgent alert (within 15 minutes):**
+**P1: Urgent alert (within 15 minutes):**
 
 | Event | Threshold | What it indicates |
 |-------|-----------|------------------|
@@ -48,7 +48,7 @@ Set up alerts for these security events (priority order):
 | Large data export | > 10,000 rows in one request | Potential data exfiltration |
 | 500 errors | > 5x baseline | Application under attack |
 
-**P2 — Daily digest:**
+**P2: Daily digest:**
 
 | Event | Period | What it indicates |
 |-------|--------|------------------|
@@ -136,7 +136,7 @@ async function trackFailedLogin(ip: string, email: string): Promise<void> {
   if (count === 50) {
     await sendSecurityAlert({
       title: 'Severe Brute Force Attack',
-      description: `${count} failed login attempts — possible automated attack`,
+      description: `${count} failed login attempts: possible automated attack`,
       severity: 'critical',
       data: { ip, attempt_count: count },
     });
@@ -165,7 +165,7 @@ Based on the logging tool in use, set up automated alerts:
 
 **For Logtail (BetterStack):**
 - Alerts → New Alert
-- Condition: `json.event = "auth.login.failure"` — threshold: 20 in 5 minutes
+- Condition: `json.event = "auth.login.failure"`: threshold: 20 in 5 minutes
 - Notification: Slack channel `#security-alerts`
 
 **For Datadog:**
@@ -226,7 +226,7 @@ Monitor 3: Auth endpoint
 Verify alerts are working:
 
 ```typescript
-// Test script — run manually
+// Test script: run manually
 import { sendSecurityAlert } from '@/lib/security-alerts';
 
 await sendSecurityAlert({

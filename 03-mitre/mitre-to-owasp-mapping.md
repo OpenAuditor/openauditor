@@ -1,6 +1,6 @@
 # MITRE ATT&CK to OWASP Mapping
 
-> **30-second summary:** MITRE ATT&CK describes how attackers operate tactically (initial access, persistence, lateral movement). OWASP describes the vulnerabilities they exploit. This mapping helps you see which MITRE techniques your OWASP fixes actually defend against — and which ATT&CK techniques have no OWASP control.
+> **30-second summary:** MITRE ATT&CK describes how attackers operate tactically (initial access, persistence, lateral movement). OWASP describes the vulnerabilities they exploit. This mapping helps you see which MITRE techniques your OWASP fixes actually defend against, and which ATT&CK techniques have no OWASP control.
 
 ## Why This Mapping Matters
 
@@ -63,7 +63,7 @@ MITRE Tactics:      Reconnaissance → Initial Access → Collection → Exfiltr
 MITRE Techniques:   T1596 (cred leak search) → T1110.004 (credential stuffing) → T1530 (cloud data) → T1041 (C2 exfil)
 
 OWASP Mapping:
-  T1596 → (not covered by OWASP — external threat intel)
+  T1596 → (not covered by OWASP: external threat intel)
   T1110.004 → A07 Authentication Failures (no rate limiting)
   T1530 → A01 Broken Access Control (IDOR on S3/Supabase)
   T1041 → A09 Logging Failures (exfil not detected)
