@@ -58,16 +58,9 @@ jobs:
           npm audit --json > npm-audit-results.json || true
 
           # Count critical and high vulnerabilities
-          CRITICAL=$(cat npm-audit-results.json | node -e "
-            const d = JSON.parse(require('fs').readFileSync('/dev/stdin'));
-            const vulns = d.vulnerabilities || {};
-            console.log(Object.values(vulns).filter(v => v.severity === 'critical').length);
-          ")
-          HIGH=$(cat npm-audit-results.json | node -e "
-            const d = JSON.parse(require('fs').readFileSync('/dev/stdin'));
-            const vulns = d.vulnerabilities || {};
-            console.log(Object.values(vulns).filter(v => v.severity === 'high').length);
-          ")
+          # npm's JSON report includes severity totals (jq is preinstalled on GitHub runners)
+          CRITICAL=$(jq '.metadata.vulnerabilities.critical // 0' npm-audit-results.json)
+          HIGH=$(jq '.metadata.vulnerabilities.high // 0' npm-audit-results.json)
 
           echo "critical=$CRITICAL" >> "$GITHUB_OUTPUT"
           echo "high=$HIGH" >> "$GITHUB_OUTPUT"
