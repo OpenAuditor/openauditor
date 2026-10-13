@@ -36,7 +36,13 @@ Unlike simple prompts, skills are structured workflows that guide the AI through
 3. Paste the contents of [SKILL.md](./production-readiness-audit/SKILL.md)
 4. Press Enter — Cursor will begin the multi-step workflow
 
-### Claude (claude.ai or Claude API)
+### Claude Code (recommended)
+
+Copy the `production-readiness-audit` folder into `.claude/skills/` (one project) or `~/.claude/skills/` (all projects), then run `/production-readiness-audit`. Full steps in [load-skill-claude.md](./production-readiness-audit/prompts/load-skill-claude.md).
+
+The same folder works in other tools that support the Agent Skills format.
+
+### Claude (claude.ai)
 
 1. Open a new conversation
 2. Paste the contents of [SKILL.md](./production-readiness-audit/SKILL.md) as your first message

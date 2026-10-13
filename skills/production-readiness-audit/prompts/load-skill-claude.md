@@ -8,46 +8,41 @@ In any Claude Code session, paste this directly into the conversation:
 Run a production readiness security audit on this codebase. Check: environment and secrets management, password hashing algorithm and strength, injection vulnerabilities (SQL, XSS, command), access control and IDOR risks, security headers, dependency vulnerabilities, TLS configuration, error handling (no stack traces to clients), sensitive data in logs, and GitHub Actions security (pinned actions, minimal permissions). Produce a findings table with Critical/High/Medium counts per area, then implement fixes for all Critical and High findings.
 ```
 
-## One-Line Shortcut
+## Install as a Claude Code skill (recommended)
 
-For quick audits, use:
+`SKILL.md` has standard skill frontmatter, so Claude Code can load the whole folder as a skill, including the question bank, scoring rubric and report template.
+
+**For one project** (commit it so your team gets it too):
+
+```bash
+mkdir -p .claude/skills
+git clone --depth 1 https://github.com/OpenAuditor/openauditor /tmp/openauditor
+cp -r /tmp/openauditor/skills/production-readiness-audit .claude/skills/
+```
+
+**For every project on your machine:**
+
+```bash
+mkdir -p ~/.claude/skills
+cp -r /tmp/openauditor/skills/production-readiness-audit ~/.claude/skills/
+```
+
+Then run it with:
 
 ```
-/project:audit
+/production-readiness-audit
 ```
 
-(Requires adding the skill to your CLAUDE.md — see below)
-
-## Adding to CLAUDE.md
-
-Add this to your project's `CLAUDE.md` to make `/project:audit` available:
-
-````markdown
-## /project:audit — Production Readiness Security Audit
-
-When user types `/project:audit`, run:
-
-1. **Secrets check**: grep for hardcoded passwords/keys, verify .env is gitignored
-2. **Auth check**: bcrypt cost≥12 or Argon2id, rate limiting on login, JWT algorithm specified  
-3. **Injection**: template literals in SQL, innerHTML with user data, exec() with user input
-4. **Access control**: params.id endpoints have ownership checks
-5. **Headers**: HSTS, X-Content-Type-Options, X-Frame-Options, CORS origin restriction
-6. **Dependencies**: npm audit for High/Critical CVEs
-7. **TLS**: rejectUnauthorized:false anywhere, http:// in production URLs
-8. **Error handling**: stack traces not returned in production
-9. **Logging**: no passwords/tokens logged
-10. **CI/CD**: GitHub Actions pinned to SHA, minimal permissions
-
-Report format: table with status per area, then implement fixes for Critical and High.
-````
+Claude will also load it automatically when you ask for a security audit or production readiness review.
 
 ## Using in Claude.ai
 
-1. Go to claude.ai/code or start a new conversation
-2. Paste the full audit prompt above
-3. Attach your codebase context or let Claude explore the directory
+1. Zip the `production-readiness-audit` folder and upload it as a skill in claude.ai (Settings, Capabilities, Skills), or paste the audit prompt above into a conversation
+2. Attach your code (or connect the GitHub repo) so Claude can review it
 
-## Using with the Anthropic API
+## Using with the Claude API
+
+The API returns a report only; it cannot edit your files. For large codebases, use Claude Code instead of sending everything in one request.
 
 ```typescript
 import Anthropic from '@anthropic-ai/sdk';
@@ -82,14 +77,14 @@ function collectSourceFiles(dir: string, extensions = ['.ts', '.js', '.tsx']): s
 const sourceCode = collectSourceFiles(process.cwd());
 
 const message = await client.messages.create({
-  model: 'claude-opus-4-7',
+  model: 'claude-sonnet-5-5', // check docs.claude.com for current model IDs
   max_tokens: 8192,
   messages: [
     {
       role: 'user',
       content: `You are a security engineer. Run a production readiness audit on this codebase.
 
-Check each area and produce a findings table, then implement fixes for Critical and High findings.
+Check each area and produce a findings table. For every Critical and High finding, give the file, the risk and the exact code change to make.
 
 Areas to check:
 1. Hardcoded secrets or credentials
@@ -110,7 +105,9 @@ ${sourceCode}
   ],
 });
 
-console.log(message.content[0].text);
+for (const block of message.content) {
+  if (block.type === 'text') console.log(block.text);
+}
 ```
 
 ## Learn More

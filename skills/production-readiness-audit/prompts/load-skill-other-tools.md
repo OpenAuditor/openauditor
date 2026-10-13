@@ -71,7 +71,7 @@ const response = await client.chat.completions.create({
 4. Paste the audit prompt as the task description
 5. Approve each file change as Cline proposes it
 
-**Cline works well with Claude claude-sonnet-4-6 or claude-opus-4-7 as the backend model.**
+**Cline works well with a current Claude Sonnet or Opus model as the backend model.**
 
 ---
 
@@ -82,7 +82,7 @@ const response = await client.chat.completions.create({
 pip install aider-chat
 
 # Run audit against your codebase
-aider --model claude-opus-4-7 \
+aider --model anthropic/claude-sonnet-5-5 \
   --message "$(cat /path/to/openauditor/skills/production-readiness-audit/SKILL.md)"
 
 # Or in watch mode (Aider monitors file changes)
