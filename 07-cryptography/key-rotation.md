@@ -233,7 +233,7 @@ jobs:
           echo "Last rotation: check SECURITY.md rotation log"
 
       - name: Create GitHub Issue
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
           script: |
             github.rest.issues.create({

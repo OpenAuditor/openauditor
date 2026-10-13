@@ -257,7 +257,7 @@ jobs:
   inventory:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Check for undocumented endpoints
         run: node scripts/discover-api-endpoints.js

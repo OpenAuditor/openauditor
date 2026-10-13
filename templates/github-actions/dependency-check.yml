@@ -15,19 +15,37 @@ permissions:
 
 jobs:
   # ============================================================
+  # Detect which ecosystems this repo uses
+  # (hashFiles() is not allowed in a job-level `if`)
+  # ============================================================
+  detect:
+    name: Detect ecosystems
+    runs-on: ubuntu-latest
+    outputs:
+      node: ${{ steps.check.outputs.node }}
+      python: ${{ steps.check.outputs.python }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - id: check
+        run: |
+          [ -f package.json ] && echo "node=true" >> "$GITHUB_OUTPUT" || echo "node=false" >> "$GITHUB_OUTPUT"
+          [ -f requirements.txt ] && echo "python=true" >> "$GITHUB_OUTPUT" || echo "python=false" >> "$GITHUB_OUTPUT"
+
+  # ============================================================
   # npm / Node.js dependency audit
   # ============================================================
   npm-audit:
     name: npm Audit
     runs-on: ubuntu-latest
-    if: hashFiles('package.json') != ''
+    needs: detect
+    if: needs.detect.outputs.node == 'true'
 
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: '20'
+          node-version: '24'
           cache: 'npm'
 
       - name: Install dependencies
@@ -61,37 +79,42 @@ jobs:
 
       - name: Create GitHub Issue for Critical Findings
         if: steps.audit.outputs.critical > 0
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
           script: |
             const critical = '${{ steps.audit.outputs.critical }}';
             const high = '${{ steps.audit.outputs.high }}';
 
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const body = [
+              '## Weekly Dependency Audit Found Critical Issues',
+              '',
+              `**Critical vulnerabilities:** ${critical}`,
+              `**High vulnerabilities:** ${high}`,
+              '',
+              '### Action Required',
+              '',
+              'Run `npm audit` locally to see the full details and `npm audit fix` where a patch is available.',
+              '',
+              'For vulnerabilities with no fix available, evaluate alternative packages or apply compensating controls.',
+              '',
+              `**Run ID:** [${context.runId}](${runUrl})`,
+              '',
+              '---',
+              '*Generated automatically by the weekly dependency check workflow.*',
+            ].join('\n');
+
             await github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: `🚨 Critical Security Vulnerabilities Found — ${new Date().toISOString().split('T')[0]}`,
-              body: `## Weekly Dependency Audit Found Critical Issues
-
-**Critical vulnerabilities:** ${critical}
-**High vulnerabilities:** ${high}
-
-### Action Required
-
-Run \`npm audit\` locally to see the full details and \`npm audit fix\` where a patch is available.
-
-For vulnerabilities with no fix available, evaluate alternative packages or apply compensating controls.
-
-**Run ID:** [${context.runId}](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})
-
----
-*Generated automatically by the weekly dependency check workflow.*`,
+              title: `Critical security vulnerabilities found: ${new Date().toISOString().split('T')[0]}`,
+              body,
               labels: ['security', 'dependencies', 'high-priority'],
             });
 
       - name: Upload audit results
         if: always()
-        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.3.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: npm-audit-results
           path: npm-audit-results.json
@@ -103,12 +126,13 @@ For vulnerabilities with no fix available, evaluate alternative packages or appl
   pip-audit:
     name: pip Audit
     runs-on: ubuntu-latest
-    if: hashFiles('requirements.txt') != ''
+    needs: detect
+    if: needs.detect.outputs.python == 'true'
 
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - uses: actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c # v5.0.0
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: '3.12'
 
@@ -137,7 +161,7 @@ For vulnerabilities with no fix available, evaluate alternative packages or appl
 
       - name: Upload pip-audit results
         if: always()
-        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.3.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: pip-audit-results
           path: pip-audit-results.json
@@ -151,10 +175,10 @@ For vulnerabilities with no fix available, evaluate alternative packages or appl
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Run OSV Scanner
-        uses: google/osv-scanner-action@v1.8.1
+        uses: google/osv-scanner-action/osv-scanner-action@b1d267aea5211fa648d9d442fa64b90dbdcbdd36 # v2.7.0
         with:
           scan-args: |-
             --recursive
@@ -164,7 +188,7 @@ For vulnerabilities with no fix available, evaluate alternative packages or appl
 
       - name: Upload OSV results
         if: always()
-        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.3.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: osv-scan-results
           path: osv-results.json

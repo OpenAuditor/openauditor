@@ -79,12 +79,12 @@ sha256sum --check app-v2.0.0.tar.gz.sha256
 - uses: some-org/some-action@main  # 'main' can be changed at any time
 
 # SECURE — pin to commit SHA (immutable)
-- uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-- uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
+- uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+- uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
 
 # Add GitHub's built-in security scanning
 - name: Run CodeQL
-  uses: github/codeql-action/analyze@c7f9125735019aa87cfc361530512d50ea439c71 # v3
+  uses: github/codeql-action/analyze@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
 ```
 
 ### 4. Dependency Confusion / Typosquatting
@@ -187,7 +187,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       
       - name: Verify lockfile integrity
         run: npm ci --ignore-scripts

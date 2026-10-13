@@ -60,12 +60,12 @@ jobs:
     name: Secret Scan
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0  # Full history for PR scanning
 
       - name: Run Gitleaks
-        uses: gitleaks/gitleaks-action@cb7149a9b57195b609c63e8518d2c6ef8e492c33
+        uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITLEAKS_CONFIG: .gitleaks.toml
@@ -76,9 +76,9 @@ jobs:
     runs-on: ubuntu-latest
     if: hashFiles('package.json') != ''
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: '20'
           cache: 'npm'
@@ -89,7 +89,7 @@ jobs:
         run: npx eslint . --max-warnings=0 --format=sarif --output-file=eslint.sarif || true
 
       - name: Upload ESLint results
-        uses: github/codeql-action/upload-sarif@c7f9125735019aa87cfc361530512d50ea439c71
+        uses: github/codeql-action/upload-sarif@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
         with:
           sarif_file: eslint.sarif
           category: eslint
@@ -100,9 +100,9 @@ jobs:
     runs-on: ubuntu-latest
     if: hashFiles('package.json') != ''
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: '20'
           cache: 'npm'
@@ -119,7 +119,7 @@ jobs:
     container:
       image: returntocorp/semgrep
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Semgrep security scan
         run: |
@@ -130,7 +130,7 @@ jobs:
             --output=semgrep.sarif \
             . || true
 
-      - uses: github/codeql-action/upload-sarif@c7f9125735019aa87cfc361530512d50ea439c71
+      - uses: github/codeql-action/upload-sarif@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
         with:
           sarif_file: semgrep.sarif
 ```

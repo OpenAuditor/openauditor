@@ -26,9 +26,9 @@
 | Skills (Production Readiness Audit) | ✓ Complete | 9 |
 | Templates (Gitignore, env, GitHub Actions, negative prompts) | ✓ Complete | 15 |
 
-| .github (issue, PR and discussion templates, CI) | ✓ Complete | 4 |
+| .github (issue, PR and discussion templates, CI) | ✓ Complete | 5 |
 
-**Total: 245 files across 18 sections**
+**Total: 246 files across 18 sections**
 
 ## Current Version
 
