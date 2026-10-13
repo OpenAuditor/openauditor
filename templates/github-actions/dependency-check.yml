@@ -69,8 +69,8 @@ jobs:
             console.log(Object.values(vulns).filter(v => v.severity === 'high').length);
           ")
 
-          echo "critical=$CRITICAL" >> $GITHUB_OUTPUT
-          echo "high=$HIGH" >> $GITHUB_OUTPUT
+          echo "critical=$CRITICAL" >> "$GITHUB_OUTPUT"
+          echo "high=$HIGH" >> "$GITHUB_OUTPUT"
 
           echo "Critical: $CRITICAL, High: $HIGH"
 
@@ -156,7 +156,7 @@ jobs:
           print(count)
           ")
 
-          echo "high_count=$HIGH" >> $GITHUB_OUTPUT
+          echo "high_count=$HIGH" >> "$GITHUB_OUTPUT"
           pip-audit -r requirements.txt || true
 
       - name: Upload pip-audit results
