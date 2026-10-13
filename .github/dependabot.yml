@@ -1,0 +1,14 @@
+# Keeps SHA-pinned actions in this repo's own workflows up to date.
+# (The templates in templates/github-actions are examples for readers and are
+# refreshed by hand; Dependabot only reads .github/workflows.)
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      actions:
+        patterns: ["*"]
+    commit-message:
+      prefix: "chore(deps)"

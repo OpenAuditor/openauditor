@@ -8,8 +8,9 @@ If you discover a vulnerability in OpenAuditor or its guidance, please report it
 
 ### How to Report
 
-1. Email: hello@baulin.co.uk
-2. Include the following:
+1. Preferred: use GitHub's private reporting form at [Security → Report a vulnerability](https://github.com/OpenAuditor/openauditor/security/advisories/new)
+2. Or email: hello@baulin.co.uk
+3. Include the following:
    - Description of the vulnerability
    - Affected section or file
    - Steps to reproduce (if applicable)
