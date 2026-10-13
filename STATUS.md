@@ -7,7 +7,7 @@
 | Core (README, START-HERE, PROMPTS, CHANGELOG, STATUS, CONTRIBUTING, SECURITY, LICENSE) | ✓ Complete | 8 |
 | 00 Foundations | ✓ Complete | 13 |
 | 01 Pre-Commit Hooks | ✓ Complete | 15 |
-| 02 OWASP (Web Top 10, API Top 10, LLM Top 10) | ⚠ Updating to 2025 editions | 40 |
+| 02 OWASP (Web Top 10, API Top 10, LLM Top 10) | ⚠ LLM Top 10 updated to 2025; Web Top 10 update to 2025 in progress | 40 |
 | 03 MITRE ATT&CK | ✓ Complete | 6 |
 | 04 CVE Awareness | ✓ Complete | 10 |
 | 05 Supply Chain Security | ✓ Complete | 8 |
@@ -41,7 +41,7 @@ All 18 sections are complete with production-quality content, real-world breach 
 ### Content
 - ⚠ OWASP Web Top 10 (2021 edition; update to the 2025 edition in progress)
 - ✓ OWASP API Top 10 (2023): all 10 categories with code fixes
-- ⚠ OWASP LLM Top 10 (currently the 2023 v1.1 list; update to the 2025 edition in progress)
+- ✓ OWASP Top 10 for LLM Applications (2025 edition): all 10 categories, including the new System Prompt Leakage and Vector and Embedding Weaknesses
 - ✓ MITRE ATT&CK for Web, SaaS, and AI apps
 - ✓ MITRE to OWASP cross-reference mapping
 - ✓ CVE triage framework with CVSS v3.1 guide

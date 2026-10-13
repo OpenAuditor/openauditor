@@ -12,7 +12,7 @@ This section covers three Top 10 lists. Each maps to a different attack surface.
 |-------------|---------------|
 | [Web Top 10 (2021)](./web-top10/README.md) | Classic web application vulnerabilities: broken access control, injection, misconfigurations, and more |
 | [API Top 10 (2023)](./api-top10/README.md) | API-specific risks: broken object-level authorisation, excessive data exposure, mass assignment |
-| [LLM Top 10 (2025)](./llm-top10/README.md) | Risks specific to large language model integrations: prompt injection, insecure output handling, training data poisoning |
+| [LLM Top 10 (2025)](./llm-top10/README.md) | Risks specific to LLM features: prompt injection, sensitive data disclosure, supply chain (including MCP servers), RAG and vector store weaknesses, excessive agency, unbounded cost |
 
 ---
 

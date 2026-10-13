@@ -87,4 +87,4 @@ If you're fine-tuning on external data:
 ## Learn More
 
 - [Supply Chain Security](../05-supply-chain-security/)
-- [OWASP LLM05: Supply Chain Vulnerabilities](../02-owasp/llm-top10/LLM05-supply-chain.md)
+- [OWASP LLM03: Supply Chain](../02-owasp/llm-top10/LLM03-supply-chain.md)

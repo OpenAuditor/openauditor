@@ -165,6 +165,6 @@ Minimal tool scope dramatically limits the damage of any single compromise.
 
 ## Learn More
 
-- [OWASP LLM08: Excessive Agency](../02-owasp/llm-top10/LLM08-excessive-agency.md)
+- [OWASP LLM06: Excessive Agency](../02-owasp/llm-top10/LLM06-excessive-agency.md)
 - [Prompt Injection Defense](./prompt-injection-defense.md)
 - [Audit Agent Permissions prompt](./prompts/audit-agent-permissions.md)

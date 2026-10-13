@@ -9,6 +9,21 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Changed: OWASP Top 10 for LLM Applications updated to the 2025 edition
+- Files renamed to 2025 IDs: LLM02 Sensitive Information Disclosure, LLM03 Supply Chain, LLM04 Data and Model Poisoning, LLM05 Improper Output Handling, LLM06 Excessive Agency, LLM09 Misinformation, LLM10 Unbounded Consumption
+- New: LLM07 System Prompt Leakage, LLM08 Vector and Embedding Weaknesses (Supabase pgvector RLS patterns, tested)
+- Insecure Plugin Design merged into LLM06; Model Denial of Service and Model Theft merged into LLM10
+- New real-world cases: EchoLeak (CVE-2025-32711), postmark-mcp malicious MCP server, Replit production database deletion, Moffatt v. Air Canada, Anthropic/UK AISI/Turing 250-document poisoning study, LangChain CVE-2023-29374
+- Coverage of MCP servers, markdown-image data exfiltration, RAG tenancy, embedding erasure, AI-hallucinated packages and provider spend limits
+- LLM Top 10 audit prompt and PROMPTS.md index rewritten for the 2025 categories
+
+### Fixed (LLM section)
+- Removed `vm2` as a recommended sandbox (discontinued after sandbox escapes)
+- RAG examples no longer filter results after retrieval; a "secure" example that gave the model a free-form SQL tool was replaced
+- Sandbox path check used a string prefix test that `/sandbox2` could pass
+- Outdated APIs: `openai...acreate`, Pydantic v1 validators, `datetime.utcnow()`; a lowercase filter that could never match `DAN`
+- Inaccurate or unverifiable "real attack" examples replaced with documented incidents
+
 ### Fixed
 - 15 broken internal links (cryptography, AI app security, foundations prompts, OWASP prompts)
 - `templates/github-actions/dependency-check.yml` was invalid YAML and used `hashFiles()` in a job-level `if`; GitHub rejected it. Now valid and actionlint-clean
