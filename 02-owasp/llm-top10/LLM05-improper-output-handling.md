@@ -1,16 +1,18 @@
-# LLM02: Insecure Output Handling
+# LLM05: Improper Output Handling
 
-**Rank #2: OWASP LLM Top 10 2025 | Severity: High**
+**LLM05:2025 · Rank #5 in the OWASP Top 10 for LLM Applications 2025 (was "Insecure Output Handling", #2 in 2023) · Severity: High**
 
-LLM outputs are treated as trusted data and used downstream without sanitisation: in HTML, SQL, shell commands, or code execution contexts. This creates secondary injection vulnerabilities driven by model output.
+Model output is used downstream without validation or encoding: rendered as HTML, run as SQL or shell, evaluated as code, fetched as a URL or used as a file path. Whoever can influence the model (any user, or any document it reads) can then attack those systems.
 
 ---
 
 ## 30-Second Summary
 
-If an LLM generates HTML that gets rendered in a browser without escaping, that's XSS. If it generates SQL that gets executed without parameterisation, that's SQL injection. If it generates shell commands that get executed, that's command injection. The LLM is just a new way for untrusted content to arrive.
+If an LLM generates HTML that gets rendered in a browser without escaping, that's XSS. If it generates SQL that gets executed without parameterisation, that's SQL injection. If it generates shell commands that get executed, that's command injection. Treat model output exactly like user input, because thanks to [prompt injection](./LLM01-prompt-injection.md) it effectively is.
 
-**Real scenario:** A coding assistant generates code containing `os.system(user_input)`. A developer trusts the output without review. The generated code passes code review because it "came from AI". The vulnerability ships to production.
+**Real vulnerability:** CVE-2023-29374 in LangChain. Its `LLMMathChain` passed model output to Python's `exec()` to "do the maths". A prompt like "what is the result of `__import__('os').system('...')`" made the model write that code, and LangChain ran it: remote code execution through a chat box. The same pattern (model writes code, app runs it unsandboxed) has since produced RCEs in several text-to-SQL and text-to-chart libraries.
+
+(AI-generated code that a developer ships without review is a different risk: see [LLM09: Misinformation](./LLM09-misinformation.md).)
 
 ---
 
@@ -172,30 +174,59 @@ async function runUserCode(prompt) {
 const fn = new Function(llm.generate(prompt));
 fn(); // same risk as eval
 
-// SECURE: run generated code in a sandbox (Node.js vm module with restrictions)
-import { VM } from 'vm2';
+// ALSO VULNERABLE: Node's `vm` module and the `vm2` package
+// `vm` is explicitly not a security boundary, and vm2 was discontinued in 2023
+// after repeated sandbox escapes. Neither is safe for model-written code.
 
-async function runSafeCode(prompt) {
-  const code = await llm.generate(`Write JavaScript code to: ${prompt}`);
-  
-  const vm = new VM({
-    timeout: 3000,
-    sandbox: {
-      console: { log: console.log }, // only allow console.log
-      // No access to fs, http, process, etc.
-    },
+// SECURE: run generated code in an isolated microVM with no secrets,
+// no network (or an allowlist) and hard time and memory limits.
+// Options include Vercel Sandbox, E2B, or Firecracker/gVisor you run yourself.
+async function runGeneratedCode(code: string) {
+  const sandbox = await createSandbox({   // your provider's SDK
+    timeoutMs: 10_000,
+    network: 'deny',
+    env: {},                              // never pass your env vars in
   });
-  
   try {
-    const result = vm.run(code);
-    return result;
-  } catch (err) {
-    return { error: err.message };
+    return await sandbox.run(code);
+  } finally {
+    await sandbox.stop();
   }
 }
 
-// Even better: use a dedicated execution service (e2b.dev, Pyodide, etc.)
+// Best of all: don't execute model-written code. Have the model choose from
+// operations you've implemented (structured output), as in the SQL example above.
 ```
+
+---
+
+## URLs and File Paths From Model Output
+
+```typescript
+// VULNERABLE: fetching whatever URL the model produced (SSRF)
+const res = await fetch(modelOutput.url);   // http://169.254.169.254/... or internal services
+
+// VULNERABLE: writing to a model-chosen path (path traversal)
+await fs.writeFile(path.join(UPLOAD_DIR, modelOutput.filename), data); // "../../.env"
+```
+
+```typescript
+// SECURE: allowlist hosts, and constrain names to a safe pattern
+const ALLOWED_HOSTS = new Set(['api.partner.com', 'docs.yourapp.com']);
+
+function safeFetchUrl(raw: string): URL {
+  const u = new URL(raw);
+  if (u.protocol !== 'https:' || !ALLOWED_HOSTS.has(u.hostname)) {
+    throw new Error('URL not allowed');
+  }
+  return u;
+}
+
+const safeName = z.string().regex(/^[a-z0-9-]{1,64}\.(txt|md|csv)$/).parse(modelOutput.filename);
+await fs.writeFile(path.join(UPLOAD_DIR, safeName), data);
+```
+
+Rendering model output as markdown has its own exfiltration risk (remote images that carry data in the URL); see [Blocking the Exfiltration Channel](./LLM01-prompt-injection.md#blocking-the-exfiltration-channel).
 
 ---
 
@@ -231,28 +262,22 @@ def send_ai_email_safe(user_id: str, topic: str):
 ## Output Validation Layer
 
 ```python
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, Field, field_validator  # Pydantic v2
 import re
 
 class LLMEmailDraft(BaseModel):
-    subject: str
-    body: str
-    
-    @validator('subject')
-    def no_html_in_subject(cls, v):
-        if re.search(r'<[^>]+>', v):
-            raise ValueError('Subject cannot contain HTML')
-        return v
-    
-    @validator('body')
-    def body_max_length(cls, v):
-        if len(v) > 5000:
-            raise ValueError('Body too long')
+    subject: str = Field(max_length=150)
+    body: str = Field(max_length=5000)
+
+    @field_validator("subject")
+    @classmethod
+    def no_html_in_subject(cls, v: str) -> str:
+        if re.search(r"<[^>]+>", v):
+            raise ValueError("Subject cannot contain HTML")
         return v
 
-# Parse LLM output with Pydantic: fails fast if model hallucinates structure
-raw_output = llm.chat_structured(prompt, schema=LLMEmailDraft)
-validated = LLMEmailDraft(**raw_output)  # validates and raises on bad data
+# Validate model output: fails fast if the model returns the wrong shape
+validated = LLMEmailDraft.model_validate_json(raw_model_output)
 ```
 
 ---
@@ -264,7 +289,9 @@ validated = LLMEmailDraft(**raw_output)  # validates and raises on bad data
 - [ ] LLM-generated SQL is never executed directly (use structured extraction + parameterised queries)
 - [ ] LLM-generated shell commands are never executed with `shell=True`
 - [ ] `eval()` and `Function()` are never used with LLM output
-- [ ] Generated code runs in a sandbox with no access to fs, network, or process
+- [ ] Model-written code never runs in-process, in `vm` or in `vm2`; if it must run, it runs in an isolated microVM with no secrets
+- [ ] URLs from model output are allowlisted before fetching; file names and paths are pattern-validated
+- [ ] Markdown rendering of model output blocks remote images and non-allowlisted links
 - [ ] Output validation (Pydantic, Zod) applied to structured LLM responses
 - [ ] LLM output in emails is escaped before insertion into HTML templates
 - [ ] Output length limits enforced (model can't generate 1MB of script tags)
@@ -273,7 +300,9 @@ validated = LLMEmailDraft(**raw_output)  # validates and raises on bad data
 
 ## Learn More
 
+- [OWASP LLM05:2025 Improper Output Handling](https://genai.owasp.org/llmrisk/llm052025-improper-output-handling/)
 - [LLM01: Prompt Injection](./LLM01-prompt-injection.md)
+- [A10: Server-Side Request Forgery](../web-top10/A10-ssrf.md)
 - [Input Validation Guide](../../06-secure-coding/input-validation.md)
 - [CORS and CSP Headers](../../06-secure-coding/cors-csp-headers.md)
 - [Prompt Injection Defence](../../08-ai-app-security/prompt-injection-defense.md)

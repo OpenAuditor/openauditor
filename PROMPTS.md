@@ -69,15 +69,15 @@ This is the master index of every agent prompt in OpenAuditor, organized by what
 |---|---|---|
 | **Full LLM Top 10 Audit** | [LLM Top 10 Audit](./02-owasp/prompts/llm-top10-audit.md) | OWASP |
 | **LLM01: Prompt Injection** | [Defend Prompt Injection](./08-ai-app-security/prompts/defend-prompt-injection.md) | AI Security |
-| **LLM02: Insecure Output Handling** | (See Output Validation in Injection Defense) | [Prompt Injection Defense](./08-ai-app-security/prompt-injection-defense.md) |
-| **LLM03: Training Data Poisoning** | (See Supply Chain for AI) | [AI Supply Chain](./08-ai-app-security/ai-supply-chain.md) |
-| **LLM04: Model DoS** | [Add Rate Limiting](./06-secure-coding/prompts/add-rate-limiting.md) | Secure coding |
-| **LLM05: Supply Chain** | [Supply Chain Audit](./05-supply-chain-security/prompts/supply-chain-audit.md) | Supply Chain |
-| **LLM06: Sensitive Info Disclosure** | [Secure RAG Pipeline](./08-ai-app-security/prompts/secure-rag-pipeline.md) | AI Security |
-| **LLM07: Insecure Plugin Design** | [Audit Agent Permissions](./08-ai-app-security/prompts/audit-agent-permissions.md) | AI Security |
-| **LLM08: Excessive Agency** | [Audit Agent Permissions](./08-ai-app-security/prompts/audit-agent-permissions.md) | AI Security |
-| **LLM09: Overreliance** | (See Human Layer) | [The Human Layer](./00-foundations/the-human-layer.md) |
-| **LLM10: Model Theft** | (See AI Supply Chain) | [AI Supply Chain](./08-ai-app-security/ai-supply-chain.md) |
+| **LLM02: Sensitive Information Disclosure** | [Secure RAG Pipeline](./08-ai-app-security/prompts/secure-rag-pipeline.md) | AI Security |
+| **LLM03: Supply Chain** | [Supply Chain Audit](./05-supply-chain-security/prompts/supply-chain-audit.md) | Supply Chain |
+| **LLM04: Data and Model Poisoning** | [Secure RAG Pipeline](./08-ai-app-security/prompts/secure-rag-pipeline.md) | AI Security |
+| **LLM05: Improper Output Handling** | [LLM Top 10 Audit](./02-owasp/prompts/llm-top10-audit.md) (Step 2, LLM05) | OWASP |
+| **LLM06: Excessive Agency** | [Audit Agent Permissions](./08-ai-app-security/prompts/audit-agent-permissions.md) | AI Security |
+| **LLM07: System Prompt Leakage** | [Secure Env Setup](./06-secure-coding/prompts/secure-env-setup.md) | Secure coding |
+| **LLM08: Vector and Embedding Weaknesses** | [Secure RAG Pipeline](./08-ai-app-security/prompts/secure-rag-pipeline.md) | AI Security |
+| **LLM09: Misinformation** | [LLM Top 10 Audit](./02-owasp/prompts/llm-top10-audit.md) (Step 2, LLM09) | OWASP |
+| **LLM10: Unbounded Consumption** | [Add Rate Limiting](./06-secure-coding/prompts/add-rate-limiting.md) | Secure coding |
 
 ---
 

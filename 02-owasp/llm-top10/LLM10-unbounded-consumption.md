@@ -1,245 +1,170 @@
-# LLM04: Model Denial of Service
+# LLM10: Unbounded Consumption
 
-**Rank #4: OWASP LLM Top 10 2025 | Severity: Medium**
+**LLM10:2025 · Rank #10 in the OWASP Top 10 for LLM Applications 2025 (merges "Model Denial of Service" and "Model Theft" from 2023) · Severity: High for anything with a public AI endpoint**
 
-Attackers send computationally expensive requests to LLM-powered applications, causing service degradation, excessive costs, or complete unavailability.
+An LLM feature lets users (or attackers) consume model resources without effective limits. The result is a huge bill ("denial of wallet"), a service that's unavailable for real users, or a competitor quietly cloning your model's behaviour through your API.
 
 ---
 
 ## 30-Second Summary
 
-LLM inference is expensive: both in compute time and API cost. A single request with a 100,000-token context window can cost £1 to 5 and take 30+ seconds. Without rate limiting and token limits, an attacker can run up your API bill by thousands of pounds or make your service unavailable for real users.
+Every LLM call costs money and compute, and the cost scales with input size, output size, images, tool calls and agent loops. Without limits, one script can:
 
-**Real cost impact:** Unrestricted LLM API access costs real money. At $15/million output tokens (GPT-4), a single request generating 100,000 tokens costs $1.50. 1,000 concurrent such requests = $1,500. Without limits, this attack is trivially achievable.
+- **Run up your bill:** long outputs, huge inputs, many parallel requests, agents that loop
+- **Starve real users:** saturate your rate limits with the provider or your own GPUs
+- **Extract your model:** send thousands of varied prompts and use the answers to train a copy (the old "Model Theft" category)
+
+For a solo founder the bill is usually the real risk. A free tier with an AI feature and no per-user cap is an open tab.
+
+**Real pattern:** In 2024 Sysdig documented "LLMjacking": attackers stole cloud credentials and used them to run expensive hosted models, estimating costs to the victim of tens of thousands of dollars per day if left unchecked. The same thing happens with leaked provider API keys pushed to GitHub. A leaked key and an unprotected endpoint are the same problem: someone else spending your money.
 
 ---
 
 ## Attack Scenarios
 
-### 1. Infinite Loop Prompting
+### 1. Output and Input Flooding
 
 ```python
-# Attacker sends prompts designed to generate maximum tokens
-malicious_prompts = [
-    "Write the complete works of Shakespeare",
-    "List every country, city, and town in the world with their populations",
-    "Write a novel about artificial intelligence, at least 100,000 words",
-    "Repeat the letter A exactly 50,000 times",
-    "Continue this sequence forever: 1, 2, 3, 4...",
-]
+# Prompts designed to produce maximum output
+"Write a novel of at least 100,000 words about..."
+"Repeat the letter A 50,000 times"
 
-# Without max_tokens limit, each could generate thousands of tokens
-response = openai.chat.completions.create(
-    model="gpt-4o",
-    messages=[{"role": "user", "content": malicious_prompt}],
-    # No max_tokens = model generates until its own limit (4096-128k tokens)
-)
+# Inputs designed to maximise input tokens
+# 500-page PDFs, dozens of images per request, pasting the same document repeatedly,
+# or forcing RAG to stuff the context window with retrieved chunks
 ```
 
-### 2. Context Window Flooding
+### 2. Runaway Agents
 
 ```python
-# Attacker submits massive inputs to exhaust the context window
-# Each character costs money even if most is truncated
-
-# Image recognition: submitting 100 images in one request
-# Document Q&A: submitting a 500-page PDF multiple times
-# RAG: forcing retrieval of thousands of chunks
-
-# The cost is in the INPUT tokens, not just output
+# VULNERABLE: no depth, step or budget limit
+def run_agent(task: str):
+    for subtask in plan(task):
+        run_agent(subtask)          # "break every subtask into further subtasks"
 ```
 
-### 3. Recursive Agent Chains
+### 3. Model Extraction
 
-```python
-# VULNERABLE: agent can spawn agents indefinitely
-def run_agent(task: str, depth: int = 0):
-    response = llm.chat(f"Break this task into subtasks: {task}")
-    subtasks = parse_subtasks(response)
-    
-    for subtask in subtasks:
-        run_agent(subtask, depth + 1)  # No depth limit!
-        # Attacker sends: "Break into subtasks, each of which should also be broken into subtasks"
-```
+Systematic, varied queries collected to fine-tune a cheaper model that imitates yours. Only worth defending if your model or fine-tune is a genuine asset; if you're wrapping a public model, your exposure is cost, not theft.
 
 ---
 
 ## Defences
 
-### 1. Token Limits
+### 1. Cap Every Request
 
-```python
-# Always set max_tokens based on your use case
-def call_llm(prompt: str, use_case: str) -> str:
-    MAX_TOKENS = {
-        'chat_response': 500,          # Customer service reply
-        'document_summary': 1000,       # Document summarisation
-        'code_completion': 2000,        # Code generation
-        'analysis_report': 3000,        # Detailed analysis
-    }
-    
-    max_tokens = MAX_TOKENS.get(use_case, 500)  # Default to 500
-    
-    return openai.chat.completions.create(
-        model="gpt-4o",
-        messages=[{"role": "user", "content": prompt}],
-        max_tokens=max_tokens,  # ALWAYS set this
-    )
+```typescript
+// Hard limits on every call: output tokens, input size, time
+const MAX_INPUT_CHARS = 20_000;
 
-# Also limit input tokens
-def truncate_input(text: str, max_chars: int = 10000) -> str:
-    """Truncate input before sending to LLM to limit input token cost."""
-    if len(text) > max_chars:
-        logger.warning({'event': 'llm.input_truncated', 'original_length': len(text)})
-        return text[:max_chars] + "\n[Content truncated for length]"
-    return text
+export async function POST(req: Request) {
+  const user = await requireUser();
+  const { message } = z.object({ message: z.string().min(1).max(MAX_INPUT_CHARS) }).parse(await req.json());
+
+  const result = await generateText({
+    model,
+    prompt: message,
+    maxOutputTokens: 800,                     // always set; never rely on the model default
+    abortSignal: AbortSignal.timeout(30_000), // fail fast
+  });
+
+  await recordUsage(user.id, result.usage);   // provider-reported token counts
+  return Response.json({ text: result.text });
+}
 ```
 
-### 2. Rate Limiting for LLM Endpoints
+Also cap: number of files and pages per upload, image count and resolution, retrieved chunks per query (`k`), and conversation length (summarise or truncate old turns).
 
-```python
-from upstash_ratelimit import Ratelimit, FixedWindow
-from upstash_redis import Redis
+### 2. Rate Limit and Budget Per User
 
-# Rate limit by user: not just by IP (authenticated users can still DoS)
-ratelimit = Ratelimit(
-    redis=Redis.from_env(),
-    limiter=FixedWindow(max_requests=10, window="1 m"),  # 10 LLM calls/minute
-)
+```typescript
+import { Ratelimit } from '@upstash/ratelimit';
+import { Redis } from '@upstash/redis';
 
-async def llm_endpoint(request: Request):
-    user_id = get_current_user_id(request)
-    
-    # Rate limit by user
-    result = await ratelimit.limit(f"llm:{user_id}")
-    if not result.allowed:
-        raise HTTPException(
-            status_code=429,
-            detail=f"Rate limit exceeded. Try again in {result.reset_after_ms // 1000} seconds."
-        )
-    
-    # Also add a cost-based rate limit
-    user_daily_cost = await get_user_daily_cost(user_id)
-    if user_daily_cost > DAILY_COST_LIMIT_USD:
-        raise HTTPException(
-            status_code=429,
-            detail="Daily AI usage limit reached."
-        )
-    
-    return await call_llm(request.body)
+const redis = Redis.fromEnv();
+const today = () => new Date().toISOString().slice(0, 10); // UTC date
+
+// Requests per minute, by authenticated user (not just IP)
+const perMinute = new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(10, '1 m'), prefix: 'ai:rpm' });
+
+export async function checkAiAllowance(userId: string, plan: 'free' | 'pro') {
+  const { success, reset } = await perMinute.limit(userId);
+  if (!success) throw new HttpError(429, `Too many requests. Try again at ${new Date(reset).toISOString()}`);
+
+  // Daily token budget by plan
+  const budget = plan === 'free' ? 50_000 : 1_000_000;
+  const used = Number(await redis.get(`ai:tokens:${userId}:${today()}`)) || 0;
+  if (used >= budget) throw new HttpError(429, 'Daily AI allowance used. It resets at midnight UTC.');
+}
+
+export async function recordUsage(userId: string, usage: { totalTokens?: number }) {
+  const key = `ai:tokens:${userId}:${today()}`;
+  await redis.incrby(key, usage.totalTokens ?? 0);
+  await redis.expire(key, 60 * 60 * 48);
+}
 ```
 
-### 3. Request Timeout
+- Budget in **tokens**, not pounds or dollars: prices change, token counts don't. Convert to cost in reporting only.
+- Limit **concurrent** requests per user, not just requests per minute.
+- Put stricter limits on free and anonymous users; require sign-up (and ideally a verified email) before any AI feature.
+
+### 3. Set Hard Limits at the Provider
+
+Application limits can have bugs. Most providers and AI gateways let you set **monthly spend limits and alerts per project or key**. Set them, use a separate key per environment, and keep production keys out of development machines. A capped key turns a disaster into an outage.
+
+### 4. Bound Agents
 
 ```python
-import asyncio
-
-async def call_llm_with_timeout(prompt: str, timeout_seconds: int = 30) -> str:
-    try:
-        response = await asyncio.wait_for(
-            openai.chat.completions.acreate(
-                model="gpt-4o",
-                messages=[{"role": "user", "content": prompt}],
-                max_tokens=500,
-            ),
-            timeout=timeout_seconds,
-        )
-        return response.choices[0].message.content
-    except asyncio.TimeoutError:
-        logger.warning({'event': 'llm.timeout', 'prompt_length': len(prompt)})
-        return "Request timed out. Please try a simpler query."
-```
-
-### 4. Cost Monitoring and Alerts
-
-```python
-# Track API spend and alert on anomalies
-class LLMCostMonitor:
-    def __init__(self):
-        self.redis = Redis.from_env()
-    
-    async def track_usage(self, user_id: str, model: str, 
-                          input_tokens: int, output_tokens: int):
-        # Pricing (approximate: check current OpenAI pricing)
-        COSTS_PER_1K = {
-            'gpt-4o': {'input': 0.0025, 'output': 0.01},
-            'gpt-4o-mini': {'input': 0.00015, 'output': 0.0006},
-        }
-        
-        pricing = COSTS_PER_1K.get(model, {'input': 0.01, 'output': 0.03})
-        cost = (input_tokens / 1000 * pricing['input'] + 
-                output_tokens / 1000 * pricing['output'])
-        
-        # Accumulate daily cost per user
-        key = f"llm_cost:{user_id}:{date.today()}"
-        daily_cost = await self.redis.incrbyfloat(key, cost)
-        await self.redis.expire(key, 86400 * 7)  # Keep 7 days
-        
-        # Alert if user exceeds $5/day
-        if daily_cost > 5.0:
-            logger.warning({
-                'event': 'llm.cost_alert',
-                'user_id': user_id,
-                'daily_cost_usd': daily_cost,
-            })
-        
-        # Alert on total daily spend > $100
-        total_key = f"llm_total_cost:{date.today()}"
-        total = await self.redis.incrbyfloat(total_key, cost)
-        if total > 100.0:
-            await alert_team(f"LLM spend exceeded $100 today: ${total:.2f}")
-```
-
-### 5. Agent Depth and Action Limits
-
-```python
-# SECURE: limit recursive agent depth and total actions
 class BoundedAgent:
     MAX_DEPTH = 3
-    MAX_ACTIONS_PER_RUN = 20
-    
+    MAX_STEPS = 20
+    MAX_TOKENS = 200_000
+
     def __init__(self):
-        self.action_count = 0
-    
+        self.steps = 0
+        self.tokens = 0
+
     def run(self, task: str, depth: int = 0) -> str:
-        if depth >= self.MAX_DEPTH:
-            return f"Max recursion depth reached. Completed {self.action_count} actions."
-        
-        if self.action_count >= self.MAX_ACTIONS_PER_RUN:
-            return "Action limit reached. Stopping agent."
-        
-        self.action_count += 1
-        
-        response = llm.chat(task)
-        subtasks = self.parse_subtasks(response)
-        
-        results = []
-        for subtask in subtasks:
-            if self.action_count >= self.MAX_ACTIONS_PER_RUN:
-                break
-            results.append(self.run(subtask, depth + 1))
-        
-        return '\n'.join(results)
+        if depth >= self.MAX_DEPTH or self.steps >= self.MAX_STEPS or self.tokens >= self.MAX_TOKENS:
+            return "Stopped: agent budget reached."
+        self.steps += 1
+        response = llm.chat(task, max_tokens=1000)
+        self.tokens += response.usage.total_tokens
+        return "\n".join(self.run(sub, depth + 1) for sub in parse_subtasks(response.text))
 ```
+
+### 5. Monitor and Alert
+
+Alert on: a single user's daily tokens far above their usual, total daily spend above your threshold, spikes in 429s or timeouts, and many varied queries from one account (possible extraction). Route alerts somewhere you'll see them on a weekend. See [Alerting Setup](../../11-monitoring-and-observability/alerting-setup.md).
+
+### 6. If Your Model Is the Asset
+
+If you've invested in a fine-tune or proprietary model:
+
+- Require authenticated accounts and agree terms that prohibit using outputs to train competing models
+- Keep per-account volume low enough that collecting a useful training set is slow and visible
+- Don't return token probabilities (logprobs) or other internals unless customers need them
+- Watch for accounts with high volume and unusually diverse prompts
 
 ---
 
 ## Audit Checklist
 
-- [ ] `max_tokens` set on every LLM API call (never use the model default)
-- [ ] Input length validated and truncated before sending to LLM
-- [ ] Rate limiting applied to LLM endpoints by user (not just IP)
-- [ ] Daily/monthly cost caps per user implemented
-- [ ] Request timeout configured (fail fast, don't hang forever)
-- [ ] LLM API spend monitored: alerts configured for anomalous usage
-- [ ] Agentic loops have max depth and max action count limits
-- [ ] Concurrent LLM requests limited per user (prevent parallel attacks)
-- [ ] Free tier users have stricter limits than paid users
+- [ ] Every model call sets a maximum output token count and a timeout
+- [ ] Input size, uploads, images, retrieved chunks and conversation length are capped
+- [ ] Per-user rate limits (requests and concurrency) and daily token budgets by plan
+- [ ] AI features require an authenticated account; free and anonymous use is tightly limited
+- [ ] Provider-side spend limits and alerts are set; separate keys per environment
+- [ ] Agents have depth, step and token budgets
+- [ ] Token usage is recorded from provider responses and alerting covers spikes and spend thresholds
+- [ ] If the model is proprietary: terms prohibit extraction, logprobs are off, extraction patterns are monitored
 
 ---
 
 ## Learn More
 
-- [LLM08: Excessive Agency](./LLM08-excessive-agency.md)
+- [OWASP LLM10:2025 Unbounded Consumption](https://genai.owasp.org/llmrisk/llm102025-unbounded-consumption/)
+- [LLM06: Excessive Agency](./LLM06-excessive-agency.md)
 - [Rate Limiting](../../06-secure-coding/rate-limiting.md)
 - [API Key Hygiene](../../08-ai-app-security/api-key-hygiene.md)
+- [Alerting Setup](../../11-monitoring-and-observability/alerting-setup.md)
