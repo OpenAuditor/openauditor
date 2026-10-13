@@ -28,6 +28,7 @@ OpenAuditor is an open source security audit toolkit built for indie hackers, vi
 | **[15 Post-Breach](./15-post-breach/)** | First 24 hours, user notification, forensics |
 | **[16 Checklists](./16-checklists/)** | Pre-launch, MVP, production hardening, incident response |
 | **[17 Resources](./17-resources/)** | Tools directory, learning paths, certifications |
+| **[Evals](./evals/)** | A deliberately vulnerable Next.js + Supabase app and answer key for measuring how well the audit skill finds real bugs |
 
 ---
 

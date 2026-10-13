@@ -1,6 +1,6 @@
 ---
 name: production-readiness-audit
-description: Run a pre-launch security audit of a web app across 18 domains (secrets, dependencies, auth, access control, injection, headers, AI features, deployment, logging, privacy and more), then return a scored RED/AMBER/GREEN verdict and a prioritised fix list. Use before shipping to production, after a major feature, or when asked for a security or production readiness review.
+description: Run a pre-launch security audit of a web app across 18 domains (secrets, dependencies, auth, access control, injection, headers, database security, uploads, CI/CD, logging, privacy and more), then return a scored RED/AMBER/GREEN verdict and a prioritised fix list. Use before shipping to production, after a major feature, or when asked for a security or production readiness review.
 license: MIT
 ---
 
