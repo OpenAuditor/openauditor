@@ -7,6 +7,28 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [Unreleased]
+
+### Fixed
+- 15 broken internal links (cryptography, AI app security, foundations prompts, OWASP prompts)
+- `templates/github-actions/dependency-check.yml` was invalid YAML and used `hashFiles()` in a job-level `if`; GitHub rejected it. Now valid and actionlint-clean
+- `osv-scanner-action` was tag-pinned in a template that teaches SHA pinning; now SHA-pinned (v2.7.0)
+- File and prompt counts in README and STATUS now match the repository
+- STATUS no longer claims the OWASP Web and LLM lists are the 2025 editions
+- Creator and security contact links point to baulin.co.uk
+- Claude Code setup used a non-existent `/project:audit` CLAUDE.md command; replaced with skill install steps
+- Outdated model IDs in skill loading guides
+
+### Changed
+- All GitHub Action SHA pins refreshed (checkout v7, setup-node v7, setup-python v7, codeql-action v4, gitleaks-action v3, upload-artifact v7, github-script v9); Node 24 in templates
+- `production-readiness-audit/SKILL.md` now has Agent Skill frontmatter and installs into `.claude/skills/`
+- Em and en dashes replaced across the repo (house style)
+
+### Added
+- `.github/workflows/docs-check.yml`: offline link check, weekly external link report, actionlint on workflow templates, dash style check
+
+---
+
 ## [1.0.0] - 2026-04-27
 
 First complete, production-ready release.
