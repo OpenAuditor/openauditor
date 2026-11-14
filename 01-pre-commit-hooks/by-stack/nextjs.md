@@ -264,9 +264,10 @@ export default function handler(req, res) {
 }
 ```
 
-### 4. Middleware and Auth
+### 4. Proxy and Auth
 
 ```typescript
+// proxy.ts (Next.js 16; called middleware.ts in Next.js 15 and earlier)
 // ✓ Good: Secure token verification
 import { jwtVerify } from 'jose';
 
